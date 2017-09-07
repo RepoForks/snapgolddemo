@@ -20,6 +20,20 @@ namespace PhotoSharingApp.Frontend.Portable
         public PhotoDetailsViewModel(IPhotoService photoService)
         {
             this.photoService = photoService;
+
+            // Design
+            Photo = new Photo
+            {
+                StandardUrl = "https://canaryappstorage.blob.core.windows.net/dummy-container/food1.jpg",
+                User = new User { ProfilePictureUrl = "https://canaryappstorage.blob.core.windows.net/dummy-container/a1_tn.jpg" },
+                Caption = "Oh, look at this",
+                CreatedAt = DateTime.Now,
+                Annotations = new System.Collections.ObjectModel.ObservableCollection<Annotation>()
+                {
+                    new Annotation { Text = "Cool", GoldCount = 10 },
+                    new Annotation { Text = "Wow, looks fantastic!", GoldCount = 10 }
+                }
+            };
         }
 
         public async Task RefreshAsync()

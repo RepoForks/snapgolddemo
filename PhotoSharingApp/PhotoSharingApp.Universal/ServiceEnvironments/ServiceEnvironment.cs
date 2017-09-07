@@ -29,7 +29,8 @@ namespace PhotoSharingApp.Universal.ServiceEnvironments
     /// </summary>
     public class ServiceEnvironment : ServiceEnvironmentBase
     {
-        private const string AzureAppServiceBaseUrl = "https://snapgolddemoapp.azurewebsites.net/";
+        private const string AzureAppServiceBaseUrl = "https://snapgolddemo-westeurope.azurewebsites.net/";
+        //private const string AzureAppServiceBaseUrl = "http://snapgolddemo.trafficmanager.net/";
 
         /// <summary>
         /// The Azure App service base URL.

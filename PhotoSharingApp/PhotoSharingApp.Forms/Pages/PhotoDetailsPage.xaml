@@ -6,22 +6,15 @@
     xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
     Title="{Binding Photo.CategoryName}">
-    
-	<ContentPage.Content>
+
+
+    <ContentPage.Content>
         <ListView
-            ItemsSource="{Binding Photo.Annotations}">
+            ItemsSource="{Binding Photo.Annotations}"
+            SeparatorVisibility="None">
 
             <ListView.Header>
-                <Grid
-                    RowSpacing="0"
-                    ColumnSpacing="0">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
+                <StackLayout Spacing="0">
 
                     <ffimageloading:CachedImage
                         Grid.Row="0"
@@ -29,7 +22,6 @@
                         Source="{Binding Photo.ImageUrl}" />
 
                     <Grid
-                        Grid.Row="1"
                         Margin="20,-50,20,0"
                         WidthRequest="100"
                         HeightRequest="100">
@@ -46,13 +38,26 @@
                             Source="{Binding Photo.User.ProfilePictureUrl}"
                             BorderColor="White"
                             BorderThickness="5" />
+
+                        <Frame
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Margin="0,0,20,0"
+                            VerticalOptions="Center"
+                            BackgroundColor="{StaticResource AccentColor}"
+                            CornerRadius="30"
+                            WidthRequest="20"
+                            HeightRequest="20"
+                            HasShadow="false">
+                            <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                        </Frame>
                     </Grid>
 
-                    <StackLayout Grid.Row="2" Padding="20">
+                    <StackLayout Padding="20">
                         <Label Text="{Binding Photo.Caption}" FontAttributes="Bold" />
                         <Label Text="{Binding Photo.CreatedAt}" />
                     </StackLayout>
-                </Grid>
+                </StackLayout>
             </ListView.Header>
 
             <ListView.ItemTemplate>
