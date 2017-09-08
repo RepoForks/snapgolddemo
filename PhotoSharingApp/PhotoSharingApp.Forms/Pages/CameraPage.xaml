@@ -12,6 +12,14 @@
             <On Platform="iOS" Value="camera.png"/>
         </OnPlatform>
     </ContentPage.Icon>
+
+    <!-- Toolbar Items -->
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem
+            Name="Library"
+            Icon="library.png"
+            Clicked="LibraryButton_Clicked"/>
+    </TabbedPage.ToolbarItems>
     
 	<ContentPage.Content>
          <Grid
@@ -21,25 +29,77 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <controls:CameraViewFinder
+                x:Name="ViewFinder"
                 Grid.Row="0"
-                BackgroundColor="#EEEEEE">
-
+                BackgroundColor="Red"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
             </controls:CameraViewFinder>
 
+            <Image
+                x:Name="PhotoPreview"
+                Grid.Row="0"
+                Aspect="AspectFit"
+                VerticalOptions="Start"/>
+
             <StackLayout
+                x:Name="CameraControls"
+
                 Grid.Row="1"
                 Orientation="Horizontal"
                 VerticalOptions="End"
                 HorizontalOptions="Center"
-                Spacing="20"
+                Spacing="10"
                 Padding="20">
                 
-                <Button Text="Library" Clicked="Handle_Clicked" />
-                <Button Text="Picuture" />
-                <Button Text="Upload" />
+                <Button Text="Init" Clicked="Handle_Clicked" TextColor="Black" BackgroundColor="{StaticResource SubtleColor}" WidthRequest="80" />
+                <Button Text="Take" Clicked="TakeButton_Clicked"  BackgroundColor="{StaticResource AccentColor}" WidthRequest="120" TextColor="White" />
+                <Button Text="Turn" TextColor="Black" BackgroundColor="{StaticResource SubtleColor}" WidthRequest="80" />
+            </StackLayout>
+
+            <StackLayout
+                x:Name="UploadControls"
+                IsVisible="false"
+                Grid.Row="2"
+                Spacing="5"
+                VerticalOptions="End"
+                Padding="20">
+
+                <Label Text="Caption" Style="{StaticResource ControlHeaderStyle}" />
+                <Entry Text="{Binding Caption}" Margin="0,0,0,15"  />
+
+                <Label Text="Category" Style="{StaticResource ControlHeaderStyle}" />
+                <Picker
+                    x:Name="CategoryPicker"
+                    Margin="0,0,0,15"
+                    ItemsSource="{Binding CategoryOptions}"
+                    SelectedItem="{Binding SelectedCategory}"
+                    ItemDisplayBinding="{Binding Name}" />
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    Spacing="10">
+
+                    <Button
+                        Text="Upload"
+                        Clicked="UploadButton_Clicked"
+                        HorizontalOptions="FillAndExpand"
+                        Command="{Binding SaveCommand}"
+                        BackgroundColor="{StaticResource AccentColor}"
+                        TextColor="White"/>
+                    
+                    <Button
+                        Text="Cancel"
+                        Clicked="CancelButton_Clicked"
+                        HorizontalOptions="FillAndExpand"
+                        Command="{Binding DeleteCommand}"
+                        BackgroundColor="{StaticResource SubtleColor}"
+                        TextColor="Black"/>
+                </StackLayout>
             </StackLayout>
         </Grid>
 	</ContentPage.Content>

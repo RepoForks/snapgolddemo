@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="01J-lp-oVM">
     <dependencies>
-        <deployment identifier="iOS"/>
         <development version="7000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -23,7 +22,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" image="icon.png"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.97254901960784312" green="0.6705882352941176" blue="0.086274509803921567" alpha="1"/>
+                        <color key="backgroundColor" red="1" green="0.78382188081741333" blue="0.37571173906326294" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="385" secondAttribute="centerY" constant="12" id="792"/>
                             <constraint firstItem="385" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="793"/>
@@ -36,12 +35,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Icon.png" width="16" height="16"/>
         <image name="icon.png" width="100" height="100"/>
-        <image name="home.png" width="25" height="25"/>
-        <image name="camera.png" width="25" height="25"/>
-        <image name="flag.png" width="25" height="25"/>
-        <image name="user.png" width="25" height="25"/>
-        <image name="settings.png" width="25" height="25"/>
     </resources>
     <color key="tintColor" red="0.95686274509803926" green="0.58823529411764708" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
 </document>

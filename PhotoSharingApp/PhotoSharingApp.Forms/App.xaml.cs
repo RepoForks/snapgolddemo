@@ -30,6 +30,7 @@ namespace PhotoSharingApp.Forms
             SimpleIoc.Default.Register<CategoriesViewModel>();
             SimpleIoc.Default.Register<PhotoDetailsViewModel>();
             SimpleIoc.Default.Register<StreamPageViewModel>();
+            SimpleIoc.Default.Register<CameraViewModel>();
 
             // Setup App Container
             var navigationPage = new NavigationPage();

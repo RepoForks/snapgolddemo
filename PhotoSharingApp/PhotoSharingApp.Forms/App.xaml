@@ -8,6 +8,12 @@
 		<ResourceDictionary>
             <Color x:Key="AccentColor">#FAA819</Color>
             <Color x:Key="SubtleColor">#EEEEEE</Color>
+            <Color x:Key="SubtleFontColor">#CCCCCC</Color>
+
+            <Style x:Key="ControlHeaderStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource SubtleColor}" />
+                <Setter Property="FontAttributes" Value="Bold" />               
+            </Style>
         </ResourceDictionary>
 	</Application.Resources>
 </Application>

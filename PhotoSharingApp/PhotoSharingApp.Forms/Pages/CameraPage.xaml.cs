@@ -3,45 +3,94 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using Plugin.Media;
+using Plugin.Media.Abstractions;
+using PhotoSharingApp.Frontend.Portable.ViewModels;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace PhotoSharingApp.Forms
 {
     public partial class CameraPage : ContentPage
     {
+        private CameraViewModel viewModel;
+        private MediaFile file;
+
         public CameraPage()
         {
             InitializeComponent();
+            BindingContext = viewModel = SimpleIoc.Default.GetInstance<CameraViewModel>();
         }
 
-        private async void Handle_Clicked(object sender, System.EventArgs e)
+        protected override async void OnAppearing()
         {
+            base.OnAppearing();
             await CrossMedia.Current.Initialize();
+            await viewModel.InitAsync();
+            CategoryPicker.SelectedIndex = 0;
+        }
 
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-            {
-                await DisplayAlert("No Camera", ":( No camera available.", "OK");
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            if (file != null)
+                file.Dispose();
+        }
+
+        async void LibraryButton_Clicked(object sender, System.EventArgs e)
+        {
+            if (!CrossMedia.Current.IsPickPhotoSupported)
                 return;
-            }
 
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-            {
-                Directory = "Sample",
-                Name = "test.jpg"
-            });
-
+            // Pick a file from the local library
+            file = await CrossMedia.Current.PickPhotoAsync();
             if (file == null)
                 return;
 
+            // Hide camera controls and show upload controls
+            CameraControls.IsVisible = false;
+            UploadControls.IsVisible = true;
+
+            // Show selected photo in preview
+            PhotoPreview.Source = ImageSource.FromFile(file.Path);
+        }
+
+        async void TakeButton_Clicked(object sender, System.EventArgs e)
+        {
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                return;
+
+            file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { AllowCropping = true, SaveToAlbum = false });
+            if (file == null)
+                return;
+
+            // Hide camera controls and show upload controls
+            CameraControls.IsVisible = false;
+            UploadControls.IsVisible = true;
+
+            // Show selected photo in preview
+            PhotoPreview.Source = ImageSource.FromFile(file.Path);
+        }
 
 
+        private void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            ViewFinder.Init();
+        }
 
-            //PreviewImage.Source = ImageSource.FromStream(() =>
-            //{
-            //    var stream = file.GetStream();
-            //    file.Dispose();
-            //    return stream;
-            //});
+        private void CancelButton_Clicked(object sender, System.EventArgs e)
+        {
+            CameraControls.IsVisible = true;
+            UploadControls.IsVisible = false;
+            PhotoPreview.Source = null;
+        }
 
+        async void UploadButton_Clicked(object sender, System.EventArgs e)
+        {
+            await viewModel.UploadPhoto(file.GetStream(), file.Path);
+            CameraControls.IsVisible = true;
+            UploadControls.IsVisible = false;
+            PhotoPreview.Source = null;
+            await DisplayAlert("Upload successful!", "", "Ok");
         }
     }
 }
