@@ -16,11 +16,22 @@ namespace PhotoSharingApp.Forms.iOS.CustomRenderers
         AVCaptureSession captureSession;
         AVCaptureDeviceInput captureDeviceInput;
         AVCaptureStillImageOutput stillImageOutput;
-        UIView liveCameraStream;
+
+
+        UIView viewFinder;
 
         void NewElement_SizeChanged(object sender, EventArgs e)
         {
+            var view = (View)sender;
+            viewFinder = new UIView() { Frame = new CGRect(0f, 0f, view.Height, view.Width) };
+            SetNativeControl(viewFinder);
 
+            var viewLayer = viewFinder.Layer;
+            var videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
+            {
+                Frame = viewFinder.Bounds
+            };
+            viewFinder.Layer.AddSublayer(videoPreviewLayer);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<CameraViewFinder> e)
@@ -34,29 +45,11 @@ namespace PhotoSharingApp.Forms.iOS.CustomRenderers
 
             try
             {
-                // SetupUserInterface();
-                liveCameraStream = new UIView()
-                {
-                    Frame = new CGRect(0f, 0f, 320f, 320f),
-                    BackgroundColor = UIColor.Blue
-
-                };
-
-                SetNativeControl(liveCameraStream);
-
-
-                // SetupEventHandlers();
-
 
                 // SetupLiveCameraStream();
                 captureSession = new AVCaptureSession();
 
-                var viewLayer = liveCameraStream.Layer;
-                var videoPreviewLayer = new AVCaptureVideoPreviewLayer(captureSession)
-                {
-                    Frame = liveCameraStream.Bounds
-                };
-                liveCameraStream.Layer.AddSublayer(videoPreviewLayer);
+                
 
                 var captureDevice = AVCaptureDevice.DefaultDeviceWithMediaType(AVMediaType.Video);
                 ConfigureCameraForDevice(captureDevice);
@@ -64,10 +57,7 @@ namespace PhotoSharingApp.Forms.iOS.CustomRenderers
 
                 var dictionary = new NSMutableDictionary();
                 dictionary[AVVideo.CodecKey] = new NSNumber((int)AVVideoCodec.JPEG);
-                stillImageOutput = new AVCaptureStillImageOutput()
-                {
-                    OutputSettings = new NSDictionary()
-                };
+                stillImageOutput = new AVCaptureStillImageOutput() { OutputSettings = new NSDictionary() };
 
                 captureSession.AddOutput(stillImageOutput);
                 captureSession.AddInput(captureDeviceInput);
@@ -80,6 +70,9 @@ namespace PhotoSharingApp.Forms.iOS.CustomRenderers
             {
                 System.Diagnostics.Debug.WriteLine(@"          ERROR: ", ex.Message);
             }
+
+
+
 
             void ConfigureCameraForDevice(AVCaptureDevice device)
             {
