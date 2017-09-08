@@ -2,6 +2,7 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:PhotoSharingApp.Forms.Controls;assembly=PhotoSharingApp.Forms"
     x:Class="PhotoSharingApp.Forms.CameraPage"
     Title="Upload">
 
@@ -22,20 +23,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid
+            <controls:CameraViewFinder
                 Grid.Row="0"
                 BackgroundColor="#EEEEEE">
 
-                <Image
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    Source="camera.png"
-                    Aspect="AspectFit"/>
-                
-                <Image
-                    x:Name="PreviewImage"
-                    Aspect="AspectFit"/>
-            </Grid>
+            </controls:CameraViewFinder>
 
             <StackLayout
                 Grid.Row="1"

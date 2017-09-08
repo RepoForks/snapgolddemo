@@ -55,6 +55,7 @@
     <Compile Include="ViewModels\StreamPageViewModel.cs" />
     <Compile Include="Helpers\GroupedRangeCollection.cs" />
     <Compile Include="Models\GroupedCategoryPreview.cs" />
+    <Compile Include="ViewModels\CameraViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

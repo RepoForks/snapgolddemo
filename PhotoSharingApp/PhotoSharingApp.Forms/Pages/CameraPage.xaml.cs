@@ -35,12 +35,12 @@ namespace PhotoSharingApp.Forms
 
 
 
-            PreviewImage.Source = ImageSource.FromStream(() =>
-            {
-                var stream = file.GetStream();
-                file.Dispose();
-                return stream;
-            });
+            //PreviewImage.Source = ImageSource.FromStream(() =>
+            //{
+            //    var stream = file.GetStream();
+            //    file.Dispose();
+            //    return stream;
+            //});
 
         }
     }
