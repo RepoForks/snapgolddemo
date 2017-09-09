@@ -10,6 +10,7 @@ namespace PhotoSharingApp.Forms
         public AppShell()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "Back");
         }
     }
 }

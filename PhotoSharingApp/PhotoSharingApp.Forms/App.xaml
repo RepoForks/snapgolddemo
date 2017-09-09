@@ -10,6 +10,9 @@
             <Color x:Key="SubtleColor">#EEEEEE</Color>
             <Color x:Key="SubtleFontColor">#CCCCCC</Color>
 
+            <x:Double x:Key="FontSizeSmall">10</x:Double>
+            <x:Double x:Key="FontSizeMedium">12</x:Double>
+            
             <Style x:Key="ControlHeaderStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource SubtleColor}" />
                 <Setter Property="FontAttributes" Value="Bold" />               

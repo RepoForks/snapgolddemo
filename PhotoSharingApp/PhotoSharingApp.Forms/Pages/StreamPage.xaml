@@ -16,12 +16,13 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid HorizontalOptions="FillAndExpand">
+                        <Grid HorizontalOptions="FillAndExpand" HeightRequest="500">
                             <ffimageloading:CachedImage                                
                                 Source="{Binding StandardUrl}"
                                 FadeAnimationEnabled="false"
-                                Aspect="AspectFill"
-                                 />
+                                LoadingPlaceholder="placeholder.jpg"
+                                ErrorPlaceholder="placeholder.jpg"
+                                Aspect="AspectFill" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

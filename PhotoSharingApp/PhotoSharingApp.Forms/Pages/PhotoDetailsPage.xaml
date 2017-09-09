@@ -3,14 +3,15 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
     xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
     Title="{Binding Photo.CategoryName}">
 
-
     <ContentPage.Content>
         <ListView
             ItemsSource="{Binding Photo.Annotations}"
+            ItemSelected="ListView_ItemSelected"
             SeparatorVisibility="None">
 
             <ListView.Header>
@@ -42,27 +43,59 @@
                         <Frame
                             Grid.Column="1"
                             HorizontalOptions="End"
-                            Margin="0,0,20,0"
+                            Margin="0,0,0,0"
                             VerticalOptions="Center"
                             BackgroundColor="{StaticResource AccentColor}"
                             CornerRadius="30"
                             WidthRequest="20"
                             HeightRequest="20"
                             HasShadow="false">
-                            <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                            <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Black" />
                         </Frame>
                     </Grid>
 
                     <StackLayout Padding="20">
                         <Label Text="{Binding Photo.Caption}" FontAttributes="Bold" />
-                        <Label Text="{Binding Photo.CreatedAt}" />
+                        <Label Text="{Binding Photo.CreatedAt, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="{StaticResource FontSizeMedium}" TextColor="{StaticResource SubtleFontColor}" />
                     </StackLayout>
                 </StackLayout>
             </ListView.Header>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding GoldCount}" Detail="{Binding Text}" />
+                    <ViewCell>
+                        <Grid Padding="20,0" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ffimageloading:CachedImage
+                                Grid.Column="0"
+                                WidthRequest="30"
+                                HeightRequest="30"
+                                VerticalOptions="Center"
+                                Source="{Binding From.ProfilePictureUrl}" >
+                                <ffimageloading:CachedImage.Transformations>
+                                    <fftransformations:CircleTransformation/>
+                                </ffimageloading:CachedImage.Transformations>
+                            </ffimageloading:CachedImage>
+
+                            <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Grid.Column="1"  Text="{Binding GoldCount, StringFormat='Gave {0:G} piece of Gold.'}" FontSize="{StaticResource FontSizeSmall}" FontAttributes="Bold" />
+                                <Label Text="{Binding Text}" FontSize="{StaticResource FontSizeSmall}" TextColor="{StaticResource SubtleFontColor}"  />
+                            </StackLayout>
+
+                            <Label
+                                Grid.Column="2"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                FontSize="{StaticResource FontSizeSmall}" 
+                                TextColor="{StaticResource SubtleFontColor}"
+                                Text="{Binding CreatedTime, StringFormat='{0:MMM dd, yyyy at hh:mm tt}'}" />
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>                    
             </ListView.ItemTemplate>
         </ListView>

@@ -37,12 +37,13 @@
             <!-- Item Template for Category Preview Image -->
             <flow:FlowListView.FlowColumnTemplate>
                 <DataTemplate>                   
-                    <Grid>
+                    <Grid MinimumHeightRequest="50">
                         <ffimageloading:CachedImage                                
                             Source="{Binding ImageUrl}"
-                            FadeAnimationEnabled="true"
                             CacheType="Disk"
                             Aspect="AspectFill"
+                            LoadingPlaceholder="placeholder.jpg"
+                            ErrorPlaceholder="placeholder.jpg"
                             HorizontalOptions="StartAndExpand" />
                     </Grid>                
                 </DataTemplate>
@@ -131,7 +132,9 @@
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="Buy gold" />
+                                    Text="Buy gold"
+                                    BackgroundColor="{StaticResource SubtleColor}"
+                                    TextColor="Black"/>
                             </StackLayout>
                         </Grid>
                     </Frame>
@@ -157,11 +160,15 @@
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="Take photo" />
+                                    Text="Take photo"
+                                    BackgroundColor="{StaticResource SubtleColor}"
+                                    TextColor="Black"/>
 
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="Browse pictures" />
+                                    Text="Browse pictures"
+                                    BackgroundColor="{StaticResource SubtleColor}"
+                                    TextColor="Black"/>
                             </StackLayout>
                         </Grid>
                     </Frame>

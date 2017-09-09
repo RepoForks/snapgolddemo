@@ -32,5 +32,10 @@ namespace PhotoSharingApp.Forms
             base.OnAppearing();
             await viewModel.RefreshAsync();
         }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            (sender as ListView).SelectedItem = null;
+        }
     }
 }
