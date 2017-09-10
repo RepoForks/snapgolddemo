@@ -60,6 +60,7 @@ namespace PhotoSharingApp.AppService
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             config.MapHttpAttributeRoutes();
 
+
             new MobileAppConfiguration()
                 .AddMobileAppHomeController()
                 .MapApiControllers()
@@ -68,6 +69,7 @@ namespace PhotoSharingApp.AppService
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);
+            
 
             // Configure Application Insights Telemetry.
             TelemetryConfiguration.Active.InstrumentationKey = SystemContext.Current.Environment.InstrumentationKey;
