@@ -78,6 +78,8 @@
     <Compile Include="ContractModelConverterExtensions\PhotoConverter.cs" />
     <Compile Include="ContractModelConverterExtensions\PhotoThumbnailConverter.cs" />
     <Compile Include="ContractModelConverterExtensions\UserConverter.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
+    <Compile Include="Services\IDialogService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

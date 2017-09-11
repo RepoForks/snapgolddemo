@@ -212,6 +212,10 @@
       <Project>{F1FD020A-30B4-400E-97BA-55176E288AE7}</Project>
       <Name>PhotoSharingApp.Forms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhotoSharingApp.Frontend.Portable\PhotoSharingApp.Frontend.Portable.csproj">
+      <Project>{B7BCF4EC-FBA2-4157-973D-7E762AD80520}</Project>
+      <Name>PhotoSharingApp.Frontend.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\home.png" />

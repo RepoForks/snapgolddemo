@@ -79,7 +79,7 @@
       <DependentUpon>StreamPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\CameraViewFinder.cs" />
-    <Compile Include="Services\AuthenticationHandler.cs" />
+    <Compile Include="Services\FormsDialogService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">

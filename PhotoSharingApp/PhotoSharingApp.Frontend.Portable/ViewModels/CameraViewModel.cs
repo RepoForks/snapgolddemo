@@ -10,6 +10,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
     public class CameraViewModel : AsyncViewModelBase
     {
+        private IDialogService dialogService;
         private IPhotoService photoService;
 
         private string caption;
@@ -33,8 +34,9 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             set { selectedCategory = value; RaisePropertyChanged(); }
         }
 
-        public CameraViewModel(IPhotoService photoService)
+        public CameraViewModel(IDialogService dialogService, IPhotoService photoService)
         {
+            this.dialogService = dialogService;
             this.photoService = photoService;
 
             CategoryOptions = new ObservableRangeCollection<Category>();
@@ -49,6 +51,12 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
         public async Task UploadPhoto(Stream stream, string filePath)
         {
+            if (await photoService.GetCurrentUser() == null)
+            {
+                await dialogService.DisplayDialogAsync("No User logged in", "Please log in first", "Ok");
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(Caption) && SelectedCategory != null)
             {
                 await photoService.UploadPhoto(stream, filePath, Caption, SelectedCategory.Id);

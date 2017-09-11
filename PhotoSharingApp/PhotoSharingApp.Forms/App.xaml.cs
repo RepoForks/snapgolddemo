@@ -16,7 +16,7 @@ namespace PhotoSharingApp.Forms
 {
     public partial class App : Application
     {
-        public App()
+        public App(IAuthenticationHandler authenticationHandler)
         {
             InitializeComponent();
             FlowListView.Init();
@@ -27,13 +27,15 @@ namespace PhotoSharingApp.Forms
 
             // Register Dependencies
             SimpleIoc.Default.Register<IAppEnvironment, AppEnvironment>();
-            SimpleIoc.Default.Register<IAuthenticationHandler, AuthenticationHandler>();
+            SimpleIoc.Default.Register<IAuthenticationHandler>(() => authenticationHandler);
             SimpleIoc.Default.Register<IPhotoService, ServiceClient>();
+            SimpleIoc.Default.Register<Frontend.Portable.Services.IDialogService, FormsDialogService>();
 
             SimpleIoc.Default.Register<CategoriesViewModel>();
             SimpleIoc.Default.Register<PhotoDetailsViewModel>();
             SimpleIoc.Default.Register<StreamPageViewModel>();
             SimpleIoc.Default.Register<CameraViewModel>();
+            SimpleIoc.Default.Register<ProfileViewModel>();
 
             // Setup App Container
             var navigationPage = new NavigationPage();

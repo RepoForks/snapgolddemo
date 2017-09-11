@@ -13,5 +13,6 @@
     </ContentPage.Icon>
     
 	<ContentPage.Content>
+        <Button Text="Login with Facebook" Command="{Binding FacebookLoginCommand}" />
 	</ContentPage.Content>
 </ContentPage>
