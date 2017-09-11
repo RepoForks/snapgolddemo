@@ -62,7 +62,7 @@ namespace PhotoSharingApp.AppService
 
 
             new MobileAppConfiguration()
-                .AddMobileAppHomeController()
+                //.AddMobileAppHomeController()
                 .MapApiControllers()
                 .ApplyTo(config);
 
