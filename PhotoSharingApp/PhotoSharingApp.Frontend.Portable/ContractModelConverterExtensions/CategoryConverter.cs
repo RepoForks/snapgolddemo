@@ -22,27 +22,29 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-using System;
+using PhotoSharingApp.Frontend.Portable.Models;
+using PhotoSharingApp.Portable.DataContracts;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
 {
     /// <summary>
-    /// The exception that is thrown when the user has canceled
-    /// authentication.
+    /// Helper class to convert between <see cref="Category" />
+    /// and <see cref="CategoryContract" /> classes.
     /// </summary>
-    public class AuthenticationCanceledException : Exception
+    public static class CategoryConverter
     {
-        public AuthenticationCanceledException()
+        /// <summary>
+        /// Converts the given category contract to the category data model.
+        /// </summary>
+        /// <param name="categoryContract">The category data contract.</param>
+        /// <returns>The category data model.</returns>
+        public static Category ToDataModel(this CategoryContract categoryContract)
         {
-        }
-
-        public AuthenticationCanceledException(string message) : base(message)
-        {
-        }
-
-        public AuthenticationCanceledException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+            return new Category
+            {
+                Id = categoryContract.Id,
+                Name = categoryContract.Name
+            };
         }
     }
 }

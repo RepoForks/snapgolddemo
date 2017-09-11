@@ -25,19 +25,38 @@
 namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
 {
     /// <summary>
-    /// The service environment that points to the production service.
+    /// Specifies a service environment.
     /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public abstract class ServiceEnvironmentBase
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
+        private static ServiceEnvironmentBase _current;
 
         /// <summary>
-        /// The Azure App service base URL.
+        /// The selected service environment.
         /// </summary>
-        public override string ServiceBaseUrl
+        public static ServiceEnvironmentBase Current
         {
-            get { return AzureAppServiceBaseUrl; }
+            get { return _current ?? Default; }
+            set { _current = value; }
         }
+
+        /// <summary>
+        /// Gets the default service environment.
+        /// </summary>
+        public static ServiceEnvironmentBase Default
+        {
+            get
+            {
+                return new ServiceEnvironment();
+            }
+        }
+
+        /// <summary>
+        /// Gets the service base URL.
+        /// </summary>
+        /// <value>
+        /// The service base URL.
+        /// </value>
+        public abstract string ServiceBaseUrl { get; }
     }
 }

@@ -22,22 +22,33 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
+using PhotoSharingApp.Frontend.Portable.Models;
+using PhotoSharingApp.Portable.DataContracts;
+
+namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
 {
     /// <summary>
-    /// The service environment that points to the production service.
+    /// Helper class to convert between <see cref="Annotation" />
+    /// and <see cref="AnnotationContract" /> classes.
     /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public static class AnnotationConverter
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
-
         /// <summary>
-        /// The Azure App service base URL.
+        /// Converts the given contract to a data model.
         /// </summary>
-        public override string ServiceBaseUrl
+        /// <param name="annotationContract">The data contract.</param>
+        /// <returns>The data model.</returns>
+        public static Annotation ToDataModel(this AnnotationContract annotationContract)
         {
-            get { return AzureAppServiceBaseUrl; }
+            return new Annotation
+            {
+                CreatedTime = annotationContract.CreatedAt,
+                Text = annotationContract.Text,
+                From = annotationContract.From.ToDataModel(),
+                Id = annotationContract.Id,
+                PhotoId = annotationContract.PhotoId,
+                GoldCount = annotationContract.GoldCount
+            };
         }
     }
 }

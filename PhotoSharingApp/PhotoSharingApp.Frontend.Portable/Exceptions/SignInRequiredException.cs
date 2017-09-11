@@ -24,24 +24,23 @@
 
 using System;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.Exceptions
 {
     /// <summary>
-    /// The exception that is thrown when the user gold balance
-    /// is not sufficient for a specific operation.
+    /// The exception that is thrown when an operation was
+    /// canceled because sign-in is required.
     /// </summary>
-    public class InsufficientBalanceException : Exception
+    public class SignInRequiredException : Exception
     {
-        public InsufficientBalanceException()
+        public SignInRequiredException()
         {
         }
 
-        public InsufficientBalanceException(string message) : base(message)
+        public SignInRequiredException(string message) : base(message)
         {
         }
 
-        public InsufficientBalanceException(string message, Exception innerException)
-            : base(message, innerException)
+        public SignInRequiredException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

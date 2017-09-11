@@ -22,22 +22,43 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.MobileServices;
+using PhotoSharingApp.Frontend.Portable.Models;
+
+namespace PhotoSharingApp.Frontend.Portable.Abstractions
 {
-    /// <summary>
-    /// The service environment that points to the production service.
-    /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public interface IAuthenticationHandler
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
+        /// <summary>
+        /// Gets the preferred authentication providers for this app.
+        /// </summary>
+        /// <value>
+        /// The authentication providers.
+        /// </value>
+        List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; }
 
         /// <summary>
-        /// The Azure App service base URL.
+        /// Starts the authentication process.
         /// </summary>
-        public override string ServiceBaseUrl
-        {
-            get { return AzureAppServiceBaseUrl; }
-        }
+        /// <param name="provider">The provider to authenticate with.</param>
+        Task AuthenticateAsync(MobileServiceAuthenticationProvider provider);
+
+        /// <summary>
+        /// Logs the user out.
+        /// </summary>
+        Task LogoutAsync();
+
+        /// <summary>
+        /// Clears the password vault.
+        /// </summary>
+        void ResetPasswordVault();
+
+        /// <summary>
+        /// Restores the sign in status.
+        /// </summary>
+        /// <returns>True, if successful. Otherwise, false.</returns>
+        Task<User> RestoreSignInStatus();
     }
 }

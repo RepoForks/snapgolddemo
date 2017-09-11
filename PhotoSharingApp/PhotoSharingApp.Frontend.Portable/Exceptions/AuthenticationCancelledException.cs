@@ -22,22 +22,27 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
+using System;
+
+namespace PhotoSharingApp.Frontend.Portable.Exceptions
 {
     /// <summary>
-    /// The service environment that points to the production service.
+    /// The exception that is thrown when the user has canceled
+    /// authentication.
     /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public class AuthenticationCanceledException : Exception
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
-
-        /// <summary>
-        /// The Azure App service base URL.
-        /// </summary>
-        public override string ServiceBaseUrl
+        public AuthenticationCanceledException()
         {
-            get { return AzureAppServiceBaseUrl; }
+        }
+
+        public AuthenticationCanceledException(string message) : base(message)
+        {
+        }
+
+        public AuthenticationCanceledException(string message, Exception innerException)
+            : base(message, innerException)
+        {
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using FFImageLoading.Forms.Touch;
 using Foundation;
 using ImageCircle.Forms.Plugin.iOS;
+using Microsoft.WindowsAzure.MobileServices;
 using UIKit;
 
 namespace PhotoSharingApp.Forms.iOS
@@ -18,6 +19,9 @@ namespace PhotoSharingApp.Forms.iOS
             global::Xamarin.Forms.Forms.Init();
             ImageCircleRenderer.Init();
             CachedImageRenderer.Init();
+
+            // Initialize Azure Mobile App Client for the current platform
+            CurrentPlatform.Init();
 
             // Code for starting up the Xamarin Test Cloud Agent
 #if DEBUG

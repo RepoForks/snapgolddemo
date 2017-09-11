@@ -22,22 +22,26 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
+using System;
+
+namespace PhotoSharingApp.Frontend.Portable.Exceptions
 {
     /// <summary>
-    /// The service environment that points to the production service.
+    /// The exception that is thrown when access to the service
+    /// is not authorized.
     /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public class UnauthorizedException : Exception
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
-
-        /// <summary>
-        /// The Azure App service base URL.
-        /// </summary>
-        public override string ServiceBaseUrl
+        public UnauthorizedException()
         {
-            get { return AzureAppServiceBaseUrl; }
+        }
+
+        public UnauthorizedException(string message) : base(message)
+        {
+        }
+
+        public UnauthorizedException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 }

@@ -22,26 +22,32 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-using System;
+using System.Linq;
+using PhotoSharingApp.Portable.DataContracts;
+using PhotoSharingApp.Frontend.Portable.Models;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
 {
     /// <summary>
-    /// The exception that is thrown when an operation was
-    /// canceled because sign-in is required.
+    /// Helper class to convert between <see cref="Leaderboard" />
+    /// and <see cref="LeaderboardContract" /> classes.
     /// </summary>
-    public class SignInRequiredException : Exception
+    public static class LeaderboardConverter
     {
-        public SignInRequiredException()
+        /// <summary>
+        /// Converts a LeaderboardContract object
+        /// </summary>
+        /// <param name="leaderboardContract">The leaderboardContract</param>
+        /// <returns>A Leaderboard object</returns>
+        public static Leaderboard ToDataModel(this LeaderboardContract leaderboardContract)
         {
-        }
-
-        public SignInRequiredException(string message) : base(message)
-        {
-        }
-
-        public SignInRequiredException(string message, Exception innerException) : base(message, innerException)
-        {
+            return new Leaderboard
+            {
+                MostGoldCategories = leaderboardContract.MostGoldCategories.Select(e => e.ToDataModel()).ToList(),
+                MostGoldPhotos = leaderboardContract.MostGoldPhotos.Select(e => e.ToDataModel()).ToList(),
+                MostGoldUsers = leaderboardContract.MostGoldUsers.Select(e => e.ToDataModel()).ToList(),
+                MostGivingUsers = leaderboardContract.MostGivingUsers.Select(e => e.ToDataModel()).ToList()
+            };
         }
     }
 }

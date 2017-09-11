@@ -22,22 +22,41 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
+using Microsoft.WindowsAzure.MobileServices;
+using PhotoSharingApp.Frontend.Portable.ServiceEnvironments;
+
+namespace PhotoSharingApp.Frontend.Portable.Services
 {
     /// <summary>
-    /// The service environment that points to the production service.
+    /// Provides access to the Azure App Service that
+    /// offers authentication with 3rd party providers.
     /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public class AzureAppService
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
+        private static MobileServiceClient _mobileServiceClient;
 
         /// <summary>
-        /// The Azure App service base URL.
+        /// Gets the app's mobile service.
         /// </summary>
-        public override string ServiceBaseUrl
+        public static MobileServiceClient Current
         {
-            get { return AzureAppServiceBaseUrl; }
+            get
+            {
+                if (_mobileServiceClient == null)
+                {
+                    _mobileServiceClient = new MobileServiceClient(ServiceEnvironmentBase.Current.ServiceBaseUrl);
+                }
+
+                return _mobileServiceClient;
+            }
+        }
+
+        /// <summary>
+        /// Resets the service client.
+        /// </summary>
+        public static void Reset()
+        {
+            _mobileServiceClient = null;
         }
     }
 }

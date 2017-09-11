@@ -200,7 +200,6 @@
     <Compile Include="Extensions\PhotoListExtensions.cs" />
     <Compile Include="ServiceEnvironments\ServiceEnvironment.cs" />
     <Compile Include="ServiceEnvironments\ServiceEnvironmentBase.cs" />
-    <Compile Include="Services\InsufficientBalanceException.cs" />
     <Compile Include="Services\SignInCompletionSource.cs" />
     <Compile Include="StateTriggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Storage\InvalidImageDimensionsException.cs" />
@@ -236,13 +235,7 @@
     <Compile Include="NavigationBar\ProfileNavigationBarMenuItem.cs" />
     <Compile Include="NavigationBar\WelcomeNavigationBarMenuItem.cs" />
     <Compile Include="Services\AuthEnforcementHandler.cs" />
-    <Compile Include="Services\AuthenticationCancelledException.cs" />
-    <Compile Include="Services\AuthenticationException.cs" />
-    <Compile Include="Services\IAuthEnforcementHandler.cs" />
-    <Compile Include="Services\IAuthenticationHandler.cs" />
     <Compile Include="Services\NotificationRegistrationClient.cs" />
-    <Compile Include="Services\SignInRequiredException.cs" />
-    <Compile Include="Services\UnauthorizedException.cs" />
     <Compile Include="Store\CurrentAppProxy.cs" />
     <Compile Include="Store\InAppPurchaseException.cs" />
     <Compile Include="Store\InAppPurchases.cs" />

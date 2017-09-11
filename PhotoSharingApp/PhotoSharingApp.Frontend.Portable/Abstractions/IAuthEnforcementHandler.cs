@@ -22,43 +22,21 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.MobileServices;
-using PhotoSharingApp.Universal.Models;
+using PhotoSharingApp.Frontend.Portable.Exceptions;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.Abstractions
 {
-    public interface IAuthenticationHandler
+    /// <summary>
+    /// This handler enforces that the user is successfully authenticated.
+    /// </summary>
+    public interface IAuthEnforcementHandler
     {
         /// <summary>
-        /// Gets the preferred authentication providers for this app.
+        /// Requires a user to be signed in successfully.
+        /// If not signed in already, the user will be prompted to do so.
         /// </summary>
-        /// <value>
-        /// The authentication providers.
-        /// </value>
-        List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; }
-
-        /// <summary>
-        /// Starts the authentication process.
-        /// </summary>
-        /// <param name="provider">The provider to authenticate with.</param>
-        Task AuthenticateAsync(MobileServiceAuthenticationProvider provider);
-
-        /// <summary>
-        /// Logs the user out.
-        /// </summary>
-        Task LogoutAsync();
-
-        /// <summary>
-        /// Clears the password vault.
-        /// </summary>
-        void ResetPasswordVault();
-
-        /// <summary>
-        /// Restores the sign in status.
-        /// </summary>
-        /// <returns>True, if successful. Otherwise, false.</returns>
-        Task<User> RestoreSignInStatus();
+        /// <exception cref="SignInRequiredException">When sign-in was not successful.</exception>
+        Task CheckUserAuthentication();
     }
 }

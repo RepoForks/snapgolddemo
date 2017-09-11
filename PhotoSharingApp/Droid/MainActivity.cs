@@ -10,6 +10,7 @@ using Android.OS;
 using ImageCircle.Forms.Plugin.Droid;
 using FFImageLoading.Forms.Droid;
 using Plugin.Permissions;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace PhotoSharingApp.Forms.Droid
 {
@@ -26,6 +27,9 @@ namespace PhotoSharingApp.Forms.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             ImageCircleRenderer.Init();
             CachedImageRenderer.Init();
+
+            // Initialize Azure Mobile App Client for the current platform
+            CurrentPlatform.Init();
 
             LoadApplication(new App());
         }

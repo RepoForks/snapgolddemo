@@ -22,20 +22,27 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-using System.Threading.Tasks;
+using PhotoSharingApp.Portable.DataContracts;
+using PhotoSharingApp.Frontend.Portable.Models;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
 {
     /// <summary>
-    /// This handler enforces that the user is successfully authenticated.
+    /// Helper class to convert between <see cref="Config" />
+    /// and <see cref="ConfigContract" /> classes.
     /// </summary>
-    public interface IAuthEnforcementHandler
+    public static class ConfigConverter
     {
         /// <summary>
-        /// Requires a user to be signed in successfully.
-        /// If not signed in already, the user will be prompted to do so.
+        /// Converts the given config contract to a data model.
         /// </summary>
-        /// <exception cref="SignInRequiredException">When sign-in was not successful.</exception>
-        Task CheckUserAuthentication();
+        /// <param name="configContract">The config data contract</param>
+        /// <returns>The config data model.</returns>
+        public static Config ToDataModel(this ConfigContract configContract)
+        {
+            return new Config(configContract.BuildVersion,
+                configContract.CategoryThumbnailsSmallFormFactor,
+                configContract.CategoryThumbnailsLargeFormFactor);
+        }
     }
 }

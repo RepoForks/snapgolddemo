@@ -22,22 +22,41 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
-namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
+using PhotoSharingApp.Portable.DataContracts;
+using PhotoSharingApp.Frontend.Portable.Models;
+
+namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
 {
     /// <summary>
-    /// The service environment that points to the production service.
+    /// Helper class to convert between <see cref="PhotoThumbnail" />
+    /// and <see cref="PhotoThumbnailContract" /> classes.
     /// </summary>
-    public class ServiceEnvironment : ServiceEnvironmentBase
+    public static class PhotoThumbnailConverter
     {
-        private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
-        //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
+        /// <summary>
+        /// Converts the given data model to a data contract.
+        /// </summary>
+        /// <param name="thumbnail">The data model.</param>
+        /// <returns>The data contract.</returns>
+        public static PhotoThumbnailContract ToDataContract(this PhotoThumbnail thumbnail)
+        {
+            return new PhotoThumbnailContract
+            {
+                ImageUrl = thumbnail.ImageUrl
+            };
+        }
 
         /// <summary>
-        /// The Azure App service base URL.
+        /// Converts the given data contract to a data model.
         /// </summary>
-        public override string ServiceBaseUrl
+        /// <param name="thumbnailContract">The data contract.</param>
+        /// <returns>The data model.</returns>
+        public static PhotoThumbnail ToDataModel(this PhotoThumbnailContract thumbnailContract)
         {
-            get { return AzureAppServiceBaseUrl; }
+            return new PhotoThumbnail
+            {
+                ImageUrl = thumbnailContract.ImageUrl
+            };
         }
     }
 }

@@ -8,6 +8,8 @@ using PhotoSharingApp.Frontend.Portable.Services;
 using PhotoSharingApp.Frontend.Portable.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
+using PhotoSharingApp.Forms.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
@@ -25,7 +27,8 @@ namespace PhotoSharingApp.Forms
 
             // Register Dependencies
             SimpleIoc.Default.Register<IAppEnvironment, AppEnvironment>();
-            SimpleIoc.Default.Register<IPhotoService, PhotoDummyService>();
+            SimpleIoc.Default.Register<IAuthenticationHandler, AuthenticationHandler>();
+            SimpleIoc.Default.Register<IPhotoService, ServiceClient>();
 
             SimpleIoc.Default.Register<CategoriesViewModel>();
             SimpleIoc.Default.Register<PhotoDetailsViewModel>();

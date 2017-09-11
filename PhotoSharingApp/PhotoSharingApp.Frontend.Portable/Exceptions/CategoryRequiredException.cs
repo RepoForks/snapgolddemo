@@ -24,23 +24,23 @@
 
 using System;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.Exceptions
 {
     /// <summary>
-    /// The exception that is thrown when access to the service
-    /// is not authorized.
+    /// The exception that is thrown when a category is required,
+    /// but the user has not selected any.
     /// </summary>
-    public class UnauthorizedException : Exception
+    public class CategoryRequiredException : Exception
     {
-        public UnauthorizedException()
+        public CategoryRequiredException()
         {
         }
 
-        public UnauthorizedException(string message) : base(message)
+        public CategoryRequiredException(string message) : base(message)
         {
         }
 
-        public UnauthorizedException(string message, Exception innerException) : base(message, innerException)
+        public CategoryRequiredException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

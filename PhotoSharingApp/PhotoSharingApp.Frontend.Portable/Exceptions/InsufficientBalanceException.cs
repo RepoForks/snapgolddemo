@@ -24,22 +24,24 @@
 
 using System;
 
-namespace PhotoSharingApp.Universal.Services
+namespace PhotoSharingApp.Frontend.Portable.Exceptions
 {
     /// <summary>
-    /// The exception that is thrown when authentication has failed.
+    /// The exception that is thrown when the user gold balance
+    /// is not sufficient for a specific operation.
     /// </summary>
-    public class AuthenticationException : Exception
+    public class InsufficientBalanceException : Exception
     {
-        public AuthenticationException()
+        public InsufficientBalanceException()
         {
         }
 
-        public AuthenticationException(string message) : base(message)
+        public InsufficientBalanceException(string message) : base(message)
         {
         }
 
-        public AuthenticationException(string message, Exception innerException) : base(message, innerException)
+        public InsufficientBalanceException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
     }
