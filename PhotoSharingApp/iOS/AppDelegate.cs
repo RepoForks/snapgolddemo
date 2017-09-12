@@ -23,9 +23,9 @@ namespace PhotoSharingApp.Forms.iOS
             AuthenticationProviders = new List<MobileServiceAuthenticationProvider>
             {
                 MobileServiceAuthenticationProvider.Facebook,
-                MobileServiceAuthenticationProvider.MicrosoftAccount,
-                MobileServiceAuthenticationProvider.Google,
-                MobileServiceAuthenticationProvider.Twitter
+                //MobileServiceAuthenticationProvider.MicrosoftAccount,
+                //MobileServiceAuthenticationProvider.Google,
+                //MobileServiceAuthenticationProvider.Twitter
             };
 
             UITabBar.Appearance.SelectedImageTintColor = UIColor.FromRGB(250, 168, 25);
@@ -52,7 +52,7 @@ namespace PhotoSharingApp.Forms.iOS
         {
             try
             {
-                var user = await AzureAppService.Current.LoginAsync(UIApplication.SharedApplication.KeyWindow.RootViewController, provider);
+                await AzureAppService.Current.LoginAsync(UIApplication.SharedApplication.KeyWindow.RootViewController, provider);
             }
             catch (Exception ex)
             {
@@ -60,9 +60,9 @@ namespace PhotoSharingApp.Forms.iOS
             }
         }
 
-        public Task LogoutAsync()
+        public async Task LogoutAsync()
         {
-            throw new NotImplementedException();
+            await AzureAppService.Current.LogoutAsync();
         }
 
         public void ResetPasswordVault()

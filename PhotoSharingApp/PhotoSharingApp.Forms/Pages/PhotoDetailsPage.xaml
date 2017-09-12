@@ -8,6 +8,20 @@
     x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
     Title="{Binding Photo.CategoryName}">
 
+    <!-- Toolbar Items -->
+    <TabbedPage.ToolbarItems>        
+        <ToolbarItem
+            x:Name="SetAsProfilePictureToolbarItem"
+            Name="Set as Profile Picture"
+            Icon="profilepicture.png"
+            Command="{Binding SetAsProfilePictureCommand}"/>
+        <ToolbarItem
+            x:Name="DeleteToolbarItem"
+            Name="Delete"
+            Icon="delete.png"
+            Command="{Binding DeletePhotoCommand}"/>
+    </TabbedPage.ToolbarItems>
+    
     <ContentPage.Content>
         <ListView
             ItemsSource="{Binding Photo.Annotations}"
@@ -20,7 +34,7 @@
                     <ffimageloading:CachedImage
                         Grid.Row="0"
                         Aspect="AspectFit"
-                        Source="{Binding Photo.ImageUrl}" />
+                        Source="{Binding Photo.StandardUrl}" />
 
                     <Grid
                         Margin="20,-50,20,0"

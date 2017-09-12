@@ -5,16 +5,4 @@
     x:Class="PhotoSharingApp.Forms.AppShell"
     Title="SnapGold">
 
-    <!-- Toolbar Items -->
-    <TabbedPage.ToolbarItems>
-        <ToolbarItem
-            Name="Settings"
-            Icon="settings.png">
-            <ToolbarItem.Order>
-                <OnPlatform x:TypeArguments="ToolbarItemOrder">
-                    <On Platform="Android" Value="Secondary"/>
-                </OnPlatform>
-            </ToolbarItem.Order>
-        </ToolbarItem>
-    </TabbedPage.ToolbarItems>
 </TabbedPage>

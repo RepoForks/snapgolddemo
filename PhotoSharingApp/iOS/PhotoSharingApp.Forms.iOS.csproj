@@ -206,6 +206,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="CustomRenderers\CameraViewFinderRenderer.cs" />
+    <Compile Include="Services\PhotoCroppingServiceiOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoSharingApp.Forms\PhotoSharingApp.Forms.csproj">
@@ -240,9 +241,18 @@
     <BundleResource Include="Resources\library.png" />
     <BundleResource Include="Resources\library%402x.png" />
     <BundleResource Include="Resources\Demo.jpg" />
+    <BundleResource Include="Resources\delete%403x.png" />
+    <BundleResource Include="Resources\delete%402x.png" />
+    <BundleResource Include="Resources\delete.png" />
+    <BundleResource Include="Resources\profilepicture%403x.png" />
+    <BundleResource Include="Resources\profilepicture%402x.png" />
+    <BundleResource Include="Resources\profilepicture.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\placeholder.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

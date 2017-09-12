@@ -11,12 +11,19 @@ using ImageCircle.Forms.Plugin.Droid;
 using FFImageLoading.Forms.Droid;
 using Plugin.Permissions;
 using Microsoft.WindowsAzure.MobileServices;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PhotoSharingApp.Frontend.Portable.Services;
+using PhotoSharingApp.Frontend.Portable.Models;
 
 namespace PhotoSharingApp.Forms.Droid
 {
     [Activity(Label = "PhotoSharingApp.Forms.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IAuthenticationHandler
     {
+        public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
+
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -38,5 +45,36 @@ namespace PhotoSharingApp.Forms.Droid
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        #region IAuthenticationHandler implementation
+
+        public async Task AuthenticateAsync(MobileServiceAuthenticationProvider provider)
+        {
+            try
+            {
+                await AzureAppService.Current.LoginAsync(this, provider);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public async Task LogoutAsync()
+        {
+            await AzureAppService.Current.LogoutAsync();
+        }
+
+        public void ResetPasswordVault()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> RestoreSignInStatus()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

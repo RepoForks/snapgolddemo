@@ -51,15 +51,17 @@ namespace PhotoSharingApp.Frontend.Portable.Services
     public class ServiceClient : IPhotoService
     {
         private readonly IAuthenticationHandler _authenticationHandler;
+        private readonly IPhotoCroppingService _photoCroppingService;
         private readonly MobileServiceClient _mobileServiceClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceClient" /> class.
         /// </summary>
         /// <param name="authenticationHandler">The authentication handler.</param>
-        public ServiceClient(IAuthenticationHandler authenticationHandler)
+        public ServiceClient(IAuthenticationHandler authenticationHandler, IPhotoCroppingService photoCroppingService)
         {
             _authenticationHandler = authenticationHandler;
+            _photoCroppingService = photoCroppingService;
 
             _mobileServiceClient = AzureAppService.Current;
         }
@@ -719,25 +721,26 @@ namespace PhotoSharingApp.Frontend.Portable.Services
         {
             try
             {
-
-
                 var sasContracts = await GetSasUrls();
+
+                byte[] myBinary = new byte[stream.Length];
+                stream.Read(myBinary, 0, (int)stream.Length);
 
                 // Upload photos into azure
                 foreach (var sasContract in sasContracts)
                 {
-                    var blob =
-                        new CloudBlockBlob(
-                            new Uri($"{sasContract.FullBlobUri}{sasContract.SasToken}"));
+                    var blob = new CloudBlockBlob(new Uri($"{sasContract.FullBlobUri}{sasContract.SasToken}"));
+                    var sideLength = (int)sasContract.SasPhotoType.ToSideLength();
+                    var resizedPhoto = _photoCroppingService.ResizeImage(myBinary, sideLength, sideLength);
+                    await blob.UploadFromByteArrayAsync(resizedPhoto, 0, resizedPhoto.Length);
 
-                    var sideLength = sasContract.SasPhotoType.ToSideLength();
 
                     //               var resizedStream = await BitmapTools.Resize(
                     //                   stream.AsRandomAccessStream(), sideLength,
                     //                   sideLength);
 
                     //await blob.UploadFromStreamAsync(resizedStream);
-                    await blob.UploadFromStreamAsync(stream);
+                    //await blob.UploadFromStreamAsync(stream);
                 }
 
                 var photoContract = new PhotoContract

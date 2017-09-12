@@ -9,6 +9,7 @@
             <Color x:Key="AccentColor">#FAA819</Color>
             <Color x:Key="SubtleColor">#EEEEEE</Color>
             <Color x:Key="SubtleFontColor">#CCCCCC</Color>
+            <Color x:Key="FacebookBlue">#4267b2</Color>
 
             <x:Double x:Key="FontSizeSmall">10</x:Double>
             <x:Double x:Key="FontSizeMedium">12</x:Double>

@@ -78,7 +78,7 @@
                                         Aspect="AspectFill"
                                         FadeAnimationEnabled="true"
                                         CacheType="Disk"
-                                        Source="{Binding ImageUrl}"/>
+                                        Source="{Binding StandardUrl}"/>
 
                                     <!-- Details -->
                                     <ffimageloading:CachedImage
@@ -125,7 +125,7 @@
 
                             <Label
                                 Grid.Row="0"
-                                Text="Gold balance: 50" />
+                                Text="{Binding CurrentUser.GoldBalance, StringFormat='Gold balance: {0:G}'}" />
 
                             <StackLayout
                                 Grid.Row="1"

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.Views;
+using PhotoSharingApp.Frontend.Portable.Exceptions;
 
 namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
@@ -29,6 +30,13 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
         {
             get { return topCategories; }
             set { topCategories = value; RaisePropertyChanged(); }
+        }
+
+        private User currentUser;
+        public User CurrentUser
+        {
+            get { return currentUser; }
+            set { currentUser = value; RaisePropertyChanged(); }
         }
 
         private RelayCommand refreshCommand;
@@ -94,13 +102,29 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
             IsRefreshing = true;
 
+            // Get current user
+            try
+            {
+                CurrentUser = await photoService.GetCurrentUser();
+            }
+            catch (UnauthorizedException) { }
+
 
             // Load hero images
-            heroImages.Clear();
-            var images = await photoService.GetHeroImages(5);
-            foreach (var img in images)
+            var heroes = await photoService.GetHeroImages(5);
+            for (var i = 0; i < HeroImages.Count(); i++)
             {
-                HeroImages.Add(img);
+                var existing = heroes.FirstOrDefault(img => img.Id == HeroImages[i].Id);
+                if (existing != null)
+                    HeroImages[i] = existing;
+                else
+                    HeroImages.RemoveAt(i);
+            }
+            foreach (var heroImage in heroes)
+            {
+                var existing = HeroImages.FirstOrDefault(img => img.Id == heroImage.Id);
+                if (existing == null)
+                    HeroImages.Insert(0, heroImage);
             }
 
             // Load categories

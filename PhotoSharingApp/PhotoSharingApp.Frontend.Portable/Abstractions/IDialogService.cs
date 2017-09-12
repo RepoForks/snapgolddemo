@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PhotoSharingApp.Frontend.Portable.Services
+namespace PhotoSharingApp.Frontend.Portable.Abstractions
 {
     public interface IDialogService
     {

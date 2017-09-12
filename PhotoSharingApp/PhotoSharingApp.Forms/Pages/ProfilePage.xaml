@@ -2,17 +2,60 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+    xmlns:converters="clr-namespace:PhotoSharingApp.Forms.Converters;assembly=PhotoSharingApp.Forms"    
     x:Class="PhotoSharingApp.Forms.ProfilePage"
     Title="My Profile">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToNegatedBoolConverter x:Key="BoolToNegatedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <!-- Icon -->
     <ContentPage.Icon>
         <OnPlatform x:TypeArguments="FileImageSource">
             <On Platform="iOS" Value="user.png"/>
         </OnPlatform>
     </ContentPage.Icon>
+
+    <!-- Toolbar Items -->
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem
+            Name="Settings"
+            Icon="settings.png">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary"/>
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
     
 	<ContentPage.Content>
-        <Button Text="Login with Facebook" Command="{Binding FacebookLoginCommand}" />
+        <StackLayout Padding="20">
+            <ic:CircleImage
+                Source="{Binding ProfilePictureUrl}"
+                HeightRequest="100"
+                WidthRequest="100"
+                BorderColor="White"
+                BorderThickness="5" />
+
+            <Button
+                Text="Login with Facebook"
+
+                Command="{Binding FacebookLoginCommand}"
+                BackgroundColor="{StaticResource FacebookBlue}"
+                TextColor="White"/>
+            <Button
+                Text="Logout"
+                IsVisible="{Binding IsLoggedIn}"
+                Command="{Binding LogoutCommand}"
+                BackgroundColor="{StaticResource SubtleColor}"
+                TextColor="Black" />
+        </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

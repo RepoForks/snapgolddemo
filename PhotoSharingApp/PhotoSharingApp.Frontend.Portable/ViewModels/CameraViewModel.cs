@@ -5,6 +5,8 @@ using MvvmHelpers;
 using PhotoSharingApp.Frontend.Portable.Models;
 using System.Linq;
 using System.IO;
+using PhotoSharingApp.Frontend.Portable.Exceptions;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
 
 namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
@@ -51,15 +53,27 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
         public async Task UploadPhoto(Stream stream, string filePath)
         {
-            if (await photoService.GetCurrentUser() == null)
+            // Check if mandatory fields are set
+            if (string.IsNullOrWhiteSpace(Caption) || SelectedCategory == null)
             {
-                await dialogService.DisplayDialogAsync("No User logged in", "Please log in first", "Ok");
+                await dialogService.DisplayDialogAsync("Missing inputs", "Please define category and caption.", "Ok");
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(Caption) && SelectedCategory != null)
+            try
             {
+                // Check if user is logged in
+                await photoService.GetCurrentUser();
+
+                // Upload photo
                 await photoService.UploadPhoto(stream, filePath, Caption, SelectedCategory.Id);
+
+                // Notify user
+                await dialogService.DisplayDialogAsync("Upload successful", "", "Ok");
+            }
+            catch (UnauthorizedException)
+            {
+                await dialogService.DisplayDialogAsync("Not logged in!", "You need to be logged in to upload a photo. Please log in first.", "Ok");
             }
         }
     }

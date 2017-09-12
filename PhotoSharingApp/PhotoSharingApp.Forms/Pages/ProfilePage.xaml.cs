@@ -16,5 +16,11 @@ namespace PhotoSharingApp.Forms
             InitializeComponent();
             BindingContext = viewModel = SimpleIoc.Default.GetInstance<ProfileViewModel>();
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await viewModel.InitAsync();
+        }
     }
 }

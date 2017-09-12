@@ -10,12 +10,19 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
 using PhotoSharingApp.Forms.Services;
+using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
 {
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+
+        }
+
         public App(IAuthenticationHandler authenticationHandler)
         {
             InitializeComponent();
@@ -28,8 +35,9 @@ namespace PhotoSharingApp.Forms
             // Register Dependencies
             SimpleIoc.Default.Register<IAppEnvironment, AppEnvironment>();
             SimpleIoc.Default.Register<IAuthenticationHandler>(() => authenticationHandler);
+            SimpleIoc.Default.Register<IPhotoCroppingService>(() => DependencyService.Get<IPhotoCroppingService>());
             SimpleIoc.Default.Register<IPhotoService, ServiceClient>();
-            SimpleIoc.Default.Register<Frontend.Portable.Services.IDialogService, FormsDialogService>();
+            SimpleIoc.Default.Register<IDialogService, FormsDialogService>();
 
             SimpleIoc.Default.Register<CategoriesViewModel>();
             SimpleIoc.Default.Register<PhotoDetailsViewModel>();
@@ -40,7 +48,7 @@ namespace PhotoSharingApp.Forms
             // Setup App Container
             var navigationPage = new NavigationPage();
             navigationPage.BarBackgroundColor = (Color)Resources["AccentColor"];
-            navigationPage.BarTextColor = Color.Black;
+            navigationPage.BarTextColor = Color.White;
 
             // Register Navigation Service
             var navigationService = new FormsNavigationService(navigationPage);

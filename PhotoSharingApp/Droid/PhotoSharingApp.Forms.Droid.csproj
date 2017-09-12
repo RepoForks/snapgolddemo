@@ -206,11 +206,25 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\settings.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\settings.png" />
     <AndroidResource Include="Resources\xml\file_paths.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\library.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\library.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\library.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\library.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\library.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\delete.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoSharingApp.Forms\PhotoSharingApp.Forms.csproj">
       <Project>{F1FD020A-30B4-400E-97BA-55176E288AE7}</Project>
       <Name>PhotoSharingApp.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotoSharingApp.Frontend.Portable\PhotoSharingApp.Frontend.Portable.csproj">
+      <Project>{B7BCF4EC-FBA2-4157-973D-7E762AD80520}</Project>
+      <Name>PhotoSharingApp.Frontend.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

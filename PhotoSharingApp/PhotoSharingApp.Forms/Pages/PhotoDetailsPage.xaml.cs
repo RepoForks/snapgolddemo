@@ -31,6 +31,12 @@ namespace PhotoSharingApp.Forms
         {
             base.OnAppearing();
             await viewModel.RefreshAsync();
+
+            if (!viewModel.IsCurrentUsersPhoto)
+            {
+                ToolbarItems.Remove(DeleteToolbarItem);
+                ToolbarItems.Remove(SetAsProfilePictureToolbarItem);
+            }
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

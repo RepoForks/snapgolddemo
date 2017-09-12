@@ -86,11 +86,14 @@ namespace PhotoSharingApp.Forms
 
         async void UploadButton_Clicked(object sender, System.EventArgs e)
         {
+            LoadingOverlay.IsVisible = true;
+
             await viewModel.UploadPhoto(file.GetStream(), file.Path);
             CameraControls.IsVisible = true;
             UploadControls.IsVisible = false;
             PhotoPreview.Source = null;
-            await DisplayAlert("Upload successful!", "", "Ok");
+
+            LoadingOverlay.IsVisible = false;
         }
     }
 }

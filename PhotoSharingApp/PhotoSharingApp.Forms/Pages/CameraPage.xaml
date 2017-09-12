@@ -101,6 +101,24 @@
                         TextColor="Black"/>
                 </StackLayout>
             </StackLayout>
+
+            <Grid
+                x:Name="LoadingOverlay"
+                IsVisible="false"
+                Grid.RowSpan="3">
+                <BoxView
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    BackgroundColor="Black"
+                    Opacity="0.5" />
+                <ActivityIndicator
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Color="White"
+                    IsRunning="true" />
+            </Grid>
         </Grid>
 	</ContentPage.Content>
 </ContentPage>

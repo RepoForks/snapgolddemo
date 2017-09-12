@@ -1,6 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using PhotoSharingApp.Frontend.Portable.Services;
+﻿using System.Threading.Tasks;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
 using Xamarin.Forms;
 
 namespace PhotoSharingApp.Forms.Services

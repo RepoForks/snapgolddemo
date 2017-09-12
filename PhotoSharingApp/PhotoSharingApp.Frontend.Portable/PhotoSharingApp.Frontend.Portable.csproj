@@ -79,7 +79,8 @@
     <Compile Include="ContractModelConverterExtensions\PhotoThumbnailConverter.cs" />
     <Compile Include="ContractModelConverterExtensions\UserConverter.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
-    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Abstractions\IDialogService.cs" />
+    <Compile Include="Abstractions\IPhotoCroppingService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

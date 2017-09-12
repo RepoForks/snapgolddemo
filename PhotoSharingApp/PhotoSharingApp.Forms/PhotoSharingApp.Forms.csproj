@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Controls\CameraViewFinder.cs" />
     <Compile Include="Services\FormsDialogService.cs" />
+    <Compile Include="Converters\BoolToNegatedBoolConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">
@@ -151,6 +152,9 @@
       <Project>{B7BCF4EC-FBA2-4157-973D-7E762AD80520}</Project>
       <Name>PhotoSharingApp.Frontend.Portable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
