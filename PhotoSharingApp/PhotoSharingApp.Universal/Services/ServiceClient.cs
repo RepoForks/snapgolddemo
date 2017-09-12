@@ -747,6 +747,9 @@ namespace PhotoSharingApp.Universal.Services
                             .FullBlobUri.ToString(),
                     HighResolutionUrl =
                         sasContracts.FirstOrDefault(c => c.SasPhotoType == PhotoTypeContract.HighRes)?
+                            .FullBlobUri.ToString(),
+                    CroppedUrl =
+                        sasContracts.FirstOrDefault(c => c.SasPhotoType == PhotoTypeContract.Cropped)?
                             .FullBlobUri.ToString()
                 };
 

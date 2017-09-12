@@ -48,6 +48,8 @@ namespace PhotoSharingApp.Portable.Extensions
                     return 650;
                 case PhotoTypeContract.HighRes:
                     return 1000;
+                case PhotoTypeContract.Cropped:
+                    return 650;
                 default:
                     throw new ArgumentException(nameof(photoTypeContract));
             }

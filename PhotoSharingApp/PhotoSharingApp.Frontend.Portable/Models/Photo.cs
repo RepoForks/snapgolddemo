@@ -85,6 +85,11 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
+        /// Gets or sets the cropped image URL.
+        /// </summary>
+        public string CroppedUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the number of up votes.
         /// </summary>
         public int GoldCount
@@ -164,6 +169,11 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         {
             get { return Id.Equals(User.ProfilePictureId); }
         }
+
+        /// <summary>
+        /// The keywords for this photo.
+        /// </summary>
+        public List<string> Keywords { get; set; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the number of comments.

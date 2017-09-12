@@ -55,7 +55,8 @@ namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
                 CreatedAt = photo.CreatedAt,
                 NumberOfAnnotations = photo.NumberOfAnnotations,
                 NumberOfGoldVotes = photo.GoldCount,
-                Status = photo.Status
+                Status = photo.Status,
+                Keywords = photo.Keywords
             };
 
             return photoContract;
@@ -75,6 +76,7 @@ namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
                 ThumbnailUrl = photoContract.ThumbnailUrl,
                 StandardUrl = photoContract.StandardUrl,
                 HighResolutionUrl = photoContract.HighResolutionUrl,
+                CroppedUrl = photoContract.CroppedUrl,
                 User = photoContract.User.ToDataModel(),
                 Caption = photoContract.Description,
                 CreatedAt = photoContract.CreatedAt,
@@ -82,7 +84,8 @@ namespace PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions
                 GoldCount = photoContract.NumberOfGoldVotes,
                 CategoryName = photoContract.CategoryName,
                 Reports = photoContract.Reports,
-                Status = photoContract.Status
+                Status = photoContract.Status,
+                Keywords = photoContract.Keywords
             };
 
             if (photoContract.Annotations != null)

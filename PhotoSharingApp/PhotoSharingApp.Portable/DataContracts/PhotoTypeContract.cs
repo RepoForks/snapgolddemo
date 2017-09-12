@@ -42,6 +42,11 @@ namespace PhotoSharingApp.Portable.DataContracts
         /// <summary>
         /// High resolution of the photo.
         /// </summary>
-        HighRes
+        HighRes,
+            
+        /// <summary>
+        /// Cropped version of the photo.
+        /// </summary>
+        Cropped
     }
 }

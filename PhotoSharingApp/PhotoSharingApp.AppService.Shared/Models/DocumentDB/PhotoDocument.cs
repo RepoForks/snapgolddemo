@@ -65,6 +65,12 @@ namespace PhotoSharingApp.AppService.Shared.Models.DocumentDB
         public DateDocument CreatedDateTime { get; set; }
 
         /// <summary>
+        /// The cropped image url. Cropped via Cognitive Services. This is not guaranteed.
+        /// </summary>
+        [JsonProperty(PropertyName = "CroppedImageUrl")]
+        public string CroppedImageUrl { get; set; }
+
+        /// <summary>
         /// The photo description.
         /// </summary>
         [JsonProperty(PropertyName = "Description")]
@@ -90,6 +96,12 @@ namespace PhotoSharingApp.AppService.Shared.Models.DocumentDB
         /// </summary>
         [JsonProperty(PropertyName = "HighResolutionUrl", Required = Required.Always)]
         public string HighResolutionUrl { get; set; }
+
+        /// <summary>
+        /// The keywords describing this photo.
+        /// </summary>
+        [JsonProperty(PropertyName = "Keywords")]
+        public List<string> Keywords { get; set; } = new List<string>();
 
         /// <summary>
         /// The timestamp when the photo has been modified

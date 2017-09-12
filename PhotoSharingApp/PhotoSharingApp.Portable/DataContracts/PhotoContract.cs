@@ -54,6 +54,11 @@ namespace PhotoSharingApp.Portable.DataContracts
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
+        /// The cropped image url. Cropped via Cognitive Services.
+        /// </summary>
+        public string CroppedUrl { get; set; }
+
+        /// <summary>
         /// The photo description.
         /// </summary>
         public string Description { get; set; }
@@ -67,6 +72,11 @@ namespace PhotoSharingApp.Portable.DataContracts
         /// The photo Id.
         /// </summary>
         public string Id { get; set; }
+        
+        /// <summary>
+        /// The keywords for this photo
+        /// </summary>
+        public List<string> Keywords { get; set; } = new List<string>();
 
         /// <summary>
         /// The timestamp when the photo has been modified
