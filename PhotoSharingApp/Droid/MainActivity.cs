@@ -16,12 +16,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PhotoSharingApp.Frontend.Portable.Services;
 using PhotoSharingApp.Frontend.Portable.Models;
+using Plugin.SecureStorage;
+using PhotoSharingApp.Portable.DataContracts;
+using System.Net;
+using System.Net.Http;
+using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 
 namespace PhotoSharingApp.Forms.Droid
 {
     [Activity(Label = "PhotoSharingApp.Forms.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IAuthenticationHandler
     {
+        private SecureStorageImplementation secureStorage = new SecureStorageImplementation();
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
 
         protected override void OnCreate(Bundle bundle)
@@ -52,7 +58,12 @@ namespace PhotoSharingApp.Forms.Droid
         {
             try
             {
+                // Login with website
                 await AzureAppService.Current.LoginAsync(this, provider);
+
+                // Store credentials in secure storage
+                secureStorage.SetValue("userId", user.UserId);
+                secureStorage.SetValue("authToken", user.MobileServiceAuthenticationToken);
             }
             catch (Exception ex)
             {
@@ -63,16 +74,43 @@ namespace PhotoSharingApp.Forms.Droid
         public async Task LogoutAsync()
         {
             await AzureAppService.Current.LogoutAsync();
+            ResetPasswordVault();
         }
 
         public void ResetPasswordVault()
         {
-            throw new NotImplementedException();
+            secureStorage.DeleteKey("userId");
+            secureStorage.DeleteKey("authToken");
         }
 
-        public Task<User> RestoreSignInStatus()
+        public async Task<User> RestoreSignInStatus()
         {
-            throw new NotImplementedException();
+            var userId = secureStorage.GetValue("userId", null);
+            var authToken = secureStorage.GetValue("authToken", null);
+
+            if (userId == null || authToken == null)
+                return null;
+
+            var user = new MobileServiceUser(userId);
+            user.MobileServiceAuthenticationToken = authToken;
+            AzureAppService.Current.CurrentUser = user;
+
+            try
+            {
+                var userContract = await AzureAppService.Current.InvokeApiAsync<UserContract>("User", HttpMethod.Get, null);
+                return userContract.ToDataModel();
+            }
+            catch (MobileServiceInvalidOperationException invalidOperationException)
+            {
+                if (invalidOperationException.Response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Remove the credentials.
+                    ResetPasswordVault();
+                    AzureAppService.Current.CurrentUser = null;
+                }
+            }
+
+            return null;
         }
 
         #endregion

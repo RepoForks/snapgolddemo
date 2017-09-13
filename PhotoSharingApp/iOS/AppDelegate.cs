@@ -10,13 +10,21 @@ using PhotoSharingApp.Frontend.Portable.Abstractions;
 using PhotoSharingApp.Frontend.Portable.Models;
 using PhotoSharingApp.Frontend.Portable.Services;
 using UIKit;
+using Plugin.SecureStorage.Abstractions;
+using Plugin.SecureStorage;
+using System.Net.Http;
+using System.Net;
+using PhotoSharingApp.Portable.DataContracts;
+using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 
 namespace PhotoSharingApp.Forms.iOS
 {
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IAuthenticationHandler
     {
+        private SecureStorageImplementation secureStorage = new SecureStorageImplementation();
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
+
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
@@ -38,9 +46,7 @@ namespace PhotoSharingApp.Forms.iOS
             CurrentPlatform.Init();
 
             // Code for starting up the Xamarin Test Cloud Agent
-#if DEBUG
             Xamarin.Calabash.Start();
-#endif
 
             LoadApplication(new App(this));
 
@@ -48,11 +54,18 @@ namespace PhotoSharingApp.Forms.iOS
             return result;
         }
 
+        #region IAuthenticationHandler implementation
+
         public async Task AuthenticateAsync(MobileServiceAuthenticationProvider provider)
         {
             try
             {
-                await AzureAppService.Current.LoginAsync(UIApplication.SharedApplication.KeyWindow.RootViewController, provider);
+                // Login with website
+                var user = await AzureAppService.Current.LoginAsync(UIApplication.SharedApplication.KeyWindow.RootViewController, provider);
+
+                // Store credentials in secure storage
+                secureStorage.SetValue("userId", user.UserId);
+                secureStorage.SetValue("authToken", user.MobileServiceAuthenticationToken);
             }
             catch (Exception ex)
             {
@@ -63,16 +76,45 @@ namespace PhotoSharingApp.Forms.iOS
         public async Task LogoutAsync()
         {
             await AzureAppService.Current.LogoutAsync();
+            ResetPasswordVault();
         }
 
         public void ResetPasswordVault()
         {
-            throw new NotImplementedException();
+            secureStorage.DeleteKey("userId");
+            secureStorage.DeleteKey("authToken");
         }
 
-        public Task<User> RestoreSignInStatus()
+        public async Task<User> RestoreSignInStatus()
         {
-            throw new NotImplementedException();
+            var userId = secureStorage.GetValue("userId", null);
+            var authToken = secureStorage.GetValue("authToken", null);
+
+            if (userId == null || authToken == null)
+                return null;
+
+            var user = new MobileServiceUser(userId);
+            user.MobileServiceAuthenticationToken = authToken;
+            AzureAppService.Current.CurrentUser = user;
+
+            try
+            {
+                var userContract = await AzureAppService.Current.InvokeApiAsync<UserContract>("User", HttpMethod.Get, null);
+                return userContract.ToDataModel();
+            }
+            catch (MobileServiceInvalidOperationException invalidOperationException)
+            {
+                if (invalidOperationException.Response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    // Remove the credentials.
+                    ResetPasswordVault();
+                    AzureAppService.Current.CurrentUser = null;
+                }
+            }
+
+            return null;
         }
+
+        #endregion
     }
 }

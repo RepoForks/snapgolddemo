@@ -613,7 +613,7 @@ namespace PhotoSharingApp.Frontend.Portable.Services
 
                 // To enable existing users to register for Push notifications without having to
                 // log out and log in again.
-                RegisterForNotifications();
+                //RegisterForNotifications();
             }
         }
 

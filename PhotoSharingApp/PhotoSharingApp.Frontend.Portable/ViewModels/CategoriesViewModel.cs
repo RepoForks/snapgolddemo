@@ -105,9 +105,16 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             // Get current user
             try
             {
+                // Try to restore user credentials
+                if (AzureAppService.Current.CurrentUser == null)
+                    await photoService.RestoreSignInStatusAsync();
+
                 CurrentUser = await photoService.GetCurrentUser();
             }
-            catch (UnauthorizedException) { }
+            catch (UnauthorizedException)
+            {
+                // User not logged in yet
+            }
 
 
             // Load hero images
