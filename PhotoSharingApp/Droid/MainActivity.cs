@@ -27,13 +27,18 @@ namespace PhotoSharingApp.Forms.Droid
     [Activity(Label = "PhotoSharingApp.Forms.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IAuthenticationHandler
     {
-        private SecureStorageImplementation secureStorage = new SecureStorageImplementation();
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
+
+        public MainActivity()
+        {
+            SecureStorageImplementation.StoragePassword = "SnapGold";
+        }
 
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+
 
             base.OnCreate(bundle);
 
@@ -44,7 +49,7 @@ namespace PhotoSharingApp.Forms.Droid
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();
 
-            LoadApplication(new App());
+            LoadApplication(new App(this));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
@@ -59,11 +64,11 @@ namespace PhotoSharingApp.Forms.Droid
             try
             {
                 // Login with website
-                await AzureAppService.Current.LoginAsync(this, provider);
+                var user = await AzureAppService.Current.LoginAsync(this, provider);
 
                 // Store credentials in secure storage
-                secureStorage.SetValue("userId", user.UserId);
-                secureStorage.SetValue("authToken", user.MobileServiceAuthenticationToken);
+                CrossSecureStorage.Current.SetValue("userId", user.UserId);
+                CrossSecureStorage.Current.SetValue("authToken", user.MobileServiceAuthenticationToken);
             }
             catch (Exception ex)
             {
@@ -79,14 +84,14 @@ namespace PhotoSharingApp.Forms.Droid
 
         public void ResetPasswordVault()
         {
-            secureStorage.DeleteKey("userId");
-            secureStorage.DeleteKey("authToken");
+            CrossSecureStorage.Current.DeleteKey("userId");
+            CrossSecureStorage.Current.DeleteKey("authToken");
         }
 
         public async Task<User> RestoreSignInStatus()
         {
-            var userId = secureStorage.GetValue("userId", null);
-            var authToken = secureStorage.GetValue("authToken", null);
+            var userId = CrossSecureStorage.Current.GetValue("userId", null);
+            var authToken = CrossSecureStorage.Current.GetValue("authToken", null);
 
             if (userId == null || authToken == null)
                 return null;

@@ -37,15 +37,14 @@
             <!-- Item Template for Category Preview Image -->
             <flow:FlowListView.FlowColumnTemplate>
                 <DataTemplate>                   
-                    <Grid MinimumHeightRequest="50">
-                        <ffimageloading:CachedImage                                
-                            Source="{Binding ImageUrl}"
-                            CacheType="Disk"
-                            Aspect="AspectFill"
-                            LoadingPlaceholder="placeholder.jpg"
-                            ErrorPlaceholder="placeholder.jpg"
-                            HorizontalOptions="StartAndExpand" />
-                    </Grid>                
+                    <ffimageloading:CachedImage                                
+                        Source="placeholder.jpg"
+                        HeightRequest="70"
+                        CacheType="Memory"
+                        Aspect="AspectFill"
+                        BackgroundColor="Green"
+                        LoadingPlaceholder="placeholder.jpg"
+                        ErrorPlaceholder="placeholder.jpg" /> 
                 </DataTemplate>
             </flow:FlowListView.FlowColumnTemplate>
 
@@ -77,7 +76,7 @@
                                         Grid.ColumnSpan="2"
                                         Aspect="AspectFill"
                                         FadeAnimationEnabled="true"
-                                        CacheType="Disk"
+                                        CacheType="Memory"
                                         Source="{Binding StandardUrl}"/>
 
                                     <!-- Details -->

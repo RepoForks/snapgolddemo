@@ -22,7 +22,7 @@ namespace PhotoSharingApp.Forms.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IAuthenticationHandler
     {
-        private SecureStorageImplementation secureStorage = new SecureStorageImplementation();
+        private SecureStorageImplementation secureStorage = new SecureStorageImplementation() { };
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
 
 
@@ -35,6 +35,8 @@ namespace PhotoSharingApp.Forms.iOS
                 //MobileServiceAuthenticationProvider.Google,
                 //MobileServiceAuthenticationProvider.Twitter
             };
+
+
 
             UITabBar.Appearance.SelectedImageTintColor = UIColor.FromRGB(250, 168, 25);
 

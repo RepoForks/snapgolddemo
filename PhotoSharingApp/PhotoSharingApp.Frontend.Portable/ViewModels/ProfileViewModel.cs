@@ -93,6 +93,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
         public async Task LogoutAsync()
         {
             await photoService.SignOutAsync();
+            IsLoggedIn = false;
         }
     }
 }

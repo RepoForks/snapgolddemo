@@ -36,26 +36,48 @@
     </TabbedPage.ToolbarItems>
     
 	<ContentPage.Content>
-        <StackLayout Padding="20">
-            <ic:CircleImage
-                Source="{Binding ProfilePictureUrl}"
-                HeightRequest="100"
-                WidthRequest="100"
-                BorderColor="White"
-                BorderThickness="5" />
+        <Grid>
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <Button
-                Text="Login with Facebook"
+            <!-- Header -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
 
-                Command="{Binding FacebookLoginCommand}"
-                BackgroundColor="{StaticResource FacebookBlue}"
-                TextColor="White"/>
-            <Button
-                Text="Logout"
-                IsVisible="{Binding IsLoggedIn}"
-                Command="{Binding LogoutCommand}"
-                BackgroundColor="{StaticResource SubtleColor}"
-                TextColor="Black" />
-        </StackLayout>
+            <!-- List -->
+            <StackLayout Grid.Row="1" Padding="20">
+                <ffimageloading:CachedImage
+                    Margin="20,0,0,20"
+                    Grid.Row="1"
+                    Aspect="AspectFill"
+                    Source="{Binding ProfilePictureUrl}"
+                    WidthRequest="100"
+                    HeightRequest="100">
+                    <ffimageloading:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffimageloading:CachedImage.Transformations>
+                </ffimageloading:CachedImage>
+
+                <Button
+                    Text="Login with Facebook"
+                    IsVisible="{Binding IsLoggedIn, Converter={StaticResource BoolToNegatedBoolConverter}}"
+                    Command="{Binding FacebookLoginCommand}"
+                    BackgroundColor="{StaticResource FacebookBlue}"
+                    TextColor="White"/>
+                <Button
+                    Text="Logout"
+                    IsVisible="{Binding IsLoggedIn}"
+                    Command="{Binding LogoutCommand}"
+                    BackgroundColor="{StaticResource SubtleColor}"
+                    TextColor="Black" />
+            </StackLayout>
+        </Grid>
 	</ContentPage.Content>
 </ContentPage>
