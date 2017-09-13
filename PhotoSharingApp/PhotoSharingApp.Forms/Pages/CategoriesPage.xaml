@@ -42,13 +42,20 @@
                         HeightRequest="70"
                         CacheType="Memory"
                         Aspect="AspectFill"
-                        BackgroundColor="{StaticResource SubtleColor}" /> 
+                        BackgroundColor="{StaticResource SubtleColor}">
+                        <ffimageloading:CachedImage.HeightRequest>
+                            <OnIdiom x:TypeArguments="x:Double" Phone="74" Tablet="130"/>
+                        </ffimageloading:CachedImage.HeightRequest>
+                    </ffimageloading:CachedImage>
                 </DataTemplate>
             </flow:FlowListView.FlowColumnTemplate>
 
             <!-- List View Header -->
             <flow:FlowListView.Header>
-                <Grid HeightRequest="250">
+                <Grid>
+                    <Grid.HeightRequest>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="250" Tablet="400"/>
+                    </Grid.HeightRequest>
                     <cv:CarouselView ItemsSource="{Binding HeroImages}">
                         <cv:CarouselView.ItemTemplate>
                             <DataTemplate>
@@ -123,8 +130,8 @@
 
                             <Label
                                 Grid.Row="0"
+                                Margin="0,0,0,5"
                                 Text="{Binding CurrentUser.GoldBalance, StringFormat='Gold balance: {0:G}'}"
-                                FontSize="{StaticResource FontSizeMedium}"
                                 TextColor="{StaticResource SubtleFontColor}"/>
 
                             <StackLayout
@@ -154,8 +161,8 @@
 
                             <Label
                                 Grid.Row="0"
+                                Margin="0,0,0,5"
                                 Text="Upload a photo now to get some Gold"
-                                FontSize="{StaticResource FontSizeMedium}"
                                 TextColor="{StaticResource SubtleFontColor}"/>
 
                             <StackLayout
