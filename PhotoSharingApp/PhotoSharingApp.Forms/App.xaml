@@ -2,22 +2,80 @@
 <Application
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+    xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="PhotoSharingApp.Forms.App">
     
 	<Application.Resources>
 		<ResourceDictionary>
             <Color x:Key="AccentColor">#FAA819</Color>
-            <Color x:Key="SubtleColor">#EEEEEE</Color>
+            <Color x:Key="SubtleColor">#f8f8f8</Color>
             <Color x:Key="SubtleFontColor">#CCCCCC</Color>
+            
             <Color x:Key="FacebookBlue">#4267b2</Color>
+            <Color x:Key="GoogleRed">#EA4335</Color>
+            <Color x:Key="TwitterBlue">#1DA1F2</Color>
 
             <x:Double x:Key="FontSizeSmall">10</x:Double>
             <x:Double x:Key="FontSizeMedium">12</x:Double>
             
             <Style x:Key="ControlHeaderStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource SubtleColor}" />
+                <Setter Property="TextColor" Value="{StaticResource SubtleFontColor}" />
                 <Setter Property="FontAttributes" Value="Bold" />               
             </Style>
+
+            <DataTemplate x:Key="FullPhotoItemTemplate">
+                <ViewCell>
+                    <StackLayout Spacing="0">
+                        <ffimageloading:CachedImage
+                            Grid.Row="0"
+                            HeightRequest="300"
+                            Aspect="AspectFill"
+                            Source="{Binding StandardUrl}"
+                            FadeAnimationEnabled="false"
+                            BackgroundColor="{StaticResource SubtleColor}"
+                            CacheType="Memory"/>
+
+                        <Grid
+                            Margin="20,-50,20,0"
+                            WidthRequest="100"
+                            HeightRequest="100">
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                        
+                            <ic:CircleImage
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                VerticalOptions="Center"
+                                Source="{Binding User.ProfilePictureUrl}"
+                                BorderColor="White"
+                                BorderThickness="5" />
+
+                            <Frame
+                                Grid.Column="1"
+                                HorizontalOptions="End"
+                                Margin="0,0,0,0"
+                                VerticalOptions="Center"
+                                BackgroundColor="{StaticResource AccentColor}"
+                                CornerRadius="30"
+                                WidthRequest="20"
+                                HeightRequest="20"
+                                HasShadow="false">
+                                <Label Text="{Binding GoldCount}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                            </Frame>
+                        </Grid>
+
+                        <StackLayout Padding="20">
+                            <Label Text="{Binding Caption}" FontAttributes="Bold" />
+                            <Label Text="{Binding CreatedAt, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="{StaticResource FontSizeMedium}" TextColor="{StaticResource SubtleFontColor}" />
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate> 
         </ResourceDictionary>
 	</Application.Resources>
 </Application>

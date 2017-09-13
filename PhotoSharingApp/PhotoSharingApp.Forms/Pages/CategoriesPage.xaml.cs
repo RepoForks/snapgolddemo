@@ -29,5 +29,10 @@ namespace PhotoSharingApp.Forms
             if (selectedItem != null)
                 viewModel.ShowCategoryStreamCommand.Execute(selectedItem);
         }
+
+        void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            DisplayAlert("Not implemented yet", "", "Too bad");
+        }
     }
 }

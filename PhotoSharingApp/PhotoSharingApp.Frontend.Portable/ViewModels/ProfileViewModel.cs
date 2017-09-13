@@ -7,12 +7,16 @@ using Microsoft.WindowsAzure.MobileServices;
 using PhotoSharingApp.Frontend.Portable.Models;
 using PhotoSharingApp.Frontend.Portable.Exceptions;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
+using MvvmHelpers;
+using GalaSoft.MvvmLight.Views;
+using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
 
 namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
     public class ProfileViewModel : AsyncViewModelBase
     {
         private IDialogService dialogService;
+        private INavigationService navigationService;
         private IPhotoService photoService;
 
         private bool isLoggedIn;
@@ -27,6 +31,27 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
         {
             get { return profilePictureUrl; }
             set { profilePictureUrl = value; RaisePropertyChanged(); }
+        }
+
+        private int numberOfPhotos;
+        public int NumberOfPhotos
+        {
+            get { return numberOfPhotos; }
+            set { numberOfPhotos = value; RaisePropertyChanged(); }
+        }
+
+        private int userGold;
+        public int UserGold
+        {
+            get { return userGold; }
+            set { userGold = value; RaisePropertyChanged(); }
+        }
+
+        private ObservableRangeCollection<Photo> userPhotos;
+        public ObservableRangeCollection<Photo> UserPhotos
+        {
+            get { return userPhotos; }
+            set { userPhotos = value; RaisePropertyChanged(); }
         }
 
         private RelayCommand facebookLoginCommand;
@@ -53,10 +78,25 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
         }
 
-        public ProfileViewModel(IDialogService dialogService, IPhotoService photoService)
+        private RelayCommand<Photo> navigateToPhotoCommand;
+        public RelayCommand<Photo> NavigateToPhotoCommand
+        {
+            get
+            {
+                return navigateToPhotoCommand ?? (navigateToPhotoCommand = new RelayCommand<Photo>((Photo photo) =>
+                {
+                    navigationService.NavigateTo(ViewNames.PhotoDetailsPage, photo);
+                }));
+            }
+        }
+
+        public ProfileViewModel(IDialogService dialogService, INavigationService navigationService, IPhotoService photoService)
         {
             this.dialogService = dialogService;
+            this.navigationService = navigationService;
             this.photoService = photoService;
+
+            UserPhotos = new ObservableRangeCollection<Photo>();
         }
 
         public async Task InitAsync()
@@ -65,7 +105,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             {
                 var currentUser = await photoService.GetCurrentUser();
                 IsLoggedIn = true;
-                SetUpUser(currentUser);
+                await SetUpUser(currentUser);
             }
             catch (UnauthorizedException)
             {
@@ -73,9 +113,14 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
         }
 
-        private void SetUpUser(User user)
+        private async Task SetUpUser(User user)
         {
             ProfilePictureUrl = user.ProfilePictureUrl;
+            UserGold = user.GoldBalance;
+
+            var photos = await photoService.GetPhotosForCurrentUser();
+            NumberOfPhotos = photos.Items.Count;
+            UserPhotos.ReplaceRange(photos.Items);
         }
 
         public async Task LoginAsync(MobileServiceAuthenticationProvider provider)
@@ -86,7 +131,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             if (currentUser != null)
             {
                 IsLoggedIn = true;
-                SetUpUser(currentUser);
+                await SetUpUser(currentUser);
             }
         }
 

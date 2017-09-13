@@ -103,6 +103,9 @@ namespace PhotoSharingApp.Frontend.Portable
 
         public async Task DeletePhotoAsync()
         {
+            if (!await dialogService.DisplayDialogAsync("Delete photo", "Do you really want to delete this photo?", "Delete", "Cancel"))
+                return;
+
             try
             {
                 await photoService.DeletePhoto(Photo);
@@ -116,6 +119,9 @@ namespace PhotoSharingApp.Frontend.Portable
 
         public async Task SetAsProfilePictureAsync()
         {
+            if (!await dialogService.DisplayDialogAsync("Set as profile picture", "Do you really want to set this photo as your profile picture?", "Yes", "Cancel"))
+                return;
+
             try
             {
                 await photoService.GetCurrentUser();

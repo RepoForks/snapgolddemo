@@ -64,7 +64,7 @@
                             WidthRequest="20"
                             HeightRequest="20"
                             HasShadow="false">
-                            <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="Black" />
+                            <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
                         </Frame>
                     </Grid>
 

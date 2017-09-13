@@ -31,7 +31,10 @@ namespace PhotoSharingApp.Forms
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem is Photo item)
+            {
+                (sender as ListView).SelectedItem = null;
                 viewModel.ShowPhotoDetailsCommand.Execute(item);
+            }
         }
     }
 }

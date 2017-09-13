@@ -25,8 +25,8 @@
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>
         <ToolbarItem
-            Name="Settings"
-            Icon="settings.png">
+            Name="Log out"
+            Command="{Binding LogoutCommand}">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Secondary"/>
@@ -36,47 +36,85 @@
     </TabbedPage.ToolbarItems>
     
 	<ContentPage.Content>
-        <Grid>
+        <Grid RowSpacing="0">
             <Grid.RowDefinitions>                
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" RowSpacing="0" Padding="20" BackgroundColor="{StaticResource SubtleColor}" IsVisible="{Binding IsLoggedIn}">
+                <Grid.RowDefinitions>                
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-            </Grid>
 
-            <!-- List -->
-            <StackLayout Grid.Row="1" Padding="20">
+                <Label Grid.Row="0" Grid.Column="0" Text="{Binding NumberOfPhotos}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="End" />
+                <Label Grid.Row="1" Grid.Column="0" Text="Photos" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+
                 <ffimageloading:CachedImage
-                    Margin="20,0,0,20"
-                    Grid.Row="1"
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
                     Aspect="AspectFill"
                     Source="{Binding ProfilePictureUrl}"
-                    WidthRequest="100"
-                    HeightRequest="100">
+                    WidthRequest="50"
+                    HeightRequest="50">
                     <ffimageloading:CachedImage.Transformations>
                         <fftransformations:CircleTransformation/>
                     </ffimageloading:CachedImage.Transformations>
                 </ffimageloading:CachedImage>
 
+                <Label Grid.Row="0" Grid.Column="2" Text="{Binding UserGold}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="End" />
+                <Label Grid.Row="1" Grid.Column="2" Text="Gold"  HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            </Grid>
+
+            <ListView
+                Grid.Row="1"
+                ItemsSource="{Binding UserPhotos}"
+                SeparatorVisibility="None"
+                ItemTapped="Handle_ItemTapped"
+                IsVisible="{Binding IsLoggedIn}"
+                HasUnevenRows="true"
+                ItemTemplate="{StaticResource FullPhotoItemTemplate}">
+            </ListView>
+                
+            
+            <!-- List -->
+            <StackLayout
+                Grid.Row="1"
+                Padding="20"
+                IsVisible="{Binding IsLoggedIn, Converter={StaticResource BoolToNegatedBoolConverter}}"
+                VerticalOptions="Center"
+                Spacing="10">
+                
                 <Button
                     Text="Login with Facebook"
-                    IsVisible="{Binding IsLoggedIn, Converter={StaticResource BoolToNegatedBoolConverter}}"
                     Command="{Binding FacebookLoginCommand}"
                     BackgroundColor="{StaticResource FacebookBlue}"
                     TextColor="White"/>
+                
                 <Button
-                    Text="Logout"
-                    IsVisible="{Binding IsLoggedIn}"
-                    Command="{Binding LogoutCommand}"
+                    Text="Login with Google"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="{StaticResource GoogleRed}"
+                    TextColor="White"/>
+
+                <Button
+                    Text="Login with Twitter"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="{StaticResource TwitterBlue}"
+                    TextColor="White"/>
+
+                <Button
+                    Text="Login with a Microsoft Account"
+                    Clicked="Handle_Clicked"
                     BackgroundColor="{StaticResource SubtleColor}"
-                    TextColor="Black" />
+                    TextColor="Black"/>
             </StackLayout>
         </Grid>
 	</ContentPage.Content>

@@ -13,6 +13,6 @@
     </ContentPage.Icon>
     
 	<ContentPage.Content>
-        <Label Text="Not implemented yet" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource SubtleColor}" />
+        <Label Text="Not implemented yet" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource SubtleFontColor}" />
 	</ContentPage.Content>
 </ContentPage>

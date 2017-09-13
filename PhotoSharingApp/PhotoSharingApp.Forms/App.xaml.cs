@@ -11,6 +11,9 @@ using Xamarin.Forms.Xaml;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
 using PhotoSharingApp.Forms.Services;
 using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
+using Microsoft.Azure.Mobile;
+using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.Azure.Mobile.Crashes;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
@@ -68,7 +71,12 @@ namespace PhotoSharingApp.Forms
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            // Visual Studio Mobile Center
+            MobileCenter.Start(
+                "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
+                "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
+                typeof(Analytics),
+                typeof(Crashes));
         }
 
         protected override void OnSleep()

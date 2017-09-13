@@ -1,8 +1,9 @@
 # Xamarin App
 
 ## Libraries
-MVVM LIght Libs - http://www.mvvmlight.net/
+MVVM Light Libs - http://www.mvvmlight.net/
 
+https://www.nuget.org/packages/Xamarin.UITest.POP
 
 ## Icons
 <a href="https://icons8.com/icon/43507/Camera">Camera icon credits</a> 

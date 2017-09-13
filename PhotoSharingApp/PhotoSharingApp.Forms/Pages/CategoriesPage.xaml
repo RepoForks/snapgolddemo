@@ -38,13 +38,11 @@
             <flow:FlowListView.FlowColumnTemplate>
                 <DataTemplate>                   
                     <ffimageloading:CachedImage                                
-                        Source="placeholder.jpg"
+                        Source="{Binding ImageUrl}"
                         HeightRequest="70"
                         CacheType="Memory"
                         Aspect="AspectFill"
-                        BackgroundColor="Green"
-                        LoadingPlaceholder="placeholder.jpg"
-                        ErrorPlaceholder="placeholder.jpg" /> 
+                        BackgroundColor="{StaticResource SubtleColor}" /> 
                 </DataTemplate>
             </flow:FlowListView.FlowColumnTemplate>
 
@@ -75,9 +73,10 @@
                                         Grid.RowSpan="2"
                                         Grid.ColumnSpan="2"
                                         Aspect="AspectFill"
-                                        FadeAnimationEnabled="true"
+                                        FadeAnimationEnabled="false"
                                         CacheType="Memory"
-                                        Source="{Binding StandardUrl}"/>
+                                        Source="{Binding StandardUrl}"
+                                        BackgroundColor="{StaticResource SubtleColor}"/>
 
                                     <!-- Details -->
                                     <ffimageloading:CachedImage
@@ -124,16 +123,19 @@
 
                             <Label
                                 Grid.Row="0"
-                                Text="{Binding CurrentUser.GoldBalance, StringFormat='Gold balance: {0:G}'}" />
+                                Text="{Binding CurrentUser.GoldBalance, StringFormat='Gold balance: {0:G}'}"
+                                FontSize="{StaticResource FontSizeMedium}"
+                                TextColor="{StaticResource SubtleFontColor}"/>
 
                             <StackLayout
                                 Grid.Row="1"
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="Buy gold"
-                                    BackgroundColor="{StaticResource SubtleColor}"
-                                    TextColor="Black"/>
+                                    Text="     Buy gold     "
+                                    Clicked="Handle_Clicked"
+                                    BackgroundColor="{StaticResource AccentColor}"
+                                    TextColor="White"/>
                             </StackLayout>
                         </Grid>
                     </Frame>
@@ -152,21 +154,25 @@
 
                             <Label
                                 Grid.Row="0"
-                                Text="Upload a photo now to get some Gold" />
+                                Text="Upload a photo now to get some Gold"
+                                FontSize="{StaticResource FontSizeMedium}"
+                                TextColor="{StaticResource SubtleFontColor}"/>
 
                             <StackLayout
                                 Grid.Row="1"
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="Take photo"
-                                    BackgroundColor="{StaticResource SubtleColor}"
+                                    Text="    Take photo    "
+                                    Clicked="Handle_Clicked"
+                                    BackgroundColor="#DDD"
                                     TextColor="Black"/>
 
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="Browse pictures"
-                                    BackgroundColor="{StaticResource SubtleColor}"
+                                    Text="    Browse pictures    "
+                                    Clicked="Handle_Clicked"
+                                    BackgroundColor="#DDD"
                                     TextColor="Black"/>
                             </StackLayout>
                         </Grid>
