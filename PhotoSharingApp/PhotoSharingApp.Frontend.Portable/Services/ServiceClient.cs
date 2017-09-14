@@ -430,12 +430,15 @@ namespace PhotoSharingApp.Frontend.Portable.Services
         {
             try
             {
-                var result = await _mobileServiceClient.InvokeApiAsync<List<CategoryPreviewContract>>("category",
-                    HttpMethod.Get,
-                    new Dictionary<string, string>
+                var dict = new Dictionary<string, string>
                     {
                         { "numberOfThumbnails", categoryThumbnailsCount.ToString() }
-                    });
+                    };
+
+
+                var result = await _mobileServiceClient.InvokeApiAsync<List<CategoryPreviewContract>>("category",
+                    HttpMethod.Get,
+                    dict);
 
                 return result.Select(c => c.ToDataModel()).ToList();
             }

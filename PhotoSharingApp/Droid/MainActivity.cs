@@ -26,7 +26,7 @@ using CarouselView.FormsPlugin.Android;
 
 namespace PhotoSharingApp.Forms.Droid
 {
-    [Activity(Label = "PhotoSharingApp.Forms.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "SnapGold", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IAuthenticationHandler
     {
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }

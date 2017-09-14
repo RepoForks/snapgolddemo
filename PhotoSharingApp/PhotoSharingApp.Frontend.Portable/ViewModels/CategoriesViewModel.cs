@@ -135,20 +135,27 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                     HeroImages.Insert(0, heroImage);
             }
 
-            // Load categories
-            var topCat = await photoService.GetTopCategories(5);
-            var grouped =
-                from category in topCat
-                group category by category.Name into categoryGroup
-                select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
-
-            TopCategories.Clear();
-            foreach (var grp in grouped)
+            try
             {
-                TopCategories.Add(grp);
-            }
+                // Load categories
+                var topCat = await photoService.GetTopCategories(5);
+                var grouped =
+                    from category in topCat
+                    group category by category.Name into categoryGroup
+                    select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
 
-            //TopCategories.ReplaceRange(grouped);
+                //TopCategories.Clear();
+                foreach (var grp in grouped)
+                {
+                    TopCategories.Add(grp);
+                }
+
+                //TopCategories.ReplaceRange(grouped);
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             // Check if loading right
             if (HeroImages.Count > 0 || TopCategories.Count > 0)
