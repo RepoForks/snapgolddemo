@@ -28,8 +28,8 @@ namespace PhotoSharingApp.Functions
         private static string DocumentVersion = "1.0";
         private static string VisionApiSubscriptionKey = ConfigurationManager.AppSettings["VisionApiSubscriptionKey"];
         private static string EmotionApiSubscriptionKey = ConfigurationManager.AppSettings["EmotionApiSubscriptionKey"];
-        private static string VisionApiRequestUrlTag = ConfigurationManager.AppSettings["VisionApiRequestUrlTag"];
-        private static string VisionApiRequestUrlDescribe = ConfigurationManager.AppSettings["VisionApiRequestUrlDescribe"];
+        private static string VisionApiRequestUrlAnalyze = ConfigurationManager.AppSettings["VisionApiRequestUrlAnalyze"];
+        private static string EmotionApiRequestUrlRecognize = ConfigurationManager.AppSettings["EmotionApiRequestUrlRecognize"];
 
 
         [FunctionName("GenerateKeywords")]
@@ -43,10 +43,14 @@ namespace PhotoSharingApp.Functions
             {
                 var documentClient = new DocumentClient(new Uri(DocumentEndpointUrl), DocumentAuthorizationKey);
 
-                //var visionServiceClient = new VisionServiceClient(VisionApiSubscriptionKey); // Issues so calling rest api direct
-                //var emotionServiceClient = new VisionServiceClient(EmotionApiSubscriptionKey); // Issues so calling rest api direct
+                //var visionServiceClient = new VisionServiceClient(VisionApiSubscriptionKey); // Had issues when using Functions so calling rest api direct
+                //var emotionServiceClient = new VisionServiceClient(EmotionApiSubscriptionKey); // Had issues when using Functions so calling rest api direct
+
                 var visionHttpClient = new HttpClient();
                 visionHttpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", VisionApiSubscriptionKey);
+
+                var emotionHttpClient = new HttpClient();
+                emotionHttpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", EmotionApiSubscriptionKey);
 
                 Dictionary<string, object> document =
                     documentClient.CreateDocumentQuery<Dictionary<string, object>>(DocumentCollectionUri,
@@ -64,33 +68,53 @@ namespace PhotoSharingApp.Functions
                     // Let's use Cog Services to get some keywords
                     var imageUrl = (string)document["StandardUrl"];
 
-                    if (!document.ContainsKey("Keywords"))
+                    var visionResponse = visionHttpClient.PostAsync(VisionApiRequestUrlAnalyze, new StringContent($"{{\"url\":\"{imageUrl}\"}}", Encoding.UTF8, "application/json")).Result;
+                    var visionJson = visionResponse.Content.ReadAsStringAsync().Result;
+                    var visionObject = JsonConvert.DeserializeObject<VisionObject>(visionJson);
+
+                    if (visionObject != null && !document.ContainsKey("Keywords"))
                     {
-                        //var analysisResult = await visionServiceClient.GetTagsAsync(imageUrl); // Bombs out so calling rest api direct
-
-                        var response = visionHttpClient.PostAsync(VisionApiRequestUrlTag, new StringContent($"{{\"url\":\"{imageUrl}\"}}", Encoding.UTF8, "application/json")).Result;
-                        var json = response.Content.ReadAsStringAsync().Result;
-                        var tagObject = JsonConvert.DeserializeObject<TagObject>(json);
-
-                        if (tagObject?.Tags != null && tagObject?.Tags.Count > 0)
+                        bool isPerson = false;
+                        if (visionObject?.Tags != null && visionObject?.Tags.Count > 0)
                         {
-                            foreach (var tag in tagObject.Tags)
+                            foreach (var tag in visionObject.Tags)
                             {
                                 if (tag.Confidence > 0.3)
+                                {
                                     keywords.Add(tag.Name);
+                                    if (tag.Name == "person")
+                                        isPerson = true;
+                                }
+                            }
+                        }
+                        // If category is people related and there is a tag of person
+                        if (isPerson && visionObject.Categories.Any(c => c.Name.StartsWith("people") && c.Score > 0.3))
+                        {
+                            var emotionResponse = emotionHttpClient.PostAsync(EmotionApiRequestUrlRecognize, new StringContent($"{{\"url\":\"{imageUrl}\"}}", Encoding.UTF8, "application/json")).Result;
+                            var emotionJson = emotionResponse.Content.ReadAsStringAsync().Result;
+                            var emotionObjectList = JsonConvert.DeserializeObject<List<EmotionObject>>(emotionJson);
+
+                            // Will only add emotion keyword if person/people are happy or surprised
+                            if (emotionObjectList != null && emotionObjectList.Count > 0)
+                            {
+                                foreach (var emotionObject in emotionObjectList)
+                                {
+                                    var scores = emotionObject.Scores;
+                                    if (scores.Happiness > 0.8 && scores.Happiness <= 1.0)
+                                        keywords.Add("happy");
+                                    if (scores.Surprise > 0.8 && scores.Surprise <= 1.0)
+                                        keywords.Add("surprised");
+
+                                }
                             }
                         }
                     }
 
-                    if (!document.ContainsKey("Description"))
+                    if (visionObject != null && !document.ContainsKey("Description"))
                     {
-                        var response = visionHttpClient.PostAsync(VisionApiRequestUrlDescribe, new StringContent($"{{\"url\":\"{imageUrl}\"}}", Encoding.UTF8, "application/json")).Result;
-                        var json = response.Content.ReadAsStringAsync().Result;
-                        var descibeObject = JsonConvert.DeserializeObject<DescribeObject>(json);
-
-                        if (descibeObject?.description?.Captions != null && descibeObject?.description?.Captions.Count > 0)
+                        if (visionObject.Description?.Captions != null && visionObject?.Description?.Captions.Count > 0)
                         {
-                            var topCaption = descibeObject.description.Captions.OrderByDescending(c => c.Confidence).FirstOrDefault();
+                            var topCaption = visionObject.Description.Captions.OrderByDescending(c => c.Confidence).FirstOrDefault();
                             if (topCaption?.Confidence > 0.75)
                                 caption = topCaption.Text;
                         }
@@ -136,55 +160,99 @@ namespace PhotoSharingApp.Functions
         }
     }
 
-    public class TagObject
+    public class VisionObject
     {
-        [JsonProperty(PropertyName = "tags")]
+        [JsonProperty("categories")]
+        public List<Category> Categories { get; set; }
+        [JsonProperty("tags")]
         public List<Tag> Tags { get; set; }
-        [JsonProperty(PropertyName = "requestId")]
+        [JsonProperty("description")]
+        public Description Description { get; set; }
+        [JsonProperty("requestId")]
         public string RequestId { get; set; }
-        [JsonProperty(PropertyName = "metadata")]
+        [JsonProperty("metadata")]
         public Metadata Metadata { get; set; }
     }
 
-    public class DescribeObject
+    public class Category
     {
-        public Description description { get; set; }
-        public string requestId { get; set; }
-        public Metadata metadata { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("score")]
+        public double Score { get; set; }
     }
 
     public class Tag
     {
-        [JsonProperty(PropertyName = "name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty(PropertyName = "confidence")]
+        [JsonProperty("confidence")]
         public double Confidence { get; set; }
-        [JsonProperty(PropertyName = "hint")]
-        public string Hint { get; set; }
+    }
+
+    public class Caption
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+        [JsonProperty("confidence")]
+        public double Confidence { get; set; }
     }
 
     public class Description
     {
-        [JsonProperty(PropertyName = "tags")]
+        [JsonProperty("tags")]
         public List<string> Tags { get; set; }
-        [JsonProperty(PropertyName = "captions")]
+        [JsonProperty("captions")]
         public List<Caption> Captions { get; set; }
-    }
-    public class Caption
-    {
-        [JsonProperty(PropertyName = "text")]
-        public string Text { get; set; }
-        [JsonProperty(PropertyName = "confidence")]
-        public double Confidence { get; set; }
     }
 
     public class Metadata
     {
-        [JsonProperty(PropertyName = "width")]
+        [JsonProperty("width")]
         public int Width { get; set; }
-        [JsonProperty(PropertyName = "height")]
+        [JsonProperty("height")]
         public int Height { get; set; }
-        [JsonProperty(PropertyName = "format")]
+        [JsonProperty("format")]
         public string Format { get; set; }
+    }
+
+    public class EmotionObject
+    {
+        [JsonProperty("faceRectangle")]
+        public FaceRectangle FaceRectangle { get; set; }
+        [JsonProperty("scores")]
+        public Scores Scores { get; set; }
+    }
+
+    public class FaceRectangle
+    {
+        [JsonProperty("left")]
+        public long Left { get; set; }
+        [JsonProperty("height")]
+        public long Height { get; set; }
+        [JsonProperty("top")]
+        public long Top { get; set; }
+        [JsonProperty("width")]
+        public long Width { get; set; }
+    }
+
+    public class Scores
+    {
+        [JsonProperty("fear")]
+        public double Fear { get; set; }
+        [JsonProperty("contempt")]
+        public double Contempt { get; set; }
+        [JsonProperty("anger")]
+        public double Anger { get; set; }
+        [JsonProperty("disgust")]
+        public double Disgust { get; set; }
+        [JsonProperty("neutral")]
+        public double Neutral { get; set; }
+        [JsonProperty("happiness")]
+        public double Happiness { get; set; }
+        [JsonProperty("sadness")]
+        public double Sadness { get; set; }
+        [JsonProperty("surprise")]
+        public double Surprise { get; set; }
     }
 }
