@@ -51,13 +51,19 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             CategoryOptions.ReplaceRange(categories);
         }
 
-        public async Task UploadPhoto(Stream stream, string filePath)
+        /// <summary>
+        /// Uploads the photo.
+        /// </summary>
+        /// <returns>Success</returns>
+        /// <param name="stream">Stream.</param>
+        /// <param name="filePath">File path.</param>
+        public async Task<bool> UploadPhoto(Stream stream, string filePath)
         {
             // Check if mandatory fields are set
             if (string.IsNullOrWhiteSpace(Caption) || SelectedCategory == null)
             {
                 await dialogService.DisplayDialogAsync("Missing inputs", "Please define category and caption.", "Ok");
-                return;
+                return false;
             }
 
             try
@@ -70,10 +76,12 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
                 // Notify user
                 await dialogService.DisplayDialogAsync("Upload successful", "", "Ok");
+                return true;
             }
             catch (UnauthorizedException)
             {
                 await dialogService.DisplayDialogAsync("Not logged in!", "You need to be logged in to upload a photo. Please log in first.", "Ok");
+                return false;
             }
         }
     }

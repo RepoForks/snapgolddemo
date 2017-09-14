@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using GalaSoft.MvvmLight.Views;
 using PhotoSharingApp.Frontend.Portable.Exceptions;
+using PhotoSharingApp.Frontend.Portable.Helpers;
 
 namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
@@ -73,7 +74,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                     var categoryPreviews = TopCategories.SingleOrDefault(c => c.Contains(photoThumbnail));
                     if (categoryPreviews != null)
                     {
-                        navigationService.NavigateTo(ViewNames.StreamPage, categoryPreviews.CategoryPreview);
+                        navigationService.NavigateTo(ViewNames.StreamPage, new CategoryThumbnailBundle(categoryPreviews.CategoryPreview, photoThumbnail));
                     }
                 }));
             }

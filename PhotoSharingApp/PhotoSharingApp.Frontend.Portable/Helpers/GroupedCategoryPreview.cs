@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using PhotoSharingApp.Frontend.Helpers;
 using PhotoSharingApp.Frontend.Portable.Models;
 
-namespace PhotoSharingApp.Frontend.Portable.Models
+namespace PhotoSharingApp.Frontend.Portable.Helpers
 {
     public class GroupedCategoryPreview : GroupedRangeCollection<PhotoThumbnail>
     {

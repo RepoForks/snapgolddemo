@@ -6,6 +6,7 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using PhotoSharingApp.Frontend.Portable.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
+using System.Globalization;
 
 namespace PhotoSharingApp.Forms
 {
@@ -87,13 +88,19 @@ namespace PhotoSharingApp.Forms
         async void UploadButton_Clicked(object sender, System.EventArgs e)
         {
             LoadingOverlay.IsVisible = true;
+            LoadingAnimation.Play();
 
-            await viewModel.UploadPhoto(file.GetStream(), file.Path);
-            CameraControls.IsVisible = true;
-            UploadControls.IsVisible = false;
-            PhotoPreview.Source = null;
+            var success = await viewModel.UploadPhoto(file.GetStream(), file.Path);
+            if (success)
+            {
+                CameraControls.IsVisible = true;
+                UploadControls.IsVisible = false;
+                PhotoPreview.Source = null;
+            }
 
             LoadingOverlay.IsVisible = false;
+            LoadingAnimation.IsPlaying = false;
+            LoadingAnimation.Pause();
         }
     }
 }

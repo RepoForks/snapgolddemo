@@ -10,6 +10,7 @@
     
 	<ContentPage.Content>
         <ListView
+            x:Name="PhotoList"
             ItemsSource="{Binding Photos}"
             HasUnevenRows="true"
             SeparatorVisibility="None"

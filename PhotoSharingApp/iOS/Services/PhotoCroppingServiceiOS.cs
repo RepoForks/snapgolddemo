@@ -31,9 +31,8 @@ namespace PhotoSharingApp.Forms.iOS.Services
                     // draw the image
                     context.DrawImage(imageRect, originalImage.CGImage);
 
-                    var resizedImage = UIImage.FromImage(context.ToImage(), 0, originalImage.Orientation);
-
                     // save the image as a jpeg
+                    var resizedImage = UIImage.FromImage(context.ToImage(), 0, originalImage.Orientation);
                     return resizedImage.AsJPEG().ToArray();
                 }
             }

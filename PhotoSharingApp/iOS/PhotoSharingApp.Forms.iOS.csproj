@@ -198,6 +198,15 @@
     <Reference Include="Microsoft.Azure.Mobile.Distribute.iOS.Bindings">
       <HintPath>..\..\packages\Microsoft.Azure.Mobile.Distribute.0.15.0\lib\Xamarin.iOS10\Microsoft.Azure.Mobile.Distribute.iOS.Bindings.dll</HintPath>
     </Reference>
+    <Reference Include="Lottie.iOS">
+      <HintPath>..\..\packages\Com.Airbnb.iOS.Lottie.2.0.5.0\lib\xamarinios\Lottie.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.Forms">
+      <HintPath>..\..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.2\lib\xamarinios\Lottie.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Lottie.Forms.iOS">
+      <HintPath>..\..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.2\lib\xamarinios\Lottie.Forms.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -284,6 +293,7 @@
     <BundleResource Include="Resources\profilepicture%403x.png" />
     <BundleResource Include="Resources\profilepicture%402x.png" />
     <BundleResource Include="Resources\profilepicture.png" />
+    <BundleResource Include="Resources\spinnerloading.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\placeholder.jpg" />

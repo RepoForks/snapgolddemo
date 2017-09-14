@@ -53,7 +53,6 @@
     <Compile Include="ViewModels\PhotoDetailsViewModel.cs" />
     <Compile Include="ViewModels\StreamPageViewModel.cs" />
     <Compile Include="Helpers\GroupedRangeCollection.cs" />
-    <Compile Include="Models\GroupedCategoryPreview.cs" />
     <Compile Include="ViewModels\CameraViewModel.cs" />
     <Compile Include="Services\ServiceClient.cs" />
     <Compile Include="Services\AzureAppService.cs" />
@@ -81,6 +80,8 @@
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="Abstractions\IDialogService.cs" />
     <Compile Include="Abstractions\IPhotoCroppingService.cs" />
+    <Compile Include="Helpers\CategoryThumbnailBundle.cs" />
+    <Compile Include="Helpers\GroupedCategoryPreview.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

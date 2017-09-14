@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.Net;
 using PhotoSharingApp.Portable.DataContracts;
 using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
+using Lottie.Forms.iOS.Renderers;
 
 namespace PhotoSharingApp.Forms.iOS
 {
@@ -43,6 +44,7 @@ namespace PhotoSharingApp.Forms.iOS
             global::Xamarin.Forms.Forms.Init();
             ImageCircleRenderer.Init();
             CachedImageRenderer.Init();
+            AnimationViewRenderer.Init();
 
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();
