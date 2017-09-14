@@ -14,12 +14,24 @@
             x:Name="SetAsProfilePictureToolbarItem"
             Name="Set as Profile Picture"
             Icon="profilepicture.png"
-            Command="{Binding SetAsProfilePictureCommand}"/>
+            Command="{Binding SetAsProfilePictureCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
         <ToolbarItem
             x:Name="DeleteToolbarItem"
             Name="Delete"
             Icon="delete.png"
-            Command="{Binding DeletePhotoCommand}"/>
+            Command="{Binding DeletePhotoCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
     </TabbedPage.ToolbarItems>
     
     <ContentPage.Content>
