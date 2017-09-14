@@ -26,8 +26,8 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             set { heroImages = value; RaisePropertyChanged(); }
         }
 
-        private ObservableRangeCollection<GroupedCategoryPreview> topCategories;
-        public ObservableRangeCollection<GroupedCategoryPreview> TopCategories
+        private ObservableCollection<GroupedCategoryPreview> topCategories;
+        public ObservableCollection<GroupedCategoryPreview> TopCategories
         {
             get { return topCategories; }
             set { topCategories = value; RaisePropertyChanged(); }
@@ -86,7 +86,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             this.photoService = photoService;
 
             heroImages = new ObservableCollection<Photo>();
-            topCategories = new ObservableRangeCollection<GroupedCategoryPreview>();
+            topCategories = new ObservableCollection<GroupedCategoryPreview>();
 
             // Design Data
             //topCategories.Add(new GroupedCategoryPreview(new List<PhotoThumbnail>
@@ -98,7 +98,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
         public async Task RefreshAsync(bool force = false)
         {
-            if (IsLoaded && !force)
+            if (IsRefreshing || (IsLoaded && !force))
                 return;
 
             IsRefreshing = true;
@@ -142,7 +142,13 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                 group category by category.Name into categoryGroup
                 select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
 
-            TopCategories.ReplaceRange(grouped);
+            TopCategories.Clear();
+            foreach (var grp in grouped)
+            {
+                TopCategories.Add(grp);
+            }
+
+            //TopCategories.ReplaceRange(grouped);
 
             // Check if loading right
             if (HeroImages.Count > 0 || TopCategories.Count > 0)

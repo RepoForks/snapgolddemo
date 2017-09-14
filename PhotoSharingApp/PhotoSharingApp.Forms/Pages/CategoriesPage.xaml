@@ -8,6 +8,7 @@
     xmlns:flow="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+    xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
     x:Name="CategoriesPage"
     Title="Home">
 
@@ -56,8 +57,15 @@
                     <Grid.HeightRequest>
                         <OnIdiom x:TypeArguments="x:Double" Phone="250" Tablet="400"/>
                     </Grid.HeightRequest>
-                    <cv:CarouselView ItemsSource="{Binding HeroImages}">
-                        <cv:CarouselView.ItemTemplate>
+
+                    <carousel:CarouselViewControl
+                        Orientation="Horizontal"
+                        ItemsSource="{Binding HeroImages}" 
+                        VerticalOptions="FillAndExpand" 
+                        HorizontalOptions="FillAndExpand"
+                        CurrentPageIndicatorTintColor="{StaticResource AccentColor}"
+                        ShowIndicators="true">
+                        <carousel:CarouselViewControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.GestureRecognizers>
@@ -87,7 +95,7 @@
 
                                     <!-- Details -->
                                     <ffimageloading:CachedImage
-                                        Margin="20,0,0,20"
+                                        Margin="20,0,0,30"
                                         Grid.Row="1"
                                         Aspect="AspectFill"
                                         Source="{Binding User.ProfilePictureUrl}"
@@ -104,8 +112,8 @@
                                     </StackLayout>
                                 </Grid>
                             </DataTemplate>
-                        </cv:CarouselView.ItemTemplate>
-                    </cv:CarouselView>
+                        </carousel:CarouselViewControl.ItemTemplate>
+                    </carousel:CarouselViewControl>
                 </Grid>
             </flow:FlowListView.Header>
 

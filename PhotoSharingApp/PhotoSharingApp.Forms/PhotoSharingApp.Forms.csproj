@@ -156,6 +156,9 @@
     <Reference Include="Lottie.Forms">
       <HintPath>..\..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.2\lib\portable-net45+wp8+win+wpa81+dnxcore50\Lottie.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="CarouselView.FormsPlugin.Abstractions">
+      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.3\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

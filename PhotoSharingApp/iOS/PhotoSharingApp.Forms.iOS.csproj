@@ -207,6 +207,12 @@
     <Reference Include="Lottie.Forms.iOS">
       <HintPath>..\..\packages\Com.Airbnb.Xamarin.Forms.Lottie.2.3.2\lib\xamarinios\Lottie.Forms.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="CarouselView.FormsPlugin.Abstractions">
+      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.3\lib\Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="CarouselView.FormsPlugin.iOS">
+      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.3\lib\Xamarin.iOS10\CarouselView.FormsPlugin.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">

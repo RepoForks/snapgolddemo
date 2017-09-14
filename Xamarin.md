@@ -3,7 +3,8 @@
 ## Libraries
 MVVM Light Libs - http://www.mvvmlight.net/
 
-https://www.nuget.org/packages/Xamarin.UITest.POP
+https://www.nuget.org/packages/Xamarin.UITest.
+https://github.com/alexrainman/CarouselView
 
 ## Icons
 <a href="https://icons8.com/icon/43507/Camera">Camera icon credits</a> 

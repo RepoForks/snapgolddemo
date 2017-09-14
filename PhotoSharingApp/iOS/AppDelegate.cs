@@ -17,6 +17,7 @@ using System.Net;
 using PhotoSharingApp.Portable.DataContracts;
 using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 using Lottie.Forms.iOS.Renderers;
+using CarouselView.FormsPlugin.iOS;
 
 namespace PhotoSharingApp.Forms.iOS
 {
@@ -45,6 +46,7 @@ namespace PhotoSharingApp.Forms.iOS
             ImageCircleRenderer.Init();
             CachedImageRenderer.Init();
             AnimationViewRenderer.Init();
+            CarouselViewRenderer.Init();
 
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();
