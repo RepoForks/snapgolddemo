@@ -19,15 +19,15 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
         private INavigationService navigationService;
         private IPhotoService photoService;
 
-        private ObservableCollection<Photo> heroImages;
-        public ObservableCollection<Photo> HeroImages
+        private ObservableRangeCollection<Photo> heroImages;
+        public ObservableRangeCollection<Photo> HeroImages
         {
             get { return heroImages; }
             set { heroImages = value; RaisePropertyChanged(); }
         }
 
-        private ObservableCollection<GroupedCategoryPreview> topCategories;
-        public ObservableCollection<GroupedCategoryPreview> TopCategories
+        private ObservableRangeCollection<GroupedCategoryPreview> topCategories;
+        public ObservableRangeCollection<GroupedCategoryPreview> TopCategories
         {
             get { return topCategories; }
             set { topCategories = value; RaisePropertyChanged(); }
@@ -85,8 +85,8 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             this.navigationService = navigationService;
             this.photoService = photoService;
 
-            heroImages = new ObservableCollection<Photo>();
-            topCategories = new ObservableCollection<GroupedCategoryPreview>();
+            heroImages = new ObservableRangeCollection<Photo>();
+            topCategories = new ObservableRangeCollection<GroupedCategoryPreview>();
 
             // Design Data
             //topCategories.Add(new GroupedCategoryPreview(new List<PhotoThumbnail>
@@ -120,20 +120,23 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
             // Load hero images
             var heroes = await photoService.GetHeroImages(5);
-            for (var i = 0; i < HeroImages.Count(); i++)
-            {
-                var existing = heroes.FirstOrDefault(img => img.Id == HeroImages[i].Id);
-                if (existing != null)
-                    HeroImages[i] = existing;
-                else
-                    HeroImages.RemoveAt(i);
-            }
-            foreach (var heroImage in heroes)
-            {
-                var existing = HeroImages.FirstOrDefault(img => img.Id == heroImage.Id);
-                if (existing == null)
-                    HeroImages.Insert(0, heroImage);
-            }
+            HeroImages.ReplaceRange(heroes);
+
+            //for (var i = 0; i < HeroImages.Count(); i++)
+            //{
+            //    var existing = heroes.FirstOrDefault(img => img.Id == HeroImages[i].Id);
+            //    if (existing != null)
+            //        HeroImages[i] = existing;
+            //    else
+            //        HeroImages.RemoveAt(i);
+            //}
+            //foreach (var heroImage in heroes)
+            //{
+            //    var existing = HeroImages.FirstOrDefault(img => img.Id == heroImage.Id);
+            //    if (existing == null)
+            //        HeroImages.Insert(0, heroImage);
+            //}
+
 
             try
             {
@@ -144,13 +147,15 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                     group category by category.Name into categoryGroup
                     select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
 
-                //TopCategories.Clear();
-                foreach (var grp in grouped)
-                {
-                    TopCategories.Add(grp);
-                }
 
-                //TopCategories.ReplaceRange(grouped);
+
+                //TopCategories.Clear();
+                //foreach (var grp in grouped)
+                //{
+                //    TopCategories.Add(grp);
+                //}
+
+                TopCategories.ReplaceRange(grouped);
             }
             catch (Exception ex)
             {

@@ -36,7 +36,6 @@
             <controls:CameraViewFinder
                 x:Name="ViewFinder"
                 Grid.Row="0"
-                BackgroundColor="Red"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
             </controls:CameraViewFinder>
