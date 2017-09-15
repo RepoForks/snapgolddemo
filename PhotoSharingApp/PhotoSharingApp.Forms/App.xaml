@@ -52,6 +52,7 @@
                                 HeightRequest="100"
                                 VerticalOptions="Center"
                                 Source="{Binding User.ProfilePictureUrl}"
+                                BackgroundColor="{StaticResource SubtleColor}"
                                 BorderColor="White"
                                 BorderThickness="5" />
 

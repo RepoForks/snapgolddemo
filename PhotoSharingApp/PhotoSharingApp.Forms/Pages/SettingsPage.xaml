@@ -6,19 +6,20 @@
     Title="Settings">
     
     <ScrollView>
-        <StackLayout Padding="20">
+        <StackLayout Padding="20" Spacing="10">
             <Label Text="Version" Style="{StaticResource ControlHeaderStyle}" />
-            <Label x:Name="VersionText" Text="1.0" TextColor="{StaticResource SubtleFontColor}" />
+            <Label x:Name="VersionText" Text="1.0"  />
 
-            <Label Text="License" Style="{StaticResource ControlHeaderStyle}" Margin="20" />
-            <Label Text="4PROS © 2017 (Preview Software)" TextColor="{StaticResource SubtleFontColor}" />
+            <!--<Label Text="License" Style="{StaticResource ControlHeaderStyle}" Margin="0,20,0,0" />
+            <Label Text="Microsoft © 2017 (Preview Software)"  />-->
 
-            <Label Text="3rd Party Libraries" Style="{StaticResource ControlHeaderStyle}" Margin="20" />
-            <Label Text="MVVM Light by Laurent Bugnion" TextColor="{StaticResource SubtleFontColor}" />
-            <Label Text="Version Tracking Plugin by Colbyl Williams" TextColor="{StaticResource SubtleFontColor}" />
-            <Label Text="Bluetooth LE Plugin by Adrian Seceleanu" TextColor="{StaticResource SubtleFontColor}" />
-            <Label Text="MVVM Helpers by James Montemagno" TextColor="{StaticResource SubtleFontColor}" />
-            <Label Text="KeyboardOverlap by Paul Patarinski" TextColor="{StaticResource SubtleFontColor}" />
+            <Label Text="3rd Party Libraries" Style="{StaticResource ControlHeaderStyle}" Margin="0,20,0,0" />
+            <Label Text="MVVM Light by Laurent Bugnion"  />
+            <Label Text="Version Tracking Plugin by Colby L Williams"  />
+            <Label Text="MVVM Helpers by James Montemagno"  />
+            <Label Text="Media Plugin by James Montemagno"  />
+            <Label Text="KeyboardOverlap by Paul Patarinski"  />
+            <Label Text="CarouselView by Alex Rainman"  />
         </StackLayout>
     </ScrollView>
 </ContentPage>

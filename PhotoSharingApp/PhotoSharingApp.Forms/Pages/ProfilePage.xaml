@@ -34,6 +34,17 @@
                 </OnPlatform>
             </ToolbarItem.Order>
         </ToolbarItem>
+
+        <ToolbarItem
+            Name="Settings"
+            Command="{Binding NavigateToSettingsCommand}"
+            Icon="settings.png">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary"/>
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
     </TabbedPage.ToolbarItems>
     
 	<ContentPage.Content>

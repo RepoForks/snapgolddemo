@@ -301,7 +301,6 @@
     <BundleResource Include="Resources\library%403x.png" />
     <BundleResource Include="Resources\library.png" />
     <BundleResource Include="Resources\library%402x.png" />
-    <BundleResource Include="Resources\Demo.jpg" />
     <BundleResource Include="Resources\delete%403x.png" />
     <BundleResource Include="Resources\delete%402x.png" />
     <BundleResource Include="Resources\delete.png" />
@@ -309,9 +308,6 @@
     <BundleResource Include="Resources\profilepicture%402x.png" />
     <BundleResource Include="Resources\profilepicture.png" />
     <BundleResource Include="Resources\spinnerloading.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\placeholder.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

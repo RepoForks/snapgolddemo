@@ -24,17 +24,14 @@ namespace PhotoSharingApp.Forms.iOS.Services
                 var newWidth = (int)(originalImage.Size.Width * ratio);
                 var newHeight = (int)(originalImage.Size.Height * ratio);
 
-                using (var context = new CGBitmapContext(IntPtr.Zero, newWidth, newHeight, 8, (4 * newWidth), CGColorSpace.CreateDeviceRGB(), CGImageAlphaInfo.PremultipliedFirst))
-                {
-                    var imageRect = new RectangleF(0, 0, newWidth, newHeight);
+                UIGraphics.BeginImageContext(new SizeF(newWidth, newHeight));
+                originalImage.Draw(new RectangleF(0, 0, newWidth, newHeight));
+                var resizedImage = UIGraphics.GetImageFromCurrentImageContext();
+                UIGraphics.EndImageContext();
 
-                    // draw the image
-                    context.DrawImage(imageRect, originalImage.CGImage);
-
-                    // save the image as a jpeg
-                    var resizedImage = UIImage.FromImage(context.ToImage(), 0, originalImage.Orientation);
-                    return resizedImage.AsJPEG().ToArray();
-                }
+                var bytesImagen = resizedImage.AsJPEG().ToArray();
+                resizedImage.Dispose();
+                return bytesImagen;
             }
         }
     }

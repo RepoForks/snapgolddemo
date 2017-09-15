@@ -60,7 +60,7 @@ namespace PhotoSharingApp.Forms
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 return;
 
-            file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { AllowCropping = true, SaveToAlbum = false });
+            file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { AllowCropping = false, SaveToAlbum = false });
             if (file == null)
                 return;
 
