@@ -307,7 +307,8 @@
     <BundleResource Include="Resources\profilepicture%403x.png" />
     <BundleResource Include="Resources\profilepicture%402x.png" />
     <BundleResource Include="Resources\profilepicture.png" />
-    <BundleResource Include="Resources\spinnerloading.json" />
+    <BundleResource Include="Resources\progress-bar.json" />
+    <BundleResource Include="Resources\upload-bubbles.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

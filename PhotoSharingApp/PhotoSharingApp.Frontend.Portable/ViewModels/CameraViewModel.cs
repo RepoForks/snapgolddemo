@@ -14,6 +14,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
     {
         private IDialogService dialogService;
         private IPhotoService photoService;
+        private CategoriesViewModel categoriesViewModel;
 
         private string caption;
         public string Caption
@@ -36,10 +37,11 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             set { selectedCategory = value; RaisePropertyChanged(); }
         }
 
-        public CameraViewModel(IDialogService dialogService, IPhotoService photoService)
+        public CameraViewModel(IDialogService dialogService, IPhotoService photoService, CategoriesViewModel categoriesViewModel)
         {
             this.dialogService = dialogService;
             this.photoService = photoService;
+            this.categoriesViewModel = categoriesViewModel;
 
             CategoryOptions = new ObservableRangeCollection<Category>();
             SelectedCategory = CategoryOptions.FirstOrDefault();
@@ -73,6 +75,9 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
                 // Upload photo
                 await photoService.UploadPhoto(stream, filePath, Caption, SelectedCategory.Id);
+
+                // Refresh CategoryViewModel
+                await categoriesViewModel.RefreshAsync(true);
 
                 // Notify user
                 await dialogService.DisplayDialogAsync("Upload successful", "", "Ok");

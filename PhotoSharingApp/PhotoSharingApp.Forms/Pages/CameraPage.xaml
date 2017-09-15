@@ -62,11 +62,10 @@
                 <!--<Button Text="Turn" TextColor="Black" BackgroundColor="{StaticResource SubtleColor}" WidthRequest="80" />-->
             </StackLayout>
 
-            <StackLayout
-                x:Name="UploadControls"
+            <StackLayout Spacing="5" x:Name="UploadControls"
                 IsVisible="false"
                 Grid.Row="2"
-                Spacing="5"
+
                 VerticalOptions="End"
                 Padding="20">
 
@@ -108,14 +107,17 @@
                 IsVisible="false"
                 Grid.RowSpan="3"
                 BackgroundColor="{StaticResource AccentColor}">
-                
-                <lottie:AnimationView
-                    Margin="120"
-                    x:Name="LoadingAnimation"
-                    Animation="spinnerloading.json"
-                    Loop="True"
-                    VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand" />
+
+                <StackLayout VerticalOptions="Center">
+                    <lottie:AnimationView
+                        HeightRequest="200"
+                        WidthRequest="200"
+                        x:Name="LoadingAnimation"
+                        Animation="upload-bubbles.json"
+                        Loop="True" />
+                    
+                    <Label Text="UPLOADING" TextColor="White" Margin="0,20,0,0" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                </StackLayout>
             </Grid>
         </Grid>
 	</ContentPage.Content>
