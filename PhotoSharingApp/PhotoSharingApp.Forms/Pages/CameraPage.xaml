@@ -5,12 +5,12 @@
     xmlns:controls="clr-namespace:PhotoSharingApp.Forms.Controls;assembly=PhotoSharingApp.Forms"
     xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     x:Class="PhotoSharingApp.Forms.CameraPage"
-    Title="Upload"
     Icon="camera.png">
 
     <!-- Remove title on Android -->
     <ContentPage.Title>
         <OnPlatform x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Upload"/>
             <On Platform="Android" Value=""/>
         </OnPlatform>
     </ContentPage.Title>
