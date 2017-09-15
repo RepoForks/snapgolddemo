@@ -61,6 +61,7 @@
                 <ffimageloading:CachedImage
                     Grid.RowSpan="2"
                     Grid.Column="1"
+                    CacheType="Disk"
                     Aspect="AspectFill"
                     Source="{Binding ProfilePictureUrl}"
                     WidthRequest="50"

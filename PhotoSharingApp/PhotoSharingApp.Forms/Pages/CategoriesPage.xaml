@@ -41,7 +41,7 @@
                     <ffimageloading:CachedImage                                
                         Source="{Binding ImageUrl}"
                         HeightRequest="70"
-                        CacheType="Memory"
+                        CacheType="Disk"
                         Aspect="AspectFill"
                         BackgroundColor="{StaticResource SubtleColor}">
                         <ffimageloading:CachedImage.HeightRequest>
@@ -89,7 +89,7 @@
                                         Grid.ColumnSpan="2"
                                         Aspect="AspectFill"
                                         FadeAnimationEnabled="false"
-                                        CacheType="Memory"
+                                        CacheType="Disk"
                                         Source="{Binding StandardUrl}"
                                         BackgroundColor="{StaticResource SubtleColor}"/>
 
@@ -178,17 +178,31 @@
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="    Take photo    "
                                     Clicked="Handle_Clicked"
                                     BackgroundColor="#DDD"
-                                    TextColor="Black"/>
+                                    TextColor="Black">
+                                    <Button.Text>
+                                        <OnPlatform x:TypeArguments="x:String">   
+                                            <!-- Ugly HACK: Simulate Padding on iOS -->
+                                            <On Platform="iOS" Value="    Take photo    "/>
+                                            <On Platform="Android,WinPhone" Value="Take photo"/>
+                                        </OnPlatform>
+                                    </Button.Text>
+                                </Button>
 
                                 <Button
                                     HorizontalOptions="Start"
-                                    Text="    Browse pictures    "
                                     Clicked="Handle_Clicked"
                                     BackgroundColor="#DDD"
-                                    TextColor="Black"/>
+                                    TextColor="Black">
+                                    <Button.Text>
+                                        <OnPlatform x:TypeArguments="x:String">   
+                                            <!-- Ugly HACK: Simulate Padding on iOS -->
+                                            <On Platform="iOS" Value="    Browse pictures    "/>
+                                            <On Platform="Android,WinPhone" Value="Browse pictures"/>
+                                        </OnPlatform>
+                                    </Button.Text>
+                                </Button>
                             </StackLayout>
                         </Grid>
                     </Frame>

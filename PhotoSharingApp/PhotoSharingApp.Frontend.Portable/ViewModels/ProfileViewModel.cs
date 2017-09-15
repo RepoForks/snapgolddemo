@@ -90,6 +90,18 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
         }
 
+        private RelayCommand navigateToSettingsCommand;
+        public RelayCommand NavigateToSettingsCommand
+        {
+            get
+            {
+                return navigateToSettingsCommand ?? (navigateToSettingsCommand = new RelayCommand(() =>
+                {
+                    navigationService.NavigateTo(ViewNames.SettingsPage);
+                }));
+            }
+        }
+
         public ProfileViewModel(IDialogService dialogService, INavigationService navigationService, IPhotoService photoService)
         {
             this.dialogService = dialogService;

@@ -5,5 +5,6 @@ namespace PhotoSharingApp.Frontend.Portable
     {
         public static string PhotoDetailsPage = "PhotoDetailsPage";
         public static string StreamPage = "StreamPage";
+        public static string SettingsPage = "SettingsPage";
     }
 }

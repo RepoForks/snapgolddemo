@@ -14,6 +14,8 @@ using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogSer
 using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Crashes;
+using PhotoSharingApp.Forms.Pages;
+using Plugin.VersionTracking;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
@@ -23,7 +25,6 @@ namespace PhotoSharingApp.Forms
         public App()
         {
             InitializeComponent();
-
         }
 
         public App(IAuthenticationHandler authenticationHandler)
@@ -57,6 +58,7 @@ namespace PhotoSharingApp.Forms
             var navigationService = new FormsNavigationService(navigationPage);
             navigationService.Configure(ViewNames.PhotoDetailsPage, typeof(PhotoDetailsPage));
             navigationService.Configure(ViewNames.StreamPage, typeof(StreamPage));
+            navigationService.Configure(ViewNames.SettingsPage, typeof(SettingsPage));
             SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 
             var appShell = new AppShell();
@@ -71,6 +73,8 @@ namespace PhotoSharingApp.Forms
 
         protected override void OnStart()
         {
+            CrossVersionTracking.Current.Track();
+
             // Visual Studio Mobile Center
             MobileCenter.Start(
                 "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +

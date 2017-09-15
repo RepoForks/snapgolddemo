@@ -35,7 +35,7 @@
                             Source="{Binding StandardUrl}"
                             FadeAnimationEnabled="false"
                             BackgroundColor="{StaticResource SubtleColor}"
-                            CacheType="Memory"/>
+                            CacheType="Disk"/>
 
                         <Grid
                             Margin="20,-50,20,0"
