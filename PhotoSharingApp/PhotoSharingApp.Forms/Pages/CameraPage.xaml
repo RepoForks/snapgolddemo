@@ -5,14 +5,15 @@
     xmlns:controls="clr-namespace:PhotoSharingApp.Forms.Controls;assembly=PhotoSharingApp.Forms"
     xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     x:Class="PhotoSharingApp.Forms.CameraPage"
-    Title="Upload">
+    Title="Upload"
+    Icon="camera.png">
 
-    <!-- Icon -->
-    <ContentPage.Icon>
-        <OnPlatform x:TypeArguments="FileImageSource">
-            <On Platform="iOS" Value="camera.png"/>
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="Android" Value=""/>
         </OnPlatform>
-    </ContentPage.Icon>
+    </ContentPage.Title>
 
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>

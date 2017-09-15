@@ -3,14 +3,15 @@
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="PhotoSharingApp.Forms.LeaderboardsPage"
-    Title="Leaderboards">
+    Title="Leaderboards"
+    Icon="flag.png">
 
-    <!-- Icon -->
-    <ContentPage.Icon>
-        <OnPlatform x:TypeArguments="FileImageSource">
-            <On Platform="iOS" Value="flag.png"/>
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="Android" Value=""/>
         </OnPlatform>
-    </ContentPage.Icon>
+    </ContentPage.Title>
     
 	<ContentPage.Content>
         <Label Text="Not implemented yet" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource SubtleFontColor}" />

@@ -10,14 +10,15 @@
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
     xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
     x:Name="CategoriesPage"
+    Icon="home.png"
     Title="Home">
 
-    <!-- Icon -->
-    <ContentPage.Icon>
-        <OnPlatform x:TypeArguments="FileImageSource">
-            <On Platform="iOS" Value="home.png"/>
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="Android" Value=""/>
         </OnPlatform>
-    </ContentPage.Icon>
+    </ContentPage.Title>
 
 	<ContentPage.Content>
         <flow:FlowListView

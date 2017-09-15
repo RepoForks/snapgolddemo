@@ -7,7 +7,8 @@
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
     xmlns:converters="clr-namespace:PhotoSharingApp.Forms.Converters;assembly=PhotoSharingApp.Forms"    
     x:Class="PhotoSharingApp.Forms.ProfilePage"
-    Title="My Profile">
+    Title="My Profile"
+    Icon="user.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,12 +16,12 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     
-    <!-- Icon -->
-    <ContentPage.Icon>
-        <OnPlatform x:TypeArguments="FileImageSource">
-            <On Platform="iOS" Value="user.png"/>
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="Android" Value=""/>
         </OnPlatform>
-    </ContentPage.Icon>
+    </ContentPage.Title>
 
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>
