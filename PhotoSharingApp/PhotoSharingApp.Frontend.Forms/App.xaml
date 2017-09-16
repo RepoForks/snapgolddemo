@@ -9,6 +9,8 @@
     
 	<Application.Resources>
 		<ResourceDictionary>
+            
+            <!-- Colors -->
             <Color x:Key="AccentColor">#FAA819</Color>
             <Color x:Key="SubtleColor">#f8f8f8</Color>
             <Color x:Key="SubtleFontColor">#CCCCCC</Color>
@@ -18,17 +20,22 @@
             <Color x:Key="GoogleRed">#EA4335</Color>
             <Color x:Key="TwitterBlue">#1DA1F2</Color>
 
+            <!-- Font Sizes -->
             <x:Double x:Key="FontSizeSmall">10</x:Double>
             <x:Double x:Key="FontSizeMedium">12</x:Double>
-            
+
+            <!-- Styles -->
             <Style x:Key="ControlHeaderStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource SubtleFontColor}" />
                 <Setter Property="FontAttributes" Value="Bold" />               
             </Style>
 
+            <!-- Template for Photo Preview in Lists -->
             <DataTemplate x:Key="FullPhotoItemTemplate">
                 <ViewCell>
                     <StackLayout Spacing="0">
+
+                        <!-- Photo -->
                         <ffimageloading:CachedImage
                             Grid.Row="0"
                             HeightRequest="300"
@@ -38,6 +45,7 @@
                             BackgroundColor="{StaticResource SubtleColor}"
                             CacheType="Disk"/>
 
+                        <!-- Details -->
                         <Grid
                             Margin="20,-50,20,0"
                             WidthRequest="100"
@@ -47,7 +55,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                        
+
+                            <!-- User Image -->
                             <ic:CircleImage
                                 WidthRequest="100"
                                 HeightRequest="100"

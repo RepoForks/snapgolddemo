@@ -8,6 +8,7 @@ using PhotoSharingApp.Frontend.Portable.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
 using System.Globalization;
 using PhotoSharingApp.Forms.Controls;
+using System.Linq;
 
 namespace PhotoSharingApp.Forms
 {
@@ -84,6 +85,7 @@ namespace PhotoSharingApp.Forms
             CameraControls.IsVisible = true;
             UploadControls.IsVisible = false;
             PhotoPreview.Source = null;
+            viewModel.Caption = string.Empty;
         }
 
         async void UploadButton_Clicked(object sender, System.EventArgs e)
@@ -97,6 +99,10 @@ namespace PhotoSharingApp.Forms
                 CameraControls.IsVisible = true;
                 UploadControls.IsVisible = false;
                 PhotoPreview.Source = null;
+                viewModel.Caption = string.Empty;
+
+                // Navigate back to categories page
+                App.AppShell.SelectedItem = App.AppShell.Children.First();
             }
 
             LoadingOverlay.IsVisible = false;

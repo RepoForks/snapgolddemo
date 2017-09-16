@@ -22,6 +22,8 @@ namespace PhotoSharingApp.Forms
 {
     public partial class App : Application
     {
+        public static AppShell AppShell;
+
         public App()
         {
             InitializeComponent();
@@ -61,13 +63,13 @@ namespace PhotoSharingApp.Forms
             navigationService.Configure(ViewNames.SettingsPage, typeof(SettingsPage));
             SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 
-            var appShell = new AppShell();
-            appShell.Children.Add(new CategoriesPage());   // Home
-            appShell.Children.Add(new CameraPage());       // Upload
-            appShell.Children.Add(new LeaderboardsPage()); // Leaderboards
-            appShell.Children.Add(new ProfilePage());      // My profile
+            AppShell = new AppShell();
+            AppShell.Children.Add(new CategoriesPage());   // Home
+            AppShell.Children.Add(new CameraPage());       // Upload
+            AppShell.Children.Add(new LeaderboardsPage()); // Leaderboards
+            AppShell.Children.Add(new ProfilePage());      // My profile
 
-            navigationPage.PushAsync(appShell);
+            navigationPage.PushAsync(AppShell);
             MainPage = navigationPage;
         }
 
