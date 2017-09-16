@@ -744,13 +744,7 @@ namespace PhotoSharingApp.Forms.Droid
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.abc_textfield_search_material = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.abc_textfield_search_material;
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.abc_vector_test = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.abc_vector_test;
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_hide_password = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password;
-			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_hide_password_1 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password_1;
-			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_hide_password_2 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password_2;
-			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_hide_password_3 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password_3;
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_show_password = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password;
-			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_show_password_1 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password_1;
-			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_show_password_2 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password_2;
-			global::CarouselView.FormsPlugin.Android.Resource.Drawable.avd_show_password_3 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password_3;
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.design_bottom_navigation_item_background = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.design_fab_background = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.design_fab_background;
 			global::CarouselView.FormsPlugin.Android.Resource.Drawable.design_ic_visibility = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.design_ic_visibility;
@@ -2890,13 +2884,7 @@ namespace PhotoSharingApp.Forms.Droid
 			global::Lottie.Forms.Droid.Resource.Drawable.abc_textfield_search_material = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.abc_textfield_search_material;
 			global::Lottie.Forms.Droid.Resource.Drawable.abc_vector_test = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.abc_vector_test;
 			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password_1 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password_1;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password_2 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password_2;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_hide_password_3 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_hide_password_3;
 			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password_1 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password_1;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password_2 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password_2;
-			global::Lottie.Forms.Droid.Resource.Drawable.avd_show_password_3 = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.avd_show_password_3;
 			global::Lottie.Forms.Droid.Resource.Drawable.design_bottom_navigation_item_background = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::Lottie.Forms.Droid.Resource.Drawable.design_fab_background = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.design_fab_background;
 			global::Lottie.Forms.Droid.Resource.Drawable.design_ic_visibility = global::PhotoSharingApp.Forms.Droid.Resource.Drawable.design_ic_visibility;
@@ -6603,26 +6591,8 @@ namespace PhotoSharingApp.Forms.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020116
-			public const int avd_hide_password_1 = 2130837782;
-			
-			// aapt resource value: 0x7f020117
-			public const int avd_hide_password_2 = 2130837783;
-			
-			// aapt resource value: 0x7f020118
-			public const int avd_hide_password_3 = 2130837784;
-			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
-			
-			// aapt resource value: 0x7f020119
-			public const int avd_show_password_1 = 2130837785;
-			
-			// aapt resource value: 0x7f02011a
-			public const int avd_show_password_2 = 2130837786;
-			
-			// aapt resource value: 0x7f02011b
-			public const int avd_show_password_3 = 2130837787;
 			
 			// aapt resource value: 0x7f020055
 			public const int camera = 2130837589;

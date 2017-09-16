@@ -37,6 +37,9 @@ namespace PhotoSharingApp.Frontend.Portable.Models
     {
         private int _goldCount;
         private bool _hasUserGivenGold;
+        private string _thumbnailurl;
+        private string _standardUrl;
+        private string _highResolutionUrl;
 
         /// <summary>
         /// Gets or sets the annotations.
@@ -134,7 +137,17 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the high resolution image URL.
         /// </summary>
-        public string HighResolutionUrl { get; set; }
+        public string HighResolutionUrl
+        {
+            get
+            {
+                return _highResolutionUrl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
+            }
+            set
+            {
+                _highResolutionUrl = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the unique identifier.
@@ -188,7 +201,17 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the standard image URL.
         /// </summary>
-        public string StandardUrl { get; set; }
+        public string StandardUrl
+        {
+            get
+            {
+                return _standardUrl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
+            }
+            set
+            {
+                _standardUrl = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the photo status.
@@ -198,7 +221,17 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the thumbnail image URL.
         /// </summary>
-        public string ThumbnailUrl { get; set; }
+        public string ThumbnailUrl
+        {
+            get
+            {
+                return _thumbnailurl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
+            }
+            set
+            {
+                _thumbnailurl = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the user.
