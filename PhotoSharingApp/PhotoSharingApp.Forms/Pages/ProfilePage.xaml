@@ -26,19 +26,21 @@
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>
         <ToolbarItem
-            Name="Log out"
-            Command="{Binding LogoutCommand}">
+            Name="Settings"
+            Command="{Binding NavigateToSettingsCommand}"
+            Icon="settings.png">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Secondary"/>
                 </OnPlatform>
             </ToolbarItem.Order>
         </ToolbarItem>
-
+        
         <ToolbarItem
-            Name="Settings"
-            Command="{Binding NavigateToSettingsCommand}"
-            Icon="settings.png">
+            x:Name="SignOutButton"
+            Name="Log out"
+            Icon="signout.png"
+            Command="{Binding LogoutCommand}">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Secondary"/>
@@ -95,7 +97,6 @@
                 HasUnevenRows="true"
                 ItemTemplate="{StaticResource FullPhotoItemTemplate}">
             </ListView>
-                
             
             <!-- List -->
             <StackLayout

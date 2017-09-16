@@ -1,21 +1,21 @@
 ﻿using DLToolkit.Forms.Controls;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
-using Microsoft.Practices.ServiceLocation;
-using PhotoSharingApp.Frontend.Portable;
-using PhotoSharingApp.Frontend.Portable.Models;
-using PhotoSharingApp.Frontend.Portable.Services;
-using PhotoSharingApp.Frontend.Portable.ViewModels;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using PhotoSharingApp.Frontend.Portable.Abstractions;
-using PhotoSharingApp.Forms.Services;
-using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
 using Microsoft.Azure.Mobile;
 using Microsoft.Azure.Mobile.Analytics;
 using Microsoft.Azure.Mobile.Crashes;
+using Microsoft.Practices.ServiceLocation;
 using PhotoSharingApp.Forms.Pages;
+using PhotoSharingApp.Forms.Services;
+using PhotoSharingApp.Frontend.Portable;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
+using PhotoSharingApp.Frontend.Portable.Models;
+using PhotoSharingApp.Frontend.Portable.Services;
+using PhotoSharingApp.Frontend.Portable.ViewModels;
 using Plugin.VersionTracking;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms

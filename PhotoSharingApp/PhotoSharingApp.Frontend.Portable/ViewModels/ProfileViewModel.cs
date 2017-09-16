@@ -73,7 +73,8 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             {
                 return logoutCommand ?? (logoutCommand = new RelayCommand(async () =>
                 {
-                    await LogoutAsync();
+                    if (await dialogService.DisplayDialogAsync("Log out", "Do you really want to sign out and delete all local user data?", "Log out", "Cancel"))
+                        await LogoutAsync();
                 }));
             }
         }

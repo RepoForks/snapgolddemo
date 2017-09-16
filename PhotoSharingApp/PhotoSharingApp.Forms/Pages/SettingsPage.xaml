@@ -18,8 +18,11 @@
             <Label Text="Version Tracking Plugin by Colby L Williams"  />
             <Label Text="MVVM Helpers by James Montemagno"  />
             <Label Text="Media Plugin by James Montemagno"  />
+            <Label Text="Image Circle by James Montemagno"  />
             <Label Text="KeyboardOverlap by Paul Patarinski"  />
             <Label Text="CarouselView by Alex Rainman"  />
+            <Label Text="FFImageLoading by Daniel Luberda"  />
+            <Label Text="Lottie by AirBnB" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

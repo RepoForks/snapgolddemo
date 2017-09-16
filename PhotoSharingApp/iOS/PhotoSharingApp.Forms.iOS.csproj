@@ -309,6 +309,9 @@
     <BundleResource Include="Resources\profilepicture.png" />
     <BundleResource Include="Resources\progress-bar.json" />
     <BundleResource Include="Resources\upload-bubbles.json" />
+    <BundleResource Include="Resources\signout.png" />
+    <BundleResource Include="Resources\signout%402x.png" />
+    <BundleResource Include="Resources\signout%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
