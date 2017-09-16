@@ -12,6 +12,7 @@
             <Color x:Key="AccentColor">#FAA819</Color>
             <Color x:Key="SubtleColor">#f8f8f8</Color>
             <Color x:Key="SubtleFontColor">#CCCCCC</Color>
+            <Color x:Key="DarkSubtleFontColor">#666666</Color>
             
             <Color x:Key="FacebookBlue">#4267b2</Color>
             <Color x:Key="GoogleRed">#EA4335</Color>
@@ -51,6 +52,7 @@
                                 WidthRequest="100"
                                 HeightRequest="100"
                                 VerticalOptions="Center"
+                                Aspect="AspectFill"
                                 Source="{Binding User.ProfilePictureUrl}"
                                 BorderColor="White"
                                 BorderThickness="5" />

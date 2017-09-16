@@ -63,6 +63,7 @@
                             WidthRequest="100"
                             HeightRequest="100"
                             VerticalOptions="Center"
+                            Aspect="AspectFill"
                             Source="{Binding Photo.User.ProfilePictureUrl}"
                             BorderColor="White"
                             BorderThickness="5" />
@@ -111,7 +112,7 @@
 
                             <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                 <Label Grid.Column="1"  Text="{Binding GoldCount, StringFormat='Gave {0:G} piece of Gold.'}" FontSize="{StaticResource FontSizeSmall}" FontAttributes="Bold" />
-                                <Label Text="{Binding Text}" FontSize="{StaticResource FontSizeSmall}" TextColor="{StaticResource SubtleFontColor}"  />
+                                <Label Text="{Binding Text}" FontSize="{StaticResource FontSizeMedium}" TextColor="{StaticResource DarkSubtleFontColor}"  />
                             </StackLayout>
 
                             <Label
