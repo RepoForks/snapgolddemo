@@ -11,6 +11,7 @@ https://github.com/alexrainman/CarouselView
 <a href="https://icons8.com/icon/14099/Settings">Settings icon credits</a>
 <a href="https://icons8.com/icon/43764/Image-File">Image file icon credits</a>
 <a href="https://icons8.com/icon/51791/Name">Name icon credits</a>
+<a href="https://icons8.com/icon/53213/Sign-Out">Sign out icon credits</a>
 
 WinPhone Image cropper
 ```csharp
