@@ -16,6 +16,18 @@ namespace PhotoSharingApp.Forms
         {
             InitializeComponent();
             BindingContext = viewModel = SimpleIoc.Default.GetInstance<ProfileViewModel>();
+
+            // Manage visibility to Log out button
+            viewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName.Equals(nameof(viewModel.IsLoggedIn)))
+                {
+                    if (viewModel.IsLoggedIn && !ToolbarItems.Contains(SignOutButton))
+                        ToolbarItems.Add(SignOutButton);
+                    else if (!viewModel.IsLoggedIn && ToolbarItems.Contains(SignOutButton))
+                        ToolbarItems.Remove(SignOutButton);
+                }
+            };
         }
 
         protected override async void OnAppearing()
