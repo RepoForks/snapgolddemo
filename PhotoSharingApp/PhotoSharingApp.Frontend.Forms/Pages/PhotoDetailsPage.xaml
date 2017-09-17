@@ -121,7 +121,7 @@
                                 VerticalOptions="Center"
                                 FontSize="{StaticResource FontSizeSmall}" 
                                 TextColor="{StaticResource SubtleFontColor}"
-                                Text="{Binding CreatedTime, StringFormat='{0:MMM dd, yyyy at hh:mm tt}'}" />
+                                Text="{Binding CreatedTime, StringFormat='{0:MMM dd, yyyy hh:mm tt}'}" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>                    

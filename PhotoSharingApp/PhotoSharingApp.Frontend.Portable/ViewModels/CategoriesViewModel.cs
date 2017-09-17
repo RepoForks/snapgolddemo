@@ -1,22 +1,22 @@
-﻿using System;
-using GalaSoft.MvvmLight;
-using PhotoSharingApp.Frontend.Portable.Services;
+﻿using PhotoSharingApp.Frontend.Portable.Services;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using MvvmHelpers;
 using PhotoSharingApp.Frontend.Portable.Models;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Collections.Generic;
 using GalaSoft.MvvmLight.Views;
 using PhotoSharingApp.Frontend.Portable.Exceptions;
 using PhotoSharingApp.Frontend.Portable.Helpers;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
+using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
 
 namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
     public class CategoriesViewModel : AsyncViewModelBase
     {
         private INavigationService navigationService;
+        private IDialogService dialogService;
+        private IConnectivityService connectivityService;
         private IPhotoService photoService;
 
         private ObservableRangeCollection<Photo> heroImages;
@@ -80,24 +80,27 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
         }
 
-        public CategoriesViewModel(INavigationService navigationService, IPhotoService photoService)
+        public CategoriesViewModel(INavigationService navigationService, IDialogService dialogService, IConnectivityService connectivityService, IPhotoService photoService)
         {
             this.navigationService = navigationService;
+            this.dialogService = dialogService;
+            this.connectivityService = connectivityService;
             this.photoService = photoService;
 
             heroImages = new ObservableRangeCollection<Photo>();
             topCategories = new ObservableRangeCollection<GroupedCategoryPreview>();
-
-            // Design Data
-            //topCategories.Add(new GroupedCategoryPreview(new List<PhotoThumbnail>
-            //{
-            //    new PhotoThumbnail { ImageUrl = "http://i0.wp.com/www.saint-mary.church/wp-content/uploads/2016/09/lorem-ipsum-logo.jpg?ssl=1" },
-            //    new PhotoThumbnail { ImageUrl = "http://i0.wp.com/www.saint-mary.church/wp-content/uploads/2016/09/lorem-ipsum-logo.jpg?ssl=1" }
-            //}, "Test", "T", null));
         }
 
         public async Task RefreshAsync(bool force = false)
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                await ShowNoConnectionDialog(dialogService);
+                return;
+            }
+
+            // Check if ViewModel is already loaded or refreshing
             if (IsRefreshing || (IsLoaded && !force))
                 return;
 
@@ -115,62 +118,23 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             catch (UnauthorizedException)
             {
                 // User not logged in yet
+                CurrentUser = null;
             }
-
 
             // Load hero images
             var heroes = await photoService.GetHeroImages(5);
             HeroImages.ReplaceRange(heroes);
 
-            //for (var i = 0; i < HeroImages.Count(); i++)
-            //{
-            //    var existing = heroes.FirstOrDefault(img => img.Id == HeroImages[i].Id);
-            //    if (existing != null)
-            //        HeroImages[i] = existing;
-            //    else
-            //        HeroImages.RemoveAt(i);
-            //}
-            //foreach (var heroImage in heroes)
-            //{
-            //    var existing = HeroImages.FirstOrDefault(img => img.Id == heroImage.Id);
-            //    if (existing == null)
-            //        HeroImages.Insert(0, heroImage);
-            //}
+            // Load categories
+            var topCat = await photoService.GetTopCategories(5);
+            var grouped =
+                from category in topCat
+                group category by category.Name into categoryGroup
+                select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
+            TopCategories.ReplaceRange(grouped);
 
-
-            try
-            {
-                // Load categories
-                var topCat = await photoService.GetTopCategories(5);
-                var grouped =
-                    from category in topCat
-                    group category by category.Name into categoryGroup
-                    select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
-
-
-
-                //TopCategories.Clear();
-                //foreach (var grp in grouped)
-                //{
-                //    TopCategories.Add(grp);
-                //}
-
-                TopCategories.ReplaceRange(grouped);
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            // Check if loading right
-            if (HeroImages.Count > 0 || TopCategories.Count > 0)
-            {
-                IsLoaded = true;
-            }
-            else
-            {
-                IsLoaded = false;
-            }
+            // Check if loading went right
+            IsLoaded = HeroImages.Count > 0 || TopCategories.Count > 0;
 
             IsRefreshing = false;
         }

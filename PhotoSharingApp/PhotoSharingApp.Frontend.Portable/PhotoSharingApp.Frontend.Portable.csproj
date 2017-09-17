@@ -82,6 +82,7 @@
     <Compile Include="Abstractions\IPhotoCroppingService.cs" />
     <Compile Include="Helpers\CategoryThumbnailBundle.cs" />
     <Compile Include="Helpers\GroupedCategoryPreview.cs" />
+    <Compile Include="Abstractions\IConnectivityService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

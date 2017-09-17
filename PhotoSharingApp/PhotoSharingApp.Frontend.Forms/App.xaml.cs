@@ -44,6 +44,7 @@ namespace PhotoSharingApp.Forms
             SimpleIoc.Default.Register<IPhotoCroppingService>(() => DependencyService.Get<IPhotoCroppingService>());
             SimpleIoc.Default.Register<IPhotoService, ServiceClient>();
             SimpleIoc.Default.Register<IDialogService, FormsDialogService>();
+            SimpleIoc.Default.Register<IConnectivityService, FormsConnectivityService>();
 
             SimpleIoc.Default.Register<CategoriesViewModel>();
             SimpleIoc.Default.Register<PhotoDetailsViewModel>();
@@ -63,6 +64,7 @@ namespace PhotoSharingApp.Forms
             navigationService.Configure(ViewNames.SettingsPage, typeof(SettingsPage));
             SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 
+            // Setup App Shell
             AppShell = new AppShell();
             AppShell.Children.Add(new CategoriesPage());   // Home
             AppShell.Children.Add(new CameraPage());       // Upload

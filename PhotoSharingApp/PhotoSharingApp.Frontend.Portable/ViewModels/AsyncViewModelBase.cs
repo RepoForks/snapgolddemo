@@ -1,5 +1,8 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
+using System.Threading.Tasks;
+
 namespace PhotoSharingApp.Frontend.Portable
 {
     public class AsyncViewModelBase : ViewModelBase
@@ -16,6 +19,11 @@ namespace PhotoSharingApp.Frontend.Portable
         {
             get { return isLoaded; }
             set { isLoaded = value; RaisePropertyChanged(); }
+        }
+
+        protected async Task ShowNoConnectionDialog(IDialogService dialogService)
+        {
+            await dialogService.DisplayDialogAsync("Not connected.", "Looks like you have no connection to the internet. Please establish a connection and try again.", "Ok");
         }
     }
 }

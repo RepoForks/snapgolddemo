@@ -3,6 +3,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="PhotoSharingApp.Forms.CategoriesPage"
+    xmlns:controls="clr-namespace:PhotoSharingApp.Forms.Controls;assembly=PhotoSharingApp.Forms"    
     xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
     xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     xmlns:flow="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
@@ -21,6 +22,7 @@
     </ContentPage.Title>
 
 	<ContentPage.Content>
+        <Grid>
         <flow:FlowListView
             FlowColumnCount="5"
             SeparatorVisibility="None"
@@ -209,5 +211,23 @@
                 </Grid>
             </flow:FlowListView.Footer>
         </flow:FlowListView>
+
+        <!-- Android only Floating Action Button -->
+        <controls:FormsFloatingActionButton
+            x:Name="AddPhotoButton"
+            Margin="0"
+            HorizontalOptions="End"
+            AutomationId="AddPhotoButton"
+            Icon="camera.png"
+            VerticalOptions="End">
+            <controls:FormsFloatingActionButton.IsVisible>
+                <OnPlatform
+                    x:TypeArguments="x:Boolean"
+                    Android="True"
+                    WinPhone="False"
+                    iOS="False" />
+            </controls:FormsFloatingActionButton.IsVisible>
+        </controls:FormsFloatingActionButton>
+        </Grid>
 	</ContentPage.Content>
 </ContentPage>

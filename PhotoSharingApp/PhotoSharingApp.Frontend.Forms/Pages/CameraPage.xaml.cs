@@ -102,6 +102,7 @@ namespace PhotoSharingApp.Forms
                 viewModel.Caption = string.Empty;
 
                 // Navigate back to categories page
+                App.AppShell.SelectedItem = null; // Hack: Xamarin.Forms Bug does not allow the same navigation twice otherwise
                 App.AppShell.SelectedItem = App.AppShell.Children.First();
             }
 

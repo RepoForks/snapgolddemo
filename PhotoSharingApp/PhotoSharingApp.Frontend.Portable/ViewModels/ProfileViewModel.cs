@@ -17,6 +17,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
     {
         private IDialogService dialogService;
         private INavigationService navigationService;
+        private IConnectivityService connectivityService;
         private IPhotoService photoService;
 
         private bool isLoggedIn;
@@ -103,10 +104,11 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
         }
 
-        public ProfileViewModel(IDialogService dialogService, INavigationService navigationService, IPhotoService photoService)
+        public ProfileViewModel(IDialogService dialogService, INavigationService navigationService, IConnectivityService connectivityService, IPhotoService photoService)
         {
             this.dialogService = dialogService;
             this.navigationService = navigationService;
+            this.connectivityService = connectivityService;
             this.photoService = photoService;
 
             UserPhotos = new ObservableRangeCollection<Photo>();
@@ -114,6 +116,12 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
         public async Task InitAsync()
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                return;
+            }
+
             try
             {
                 var currentUser = await photoService.GetCurrentUser();
@@ -138,6 +146,13 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
         public async Task LoginAsync(MobileServiceAuthenticationProvider provider)
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                await ShowNoConnectionDialog(dialogService);
+                return;
+            }
+
             await photoService.SignInAsync(provider);
 
             var currentUser = await photoService.GetCurrentUser();

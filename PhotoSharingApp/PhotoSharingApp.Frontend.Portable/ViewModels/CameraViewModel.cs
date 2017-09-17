@@ -13,6 +13,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
     public class CameraViewModel : AsyncViewModelBase
     {
         private IDialogService dialogService;
+        private IConnectivityService connectivityService;
         private IPhotoService photoService;
         private CategoriesViewModel categoriesViewModel;
 
@@ -37,9 +38,10 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             set { selectedCategory = value; RaisePropertyChanged(); }
         }
 
-        public CameraViewModel(IDialogService dialogService, IPhotoService photoService, CategoriesViewModel categoriesViewModel)
+        public CameraViewModel(IDialogService dialogService, IConnectivityService connectivityService, IPhotoService photoService, CategoriesViewModel categoriesViewModel)
         {
             this.dialogService = dialogService;
+            this.connectivityService = connectivityService;
             this.photoService = photoService;
             this.categoriesViewModel = categoriesViewModel;
 
@@ -49,6 +51,12 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
         public async Task InitAsync()
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                return;
+            }
+
             var categories = await photoService.GetCategories();
             CategoryOptions.ReplaceRange(categories);
         }
@@ -65,6 +73,13 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             if (string.IsNullOrWhiteSpace(Caption) || SelectedCategory == null)
             {
                 await dialogService.DisplayDialogAsync("Missing inputs", "Please define category and caption.", "Ok");
+                return false;
+            }
+
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                await ShowNoConnectionDialog(dialogService);
                 return false;
             }
 

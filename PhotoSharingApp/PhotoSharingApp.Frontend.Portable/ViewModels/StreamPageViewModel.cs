@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using MvvmHelpers;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using PhotoSharingApp.Frontend.Portable.Abstractions;
 
 namespace PhotoSharingApp.Frontend.Portable
 {
     public class StreamPageViewModel : AsyncViewModelBase
     {
         private INavigationService navigationService;
+        private IConnectivityService connectivityService;
         private IPhotoService photoService;
 
         private string categoryId;
@@ -41,9 +43,10 @@ namespace PhotoSharingApp.Frontend.Portable
             }
         }
 
-        public StreamPageViewModel(INavigationService navigationService, IPhotoService photoService)
+        public StreamPageViewModel(INavigationService navigationService, IConnectivityService connectivityService, IPhotoService photoService)
         {
             this.navigationService = navigationService;
+            this.connectivityService = connectivityService;
             this.photoService = photoService;
 
             Photos = new ObservableRangeCollection<Photo>();
@@ -57,6 +60,12 @@ namespace PhotoSharingApp.Frontend.Portable
 
         public async Task RefreshAsync()
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                return;
+            }
+
             if (categoryId != null)
             {
                 var photos = await photoService.GetPhotosForCategoryId(categoryId);

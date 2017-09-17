@@ -17,7 +17,8 @@ namespace PhotoSharingApp.Forms
             InitializeComponent();
             BindingContext = viewModel = SimpleIoc.Default.GetInstance<ProfileViewModel>();
 
-            // Manage visibility to Log out button
+            // Manage visibility to Log out button by subscribing the according property of the ViewModel
+            // This has to be done, as Xamarin.Forms does not support a bindable IsVisible property for Toolbar Items, yet
             viewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName.Equals(nameof(viewModel.IsLoggedIn)))

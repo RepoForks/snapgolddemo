@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using PhotoSharingApp.Frontend.Portable.ViewModels;
 using Xamarin.Forms;
 using PhotoSharingApp.Frontend.Portable.Models;
+using System.Linq;
 
 namespace PhotoSharingApp.Forms
 {
@@ -15,6 +16,7 @@ namespace PhotoSharingApp.Forms
         {
             InitializeComponent();
             BindingContext = viewModel = SimpleIoc.Default.GetInstance<CategoriesViewModel>();
+            AddPhotoButton.Clicked += AddPhotoButton_Clicked;
         }
 
         protected override async void OnAppearing()
@@ -33,6 +35,13 @@ namespace PhotoSharingApp.Forms
         void Handle_Clicked(object sender, System.EventArgs e)
         {
             DisplayAlert("Not implemented yet", "", "Too bad");
+        }
+
+        void AddPhotoButton_Clicked(object sender, System.EventArgs e)
+        {
+            // Navigate to camera page
+            App.AppShell.SelectedItem = null; // Hack: Xamarin.Forms Bug does not allow the same navigation twice otherwise
+            App.AppShell.SelectedItem = App.AppShell.Children.ElementAt(1);
         }
     }
 }

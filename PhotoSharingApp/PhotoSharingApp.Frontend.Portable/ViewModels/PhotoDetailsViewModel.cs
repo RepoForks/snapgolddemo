@@ -15,6 +15,7 @@ namespace PhotoSharingApp.Frontend.Portable
     {
         private INavigationService navigationService;
         private IDialogService dialogService;
+        private IConnectivityService connectivityService;
         private IPhotoService photoService;
 
         private Photo photo;
@@ -56,29 +57,22 @@ namespace PhotoSharingApp.Frontend.Portable
         }
 
 
-        public PhotoDetailsViewModel(INavigationService navigationService, IDialogService dialogService, IPhotoService photoService)
+        public PhotoDetailsViewModel(INavigationService navigationService, IDialogService dialogService, IConnectivityService connectivityService, IPhotoService photoService)
         {
             this.navigationService = navigationService;
             this.dialogService = dialogService;
+            this.connectivityService = connectivityService;
             this.photoService = photoService;
-
-            // Design
-            Photo = new Photo
-            {
-                StandardUrl = "https://canaryappstorage.blob.core.windows.net/dummy-container/food1.jpg",
-                User = new User { ProfilePictureUrl = "https://canaryappstorage.blob.core.windows.net/dummy-container/a1_tn.jpg" },
-                Caption = "Oh, look at this",
-                CreatedAt = DateTime.Now,
-                Annotations = new System.Collections.ObjectModel.ObservableCollection<Annotation>()
-                {
-                    new Annotation { Text = "Cool", GoldCount = 10 },
-                    new Annotation { Text = "Wow, looks fantastic!", GoldCount = 10 }
-                }
-            };
         }
 
         public async Task RefreshAsync()
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                return;
+            }
+
             IsRefreshing = true;
 
             // Update photo with detailed information
@@ -103,6 +97,13 @@ namespace PhotoSharingApp.Frontend.Portable
 
         public async Task DeletePhotoAsync()
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                await ShowNoConnectionDialog(dialogService);
+                return;
+            }
+
             if (!await dialogService.DisplayDialogAsync("Delete photo", "Do you really want to delete this photo?", "Delete", "Cancel"))
                 return;
 
@@ -119,6 +120,13 @@ namespace PhotoSharingApp.Frontend.Portable
 
         public async Task SetAsProfilePictureAsync()
         {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                await ShowNoConnectionDialog(dialogService);
+                return;
+            }
+
             if (!await dialogService.DisplayDialogAsync("Set as profile picture", "Do you really want to set this photo as your profile picture?", "Yes", "Cancel"))
                 return;
 
