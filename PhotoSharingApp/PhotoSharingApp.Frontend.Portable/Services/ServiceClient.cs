@@ -729,21 +729,13 @@ namespace PhotoSharingApp.Frontend.Portable.Services
                 byte[] myBinary = new byte[stream.Length];
                 stream.Read(myBinary, 0, (int)stream.Length);
 
-                // Upload photos into azure
+                // Upload photos into azure blob storage
                 foreach (var sasContract in sasContracts)
                 {
                     var blob = new CloudBlockBlob(new Uri($"{sasContract.FullBlobUri}{sasContract.SasToken}"));
                     var sideLength = (int)sasContract.SasPhotoType.ToSideLength();
                     var resizedPhoto = _photoCroppingService.ResizeImage(myBinary, sideLength, sideLength);
                     await blob.UploadFromByteArrayAsync(resizedPhoto, 0, resizedPhoto.Length);
-
-
-                    //               var resizedStream = await BitmapTools.Resize(
-                    //                   stream.AsRandomAccessStream(), sideLength,
-                    //                   sideLength);
-
-                    //await blob.UploadFromStreamAsync(resizedStream);
-                    //await blob.UploadFromStreamAsync(stream);
                 }
 
                 var photoContract = new PhotoContract
@@ -769,6 +761,15 @@ namespace PhotoSharingApp.Frontend.Portable.Services
                         photoContract,
                         HttpMethod.Post,
                         null);
+
+                // Call the Cognitive Vision API to generate tags for the image
+                // TODO: Shift this call to the backend and let it gets triggered automatically with functions
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetAsync($"https://snapgolddemofunctions.azurewebsites.net/api/generatekeywords/{responsePhotoContract.Id}");
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Something went wrong...
+                }
 
                 return responsePhotoContract.ToDataModel();
             }
