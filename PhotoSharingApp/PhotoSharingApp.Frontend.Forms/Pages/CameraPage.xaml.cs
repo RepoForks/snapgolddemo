@@ -26,6 +26,7 @@ namespace PhotoSharingApp.Forms
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            //ViewFinder.Init();
             await CrossMedia.Current.Initialize();
             await viewModel.InitAsync();
             CategoryPicker.SelectedIndex = 0;
@@ -34,9 +35,7 @@ namespace PhotoSharingApp.Forms
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-
-            if (file != null)
-                file.Dispose();
+            file?.Dispose();
         }
 
         async void LibraryButton_Clicked(object sender, System.EventArgs e)
@@ -62,6 +61,7 @@ namespace PhotoSharingApp.Forms
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 return;
 
+            // Open camera capture overlay
             file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { AllowCropping = false, SaveToAlbum = false });
             if (file == null)
                 return;
@@ -74,25 +74,12 @@ namespace PhotoSharingApp.Forms
             PhotoPreview.Source = ImageSource.FromFile(file.Path);
         }
 
-
-        private void Handle_Clicked(object sender, System.EventArgs e)
-        {
-            ViewFinder.Init();
-        }
-
-        private void CancelButton_Clicked(object sender, System.EventArgs e)
-        {
-            CameraControls.IsVisible = true;
-            UploadControls.IsVisible = false;
-            PhotoPreview.Source = null;
-            viewModel.Caption = string.Empty;
-        }
-
         async void UploadButton_Clicked(object sender, System.EventArgs e)
         {
             LoadingOverlay.IsVisible = true;
             LoadingAnimation.Play();
 
+            // Upload photo
             var success = await viewModel.UploadPhoto(file.GetStream(), file.Path);
             if (success)
             {
@@ -109,6 +96,14 @@ namespace PhotoSharingApp.Forms
             LoadingOverlay.IsVisible = false;
             LoadingAnimation.IsPlaying = false;
             LoadingAnimation.Pause();
+        }
+
+        private void CancelButton_Clicked(object sender, System.EventArgs e)
+        {
+            CameraControls.IsVisible = true;
+            UploadControls.IsVisible = false;
+            PhotoPreview.Source = null;
+            viewModel.Caption = string.Empty;
         }
     }
 }

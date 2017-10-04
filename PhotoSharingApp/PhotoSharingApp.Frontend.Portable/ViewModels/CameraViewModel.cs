@@ -57,6 +57,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                 return;
             }
 
+            // Load available categories
             var categories = await photoService.GetCategories();
             CategoryOptions.ReplaceRange(categories);
         }

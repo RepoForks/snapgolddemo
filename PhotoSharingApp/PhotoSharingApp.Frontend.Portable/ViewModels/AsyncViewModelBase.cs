@@ -23,7 +23,10 @@ namespace PhotoSharingApp.Frontend.Portable
 
         protected async Task ShowNoConnectionDialog(IDialogService dialogService)
         {
-            await dialogService.DisplayDialogAsync("Not connected.", "Looks like you have no connection to the internet. Please establish a connection and try again.", "Ok");
+            await dialogService.DisplayDialogAsync(
+                "Not connected.",
+                "Looks like you have no connection to the internet. Please establish a connection and try again.",
+                "Ok");
         }
     }
 }

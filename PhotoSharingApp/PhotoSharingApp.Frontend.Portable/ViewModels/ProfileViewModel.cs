@@ -126,7 +126,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             {
                 var currentUser = await photoService.GetCurrentUser();
                 IsLoggedIn = true;
-                await SetUpUser(currentUser);
+                await SetupUser(currentUser);
             }
             catch (UnauthorizedException)
             {
@@ -134,7 +134,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
         }
 
-        private async Task SetUpUser(User user)
+        private async Task SetupUser(User user)
         {
             ProfilePictureUrl = user.ProfilePictureUrl;
             UserGold = user.GoldBalance;
@@ -159,7 +159,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             if (currentUser != null)
             {
                 IsLoggedIn = true;
-                await SetUpUser(currentUser);
+                await SetupUser(currentUser);
             }
         }
 

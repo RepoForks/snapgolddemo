@@ -31,7 +31,6 @@ namespace PhotoSharingApp.Functions
         private static string VisionApiRequestUrlAnalyze = ConfigurationManager.AppSettings["VisionApiRequestUrlAnalyze"];
         private static string EmotionApiRequestUrlRecognize = ConfigurationManager.AppSettings["EmotionApiRequestUrlRecognize"];
 
-
         [FunctionName("GenerateKeywords")]
         public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "GenerateKeywords/{photoId}")]HttpRequestMessage req, string photoId, TraceWriter log)
         {

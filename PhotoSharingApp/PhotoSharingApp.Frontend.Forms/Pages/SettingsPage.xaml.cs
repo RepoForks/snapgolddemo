@@ -14,7 +14,6 @@ namespace PhotoSharingApp.Forms.Pages
 
             var version = CrossVersionTracking.Current;
             VersionText.Text = $"{version.CurrentVersion} (Build {version.CurrentBuild})";
-
         }
     }
 }

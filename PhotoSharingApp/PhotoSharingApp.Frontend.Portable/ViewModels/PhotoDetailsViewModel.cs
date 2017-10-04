@@ -56,7 +56,6 @@ namespace PhotoSharingApp.Frontend.Portable
             }
         }
 
-
         public PhotoDetailsViewModel(INavigationService navigationService, IDialogService dialogService, IConnectivityService connectivityService, IPhotoService photoService)
         {
             this.navigationService = navigationService;
@@ -104,11 +103,13 @@ namespace PhotoSharingApp.Frontend.Portable
                 return;
             }
 
+            // Confirm deletion
             if (!await dialogService.DisplayDialogAsync("Delete photo", "Do you really want to delete this photo?", "Delete", "Cancel"))
                 return;
 
             try
             {
+                // Delete photo
                 await photoService.DeletePhoto(Photo);
                 navigationService.GoBack();
             }
@@ -127,11 +128,13 @@ namespace PhotoSharingApp.Frontend.Portable
                 return;
             }
 
+            // Confirm profile picture
             if (!await dialogService.DisplayDialogAsync("Set as profile picture", "Do you really want to set this photo as your profile picture?", "Yes", "Cancel"))
                 return;
 
             try
             {
+                // Set profile picture
                 await photoService.GetCurrentUser();
                 await photoService.UpdateUserProfilePhoto(Photo);
                 await dialogService.DisplayDialogAsync("Profile Picture updated", "", "Ok");

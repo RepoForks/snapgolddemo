@@ -32,6 +32,7 @@ namespace PhotoSharingApp.Forms
             base.OnAppearing();
             await viewModel.RefreshAsync();
 
+            // Hide controls if photo is not owned by current user
             if (!viewModel.IsCurrentUsersPhoto)
             {
                 ToolbarItems.Remove(DeleteToolbarItem);

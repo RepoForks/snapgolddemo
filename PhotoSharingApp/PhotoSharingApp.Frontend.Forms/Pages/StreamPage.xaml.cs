@@ -21,7 +21,6 @@ namespace PhotoSharingApp.Forms
 
             viewModel = SimpleIoc.Default.GetInstance<StreamPageViewModel>();
             viewModel.Init(bundle.Preview);
-            //photoId = bundle.Thumbnail.
             BindingContext = viewModel;
         }
 

@@ -88,6 +88,7 @@
                 <Label Grid.Row="1" Grid.Column="2" Text="Gold"  HorizontalOptions="Center" HorizontalTextAlignment="Center" />
             </Grid>
 
+            <!-- List of user's photos -->
             <ListView
                 Grid.Row="1"
                 ItemsSource="{Binding UserPhotos}"
@@ -98,7 +99,7 @@
                 ItemTemplate="{StaticResource FullPhotoItemTemplate}">
             </ListView>
             
-            <!-- List -->
+            <!-- Social Login buttons -->
             <StackLayout
                 Grid.Row="1"
                 Padding="20"
