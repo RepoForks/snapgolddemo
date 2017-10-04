@@ -1,13 +1,20 @@
-<!---
-category: AudioVideoAndCamera ControlsLayoutAndText Data FilesFoldersAndLibraries IdentitySecurityAndEncryption Navigation NetworkingAndWebServices TrialsAdsAndInAppPurchases GlobalizationAndLocalization 
--->
-> Please use the XAMARIN branch
+# SnapGold Demo
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus et.
 
-iOS [![Build status](https://build.mobile.azure.com/v0.1/apps/0da4e6cf-5853-4c6c-bd8d-0760b6330a0b/branches/xamarin/badge)](https://mobile.azure.com)
+| Platform | Build Status                                                                                                                                     |
+|----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| iOS      | [![Build status](https://build.mobile.azure.com/v0.1/apps/0da4e6cf-5853-4c6c-bd8d-0760b6330a0b/branches/xamarin/badge)](https://mobile.azure.com) |
+| Android  | [![Build status](https://build.mobile.azure.com/v0.1/apps/8f830d4e-424e-4c37-b9dd-b7a161fb493f/branches/xamarin/badge)](https://mobile.azure.com) |
 
-Android [![Build status](https://build.mobile.azure.com/v0.1/apps/8f830d4e-424e-4c37-b9dd-b7a161fb493f/branches/xamarin/badge)](https://mobile.azure.com)
+## What we did
 
-# Appsample-Photosharing
+- Bla
+- Bla
+  - Bla
+  - Bla
+- Bla
+
+# OLD: Appsample-Photosharing
 
 **PhotoSharingApp** is a Universal Windows Platform (UWP) app sample that demonstrates real-world social media experiences around photo sharing.
 
