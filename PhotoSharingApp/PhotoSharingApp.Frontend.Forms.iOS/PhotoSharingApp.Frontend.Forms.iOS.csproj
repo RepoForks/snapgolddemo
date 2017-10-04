@@ -337,6 +337,7 @@
     <BundleResource Include="Resources\signout.png" />
     <BundleResource Include="Resources\signout%402x.png" />
     <BundleResource Include="Resources\signout%403x.png" />
+    <BundleResource Include="Resources\shadow.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

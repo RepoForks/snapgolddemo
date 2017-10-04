@@ -47,7 +47,7 @@
                         Aspect="AspectFill"
                         BackgroundColor="{StaticResource SubtleColor}">
                         <ffimageloading:CachedImage.HeightRequest>
-                            <OnIdiom x:TypeArguments="x:Double" Phone="74" Tablet="130"/>
+                            <OnIdiom x:TypeArguments="x:Double" Phone="74" Tablet="130" />                                
                         </ffimageloading:CachedImage.HeightRequest>
                     </ffimageloading:CachedImage>
                 </DataTemplate>
@@ -57,7 +57,14 @@
             <flow:FlowListView.Header>
                 <Grid>
                     <Grid.HeightRequest>
-                        <OnIdiom x:TypeArguments="x:Double" Phone="250" Tablet="400"/>
+                        <OnIdiom x:TypeArguments="x:Double" Tablet="400">
+                            <OnIdiom.Phone>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="iOS" Value="300" />
+                                    <On Platform="Android,WinPhone" Value="250" />
+                                </OnPlatform>
+                            </OnIdiom.Phone>
+                        </OnIdiom>
                     </Grid.HeightRequest>
 
                     <carousel:CarouselViewControl
@@ -84,17 +91,28 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-
+                                                                           
+                                       
                                     <!-- Hero Image -->
                                     <ffimageloading:CachedImage
                                         Grid.RowSpan="2"
-                                        Grid.ColumnSpan="2"
+                                        Grid.ColumnSpan="2"                                       
                                         Aspect="AspectFill"
                                         FadeAnimationEnabled="false"
                                         CacheType="Disk"
                                         Source="{Binding StandardUrl}"
                                         BackgroundColor="{StaticResource SubtleColor}"/>
 
+                                    <!-- Shadow -->
+                                    <ffimageloading:CachedImage
+                                        Grid.RowSpan="2"
+                                        Grid.ColumnSpan="2"
+                                        Source="shadow.png"
+                                        HeightRequest="100"
+                                        Aspect="Fill"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="End" />
+                                        
                                     <!-- Details -->
                                     <ffimageloading:CachedImage
                                         Margin="20,0,0,30"

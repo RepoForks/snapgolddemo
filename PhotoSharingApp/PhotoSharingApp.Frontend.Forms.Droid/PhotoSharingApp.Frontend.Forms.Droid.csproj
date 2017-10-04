@@ -324,6 +324,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\signout.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\signout.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\signout.png" />
+    <AndroidResource Include="Resources\drawable\shadow.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoSharingApp.Frontend.Forms\PhotoSharingApp.Frontend.Forms.csproj">
