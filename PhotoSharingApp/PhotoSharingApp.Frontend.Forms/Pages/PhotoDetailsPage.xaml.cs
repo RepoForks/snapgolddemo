@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using PhotoSharingApp.Frontend.Portable;
 using GalaSoft.MvvmLight.Ioc;
 using PhotoSharingApp.Frontend.Portable.Models;
+using Acr.UserDialogs;
 
 namespace PhotoSharingApp.Forms
 {
@@ -43,6 +44,15 @@ namespace PhotoSharingApp.Forms
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             (sender as ListView).SelectedItem = null;
+        }
+
+        async void Handle_Clicked(object sender, System.EventArgs e)
+        {
+            var gold = await UserDialogs.Instance.PromptAsync("Gold");
+            var text = await UserDialogs.Instance.PromptAsync("Text");
+            var annotation = new Annotation { Text = text.Text, GoldCount = Convert.ToInt32(gold.Text) };
+            viewModel.AddAnnotationCommand.Execute(annotation);
+
         }
     }
 }

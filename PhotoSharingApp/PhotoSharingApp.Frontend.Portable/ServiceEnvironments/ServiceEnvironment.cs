@@ -29,6 +29,7 @@ namespace PhotoSharingApp.Frontend.Portable.ServiceEnvironments
     /// </summary>
     public class ServiceEnvironment : ServiceEnvironmentBase
     {
+        //private const string AzureAppServiceBaseUrl = "https://snapgolddemo-eastus.azurewebsites.net/";
         private const string AzureAppServiceBaseUrl = "https://www.snapgold.net/";
         //private const string AzureAppServiceBaseUrl = "http://localhost:51538/";
 

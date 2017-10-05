@@ -6,7 +6,8 @@
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
     xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
-    Title="{Binding Photo.CategoryName}">
+    Title="{Binding Photo.CategoryName}"
+    IsBusy="{Binding IsRefreshing}">
 
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>        
@@ -88,6 +89,10 @@
                     </StackLayout>
                 </StackLayout>
             </ListView.Header>
+
+            <ListView.Footer>
+                <Button Text="Add Annotation" Clicked="Handle_Clicked" />
+            </ListView.Footer>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
