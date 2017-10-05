@@ -290,6 +290,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\snapgolddemo-eastus - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\snapgolddemo-eastus - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\snapgolddemo-westeurope - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\snapgolddemoapp - FTP.pubxml" />

@@ -1302,6 +1302,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photo">A PhotoDocument object.</param>
         private void ConvertImageUrlsToPathOnly(PhotoDocument photo)
         {
+            if (photo == null)
+                return;
+
             if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 photo.CroppedUrl = new Uri(photo.CroppedUrl).PathAndQuery;
 
@@ -1321,6 +1324,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photo">A PhotoContract object.</param>
         private void ConvertImageUrlsToPathOnly(PhotoContract photo)
         {
+            if (photo == null)
+                return;
+
             if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 photo.CroppedUrl = new Uri(photo.CroppedUrl).PathAndQuery;
 
@@ -1340,6 +1346,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photos">A List of PhotoContract objects.</param>
         private void ConvertImageUrlsToPathOnly(IList<PhotoContract> photos)
         {
+            if (photos == null)
+                return;
+
             foreach (var photo in photos)
             {
                 if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1362,6 +1371,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photos">A List of PhotoContract objects.</param>
         private void ConvertImageUrlsToPathOnly(IList<PhotoDocument> photos)
         {
+            if (photos == null)
+                return;
+
             foreach (var photo in photos)
             {
                 if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1384,6 +1396,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="user">A UserDocument object.</param>
         private void ConvertImageUrlsToPathOnly(UserDocument user)
         {
+            if (user == null)
+                return;
+
             if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 user.ProfilePhotoUrl = new Uri(user.ProfilePhotoUrl).PathAndQuery;
         }
@@ -1394,6 +1409,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="user">A UserContract object.</param>
         private void ConvertImageUrlsToPathOnly(UserContract user)
         {
+            if (user == null)
+                return;
+
             if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 user.ProfilePhotoUrl = new Uri(user.ProfilePhotoUrl).PathAndQuery;
         }
@@ -1404,6 +1422,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="users">A List of UserContract objects.</param>
         private void ConvertImageUrlsToPathOnly(IList<UserContract> users)
         {
+            if (users == null)
+                return;
+
             foreach (var user in users)
             {
                 if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1417,6 +1438,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="users">A List of UserContract objects.</param>
         private void ConvertImageUrlsToPathOnly(IList<UserDocument> users)
         {
+            if (users == null)
+                return;
+
             foreach (var user in users)
             {
                 if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1430,6 +1454,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photo">A PhotoDocument object.</param>
         private void ConvertImageUrlsToFullyQualified(PhotoDocument photo)
         {
+            if (photo == null)
+                return;
+
             if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 photo.CroppedUrl = $"{Settings.ImageBaseUrl}{photo.CroppedUrl}";
 
@@ -1449,6 +1476,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photo">A PhotoContract object</param>
         private void ConvertImageUrlsToFullyQualified(PhotoContract photo)
         {
+            if (photo == null)
+                return;
+
             if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 photo.CroppedUrl = $"{Settings.ImageBaseUrl}{photo.CroppedUrl}";
 
@@ -1468,6 +1498,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photos">A List of PhotoContract objects</param>
         private void ConvertImageUrlsToFullyQualified(IList<PhotoContract> photos)
         {
+            if (photos == null)
+                return;
+
             foreach (var photo in photos)
             {
                 if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1490,6 +1523,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="photos">A List of PhotoDocument objects</param>
         private void ConvertImageUrlsToFullyQualified(IList<PhotoDocument> photos)
         {
+            if (photos == null)
+                return;
+
             foreach (var photo in photos)
             {
                 if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1512,6 +1548,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="user">A UserDocument object.</param>
         private void ConvertImageUrlsToFullyQualified(UserContract user)
         {
+            if (user == null)
+                return;
+
             if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 user.ProfilePhotoUrl = $"{Settings.ImageBaseUrl}{user.ProfilePhotoUrl}";
         }
@@ -1522,6 +1561,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="user">A UserDocument object.</param>
         private void ConvertImageUrlsToFullyQualified(UserDocument user)
         {
+            if (user == null)
+                return;
+
             if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
                 user.ProfilePhotoUrl = $"{Settings.ImageBaseUrl}{user.ProfilePhotoUrl}";
         }
@@ -1532,6 +1574,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="users">A List of UserContract objects</param>
         private void ConvertImageUrlsToFullyQualified(IList<UserContract> users)
         {
+            if (users == null)
+                return;
+
             foreach (var user in users)
             {
                 if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
@@ -1545,6 +1590,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <param name="users">A List of UserDocument objects</param>
         private void ConvertImageUrlsToFullyQualified(IList<UserDocument> users)
         {
+            if (users == null)
+                return;
+
             foreach (var user in users)
             {
                 if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
