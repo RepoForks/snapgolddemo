@@ -137,17 +137,7 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the high resolution image URL.
         /// </summary>
-        public string HighResolutionUrl
-        {
-            get
-            {
-                return _highResolutionUrl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
-            }
-            set
-            {
-                _highResolutionUrl = value;
-            }
-        }
+        public string HighResolutionUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier.
@@ -163,10 +153,10 @@ namespace PhotoSharingApp.Frontend.Portable.Models
             {
                 //if (AppEnvironment.Instance.IsMobileDeviceFamily)
                 //{
-                //    return StandardUrl;
+                return StandardUrl;
                 //}
 
-                return HighResolutionUrl;
+                //return HighResolutionUrl;
             }
         }
 
@@ -201,17 +191,7 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the standard image URL.
         /// </summary>
-        public string StandardUrl
-        {
-            get
-            {
-                return _standardUrl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
-            }
-            set
-            {
-                _standardUrl = value;
-            }
-        }
+        public string StandardUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the photo status.
@@ -221,17 +201,7 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the thumbnail image URL.
         /// </summary>
-        public string ThumbnailUrl
-        {
-            get
-            {
-                return _thumbnailurl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
-            }
-            set
-            {
-                _thumbnailurl = value;
-            }
-        }
+        public string ThumbnailUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the user.
