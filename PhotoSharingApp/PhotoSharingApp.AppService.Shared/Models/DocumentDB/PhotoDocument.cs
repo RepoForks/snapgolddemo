@@ -67,8 +67,8 @@ namespace PhotoSharingApp.AppService.Shared.Models.DocumentDB
         /// <summary>
         /// The cropped image url. Cropped via Cognitive Services. This is not guaranteed.
         /// </summary>
-        [JsonProperty(PropertyName = "CroppedImageUrl")]
-        public string CroppedImageUrl { get; set; }
+        [JsonProperty(PropertyName = "CroppedUrl")]
+        public string CroppedUrl { get; set; }
 
         /// <summary>
         /// The photo description.

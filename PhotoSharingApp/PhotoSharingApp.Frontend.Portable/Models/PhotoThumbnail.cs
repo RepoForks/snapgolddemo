@@ -34,16 +34,6 @@ namespace PhotoSharingApp.Frontend.Portable.Models
         /// <summary>
         /// Gets or sets the image URL.
         /// </summary>
-        public string ImageUrl
-        {
-            get
-            {
-                return _imageUrl.Replace("snapgolddemostorage.blob.core.windows.net", "snapgold.azureedge.net");
-            }
-            set
-            {
-                _imageUrl = value;
-            }
-        }
+        public string ImageUrl { get; set; }
     }
 }

@@ -10,6 +10,7 @@
     "VisionApiSubscriptionKey": "13b4c92af6bc4e80a3337499f47de2fa",
     "EmotionApiSubscriptionKey": "55fe1bd0eb2549039dd9301911b50d32",
     "VisionApiRequestUrlAnalyze": "https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description&language=en",
-    "EmotionApiRequestUrlRecognize": "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize"
+    "EmotionApiRequestUrlRecognize": "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize",
+    "ImageUrlBase": "https://snapgolddemostorage.blob.core.windows.net"
   }
 }
