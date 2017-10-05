@@ -33,7 +33,7 @@ namespace PhotoSharingApp.Functions
         private static string ImageUrlBase = ConfigurationManager.AppSettings["ImageUrlBase"];
 
         [FunctionName("GenerateKeywords")]
-        public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "GenerateKeywords/{photoId}")]HttpRequestMessage req, string photoId, TraceWriter log)
+        public static HttpResponseMessage Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "GenerateKeywords/{photoId}")]HttpRequestMessage req, string photoId, TraceWriter log)
         {
             log.Info($"GenerateKeywords HTTP trigger processing a request. Photo ID: {photoId}");
 
@@ -60,9 +60,9 @@ namespace PhotoSharingApp.Functions
                 if (document == null)
                     return req.CreateResponse(HttpStatusCode.NotFound);
 
-                if (!(document.ContainsKey("Keywords") && document.ContainsKey("Description")) && document.ContainsKey("StandardUrl") && !string.IsNullOrWhiteSpace((string)document["StandardUrl"]))
+                if (document.ContainsKey("StandardUrl") && !string.IsNullOrWhiteSpace((string)document["StandardUrl"]))
                 {
-                    var keywords = new List<string>();
+                    var keywords = document.ContainsKey("Keywords") ? JsonConvert.DeserializeObject<List<string>>((string)document["Keywords"]) : new List<string>();
                     string caption = null;
 
                     // Let's use Cog Services to get some keywords
@@ -72,14 +72,14 @@ namespace PhotoSharingApp.Functions
                     var visionJson = visionResponse.Content.ReadAsStringAsync().Result;
                     var visionObject = JsonConvert.DeserializeObject<VisionObject>(visionJson);
 
-                    if (visionObject != null && !document.ContainsKey("Keywords"))
+                    if (visionObject != null)
                     {
                         bool isPerson = false;
                         if (visionObject?.Tags != null && visionObject?.Tags.Count > 0)
                         {
                             foreach (var tag in visionObject.Tags)
                             {
-                                if (tag.Confidence > 0.3)
+                                if (!keywords.Any(t => t == tag.Name) && tag.Confidence > 0.3)
                                 {
                                     keywords.Add(tag.Name);
                                     if (tag.Name == "person")
@@ -100,17 +100,16 @@ namespace PhotoSharingApp.Functions
                                 foreach (var emotionObject in emotionObjectList)
                                 {
                                     var scores = emotionObject.Scores;
-                                    if (scores.Happiness > 0.8 && scores.Happiness <= 1.0)
+                                    if (scores.Happiness > 0.8 && scores.Happiness <= 1.0 && !keywords.Any(t => t == "happy"))
                                         keywords.Add("happy");
-                                    if (scores.Surprise > 0.8 && scores.Surprise <= 1.0)
+                                    if (scores.Surprise > 0.8 && scores.Surprise <= 1.0 && !keywords.Any(t => t == "surprised"))
                                         keywords.Add("surprised");
-
                                 }
                             }
                         }
                     }
 
-                    if (visionObject != null && !document.ContainsKey("Description"))
+                    if (visionObject != null && (!document.ContainsKey("Description") || string.IsNullOrEmpty((string)document["Description"])))
                     {
                         if (visionObject.Description?.Captions != null && visionObject?.Description?.Captions.Count > 0)
                         {
