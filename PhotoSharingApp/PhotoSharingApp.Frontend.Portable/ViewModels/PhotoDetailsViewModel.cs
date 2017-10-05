@@ -181,6 +181,13 @@ namespace PhotoSharingApp.Frontend.Portable
             catch (UnauthorizedException)
             {
                 await dialogService.DisplayDialogAsync("Not logged in!", "You need to be logged in to upload a photo. Please log in first.", "Ok");
+            }
+            catch (InsufficientBalanceException)
+            {
+                await dialogService.DisplayDialogAsync("Balance too low!", "You don't have enough gold.", "Ok");
+            }
+            finally
+            {
                 IsRefreshing = false;
             }
         }

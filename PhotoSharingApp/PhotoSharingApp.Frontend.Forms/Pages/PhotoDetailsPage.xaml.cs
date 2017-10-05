@@ -48,11 +48,16 @@ namespace PhotoSharingApp.Forms
 
         async void Handle_Clicked(object sender, System.EventArgs e)
         {
-            var gold = await UserDialogs.Instance.PromptAsync("Gold");
-            var text = await UserDialogs.Instance.PromptAsync("Text");
-            var annotation = new Annotation { Text = text.Text, GoldCount = Convert.ToInt32(gold.Text) };
-            viewModel.AddAnnotationCommand.Execute(annotation);
-
+            var gold = await UserDialogs.Instance.PromptAsync("How much gold do you want to give?", "Gold", "Ok", "Cancel", "", InputType.Number);
+            if (gold.Ok && !string.IsNullOrEmpty(gold.Value))
+            {
+                var text = await UserDialogs.Instance.PromptAsync("What do you think?", "Comment");
+                if (!string.IsNullOrEmpty(text.Value))
+                {
+                    var annotation = new Annotation { Text = text.Value, GoldCount = Convert.ToInt32(gold.Value) };
+                    viewModel.AddAnnotationCommand.Execute(annotation);
+                }
+            }
         }
     }
 }

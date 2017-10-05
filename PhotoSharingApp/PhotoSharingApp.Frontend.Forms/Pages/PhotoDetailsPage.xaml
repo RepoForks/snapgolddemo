@@ -91,7 +91,22 @@
             </ListView.Header>
 
             <ListView.Footer>
-                <Button Text="Add Annotation" Clicked="Handle_Clicked" />
+                <Grid Padding="20">
+
+                <Button
+                    HorizontalOptions="Start"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="#DDD"
+                    TextColor="Black">
+                    <Button.Text>
+                        <OnPlatform x:TypeArguments="x:String">   
+                            <!-- Ugly HACK: Simulate Padding on iOS -->
+                            <On Platform="iOS" Value="    Add Annotation    "/>
+                            <On Platform="Android,WinPhone" Value="Add Annotation"/>
+                        </OnPlatform>
+                    </Button.Text>
+                </Button>
+                    </Grid>
             </ListView.Footer>
 
             <ListView.ItemTemplate>
