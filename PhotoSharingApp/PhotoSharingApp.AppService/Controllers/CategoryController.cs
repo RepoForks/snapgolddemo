@@ -69,7 +69,7 @@ namespace PhotoSharingApp.AppService.Controllers
         /// <param name="continuationToken">continuation token to page through the result.</param>
         /// <returns>Paged list of photo contract.</returns>
         [Route("api/category/{id}")]
-        public async Task<PagedResponse<PhotoContract>> GetAsync(string id, [FromUri] string continuationToken)
+        public async Task<PagedResponse<PhotoContract>> GetAsync(string id, [FromUri] string continuationToken = null)
         {
             try
             {

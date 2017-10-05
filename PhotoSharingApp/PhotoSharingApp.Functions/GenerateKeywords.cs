@@ -30,6 +30,7 @@ namespace PhotoSharingApp.Functions
         private static string EmotionApiSubscriptionKey = ConfigurationManager.AppSettings["EmotionApiSubscriptionKey"];
         private static string VisionApiRequestUrlAnalyze = ConfigurationManager.AppSettings["VisionApiRequestUrlAnalyze"];
         private static string EmotionApiRequestUrlRecognize = ConfigurationManager.AppSettings["EmotionApiRequestUrlRecognize"];
+        private static string ImageUrlBase = ConfigurationManager.AppSettings["ImageUrlBase"];
 
 
         [FunctionName("GenerateKeywords")]
@@ -66,7 +67,7 @@ namespace PhotoSharingApp.Functions
                     string caption = null;
 
                     // Let's use Cog Services to get some keywords
-                    var imageUrl = (string)document["StandardUrl"];
+                    var imageUrl = $"{ImageUrlBase}{(string)document["StandardUrl"]}";
 
                     var visionResponse = visionHttpClient.PostAsync(VisionApiRequestUrlAnalyze, new StringContent($"{{\"url\":\"{imageUrl}\"}}", Encoding.UTF8, "application/json")).Result;
                     var visionJson = visionResponse.Content.ReadAsStringAsync().Result;
