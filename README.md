@@ -9,9 +9,9 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 ## What we did
 
 - Bla
-- Bla
-  - Bla
-  - Bla
+- Add Azure CDN
+  - Removed domain part from image urls in the documents
+  - Backend now prepends either the CDN or Blob storage URL (can be configured) 
 - Bla
 
 # OLD: Appsample-Photosharing
