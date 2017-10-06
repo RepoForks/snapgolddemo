@@ -384,7 +384,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 .AsDocumentQuery();
 
             var documentResponse = await query.ExecuteNextAsync<UserDocument>();
-            
+
             var userList = documentResponse.ToList();
 
             ConvertImageUrlsToFullyQualified(userList);
@@ -430,7 +430,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                     numberOfThumbnails,
                     _currentDocumentVersion);
 
-            
+
             var mostRecentCategoryPhotos = photosQuery.Response;
 
             if (mostRecentCategoryPhotos != null && mostRecentCategoryPhotos.Any())
@@ -583,7 +583,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 Value = u.GoldGiven,
                 Rank = rank++
             }).ToList();
-            
+
             foreach (var item in mostGivingUsers)
             {
                 ConvertImageUrlsToFullyQualified(item.Model);
@@ -847,6 +847,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 throw new DataLayerException(DataLayerError.NotFound, $"No user with registrationReference {registrationReference} found");
             }
 
+            ConvertImageUrlsToFullyQualified(user);
+
             return user;
         }
 
@@ -1101,7 +1103,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                     photoDocument.Reports.Add(reportDocument);
 
                     if (photoDocument.Reports.Count >= _maxReportsPermitted)
-                    { 
+                    {
                         photoDocument.Status = PhotoStatus.UnderReview;
 
                         var user = GetUserDocumentByUserId(photoDocument.UserId);
@@ -1221,7 +1223,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             {
                 throw new DataLayerException(DataLayerError.NotFound, ex.Message, ex);
             }
-            
+
             if (firstTimeProfileGoldAward)
             {
                 // Handle gold balance changes and create transaction record
@@ -1555,7 +1557,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                     photo.ThumbnailUrl = $"{Settings.ImageBaseUrl}{photo.ThumbnailUrl}";
             }
         }
-        
+
         /// <summary>
         /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
         /// </summary>
