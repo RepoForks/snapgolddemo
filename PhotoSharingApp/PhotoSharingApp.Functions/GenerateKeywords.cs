@@ -62,7 +62,8 @@ namespace PhotoSharingApp.Functions
 
                 if (document.ContainsKey("StandardUrl") && !string.IsNullOrWhiteSpace((string)document["StandardUrl"]))
                 {
-                    var keywords = document.ContainsKey("Keywords") ? JsonConvert.DeserializeObject<List<string>>((string)document["Keywords"]) : new List<string>();
+                    var existingKeywords = document.ContainsKey("Keywords") ? ((Newtonsoft.Json.Linq.JArray)document["Keywords"]).ToObject<List<string>>() : new List<string>();
+                    var keywords = existingKeywords.Select(item => (string)item.Clone()).ToList();
                     string caption = null;
 
                     // Let's use Cog Services to get some keywords
@@ -121,19 +122,32 @@ namespace PhotoSharingApp.Functions
 
                     var hasChanged = false;
 
-                    if (keywords.Count > 0)
+                    var keywordUnique = keywords.Except(existingKeywords, StringComparer.OrdinalIgnoreCase).ToList();
+                    var existingKeywordUnique = existingKeywords.Except(keywords, StringComparer.OrdinalIgnoreCase).ToList();
+                    if (keywordUnique.Any() || existingKeywordUnique.Any())
                     {
-                        document.Add("Keywords", keywords);
+                        if (document.ContainsKey("Keywords"))
+                            document["Keywords"] = keywords;
+                        else
+                            document.Add("Keywords", keywords);
+
                         hasChanged = true;
                     }
 
                     if (!string.IsNullOrWhiteSpace(caption))
                     {
-                        document.Add("Description", caption);
+                        if (document.ContainsKey("Keywords"))
+                            document["Description"] = caption;
+                        else
+                            document.Add("Description", caption);
+
                         hasChanged = true;
                     }
 
-                    returnStatusCode = HttpStatusCode.NoContent; // We want to assume a successful outcome at this point.
+                    if (hasChanged)
+                        returnStatusCode = HttpStatusCode.NoContent; // We want to assume a successful outcome at this point.
+                    else
+                        returnStatusCode = HttpStatusCode.NotModified;
 
                     if (hasChanged)
                     {
