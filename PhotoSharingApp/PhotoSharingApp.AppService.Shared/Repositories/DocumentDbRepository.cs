@@ -384,8 +384,12 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 .AsDocumentQuery();
 
             var documentResponse = await query.ExecuteNextAsync<UserDocument>();
+            
+            var userList = documentResponse.ToList();
 
-            return documentResponse.ToList();
+            ConvertImageUrlsToFullyQualified(userList);
+
+            return userList;
         }
 
         private AnnotationDocument GetAnnotationDocument(string annotationId)
@@ -579,6 +583,11 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 Value = u.GoldGiven,
                 Rank = rank++
             }).ToList();
+            
+            foreach (var item in mostGivingUsers)
+            {
+                ConvertImageUrlsToFullyQualified(item.Model);
+            }
 
             return mostGivingUsers;
         }
@@ -676,6 +685,11 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 Value = u.GoldBalance,
                 Rank = rank++
             }).ToList();
+
+            foreach (var item in mostGoldUsers)
+            {
+                ConvertImageUrlsToFullyQualified(item.Model);
+            }
 
             return mostGoldUsers;
         }
