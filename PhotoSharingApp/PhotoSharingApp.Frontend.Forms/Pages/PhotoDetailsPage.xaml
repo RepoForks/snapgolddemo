@@ -6,7 +6,8 @@
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
     xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
-    Title="{Binding Photo.CategoryName}">
+    Title="{Binding Photo.CategoryName}"
+    IsBusy="{Binding IsRefreshing}">
 
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>        
@@ -88,6 +89,25 @@
                     </StackLayout>
                 </StackLayout>
             </ListView.Header>
+
+            <ListView.Footer>
+                <Grid Padding="20">
+
+                <Button
+                    HorizontalOptions="Start"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="#DDD"
+                    TextColor="Black">
+                    <Button.Text>
+                        <OnPlatform x:TypeArguments="x:String">   
+                            <!-- Ugly HACK: Simulate Padding on iOS -->
+                            <On Platform="iOS" Value="    Add Annotation    "/>
+                            <On Platform="Android,WinPhone" Value="Add Annotation"/>
+                        </OnPlatform>
+                    </Button.Text>
+                </Button>
+                    </Grid>
+            </ListView.Footer>
 
             <ListView.ItemTemplate>
                 <DataTemplate>

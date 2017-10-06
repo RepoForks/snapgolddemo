@@ -56,6 +56,18 @@ namespace PhotoSharingApp.Frontend.Portable
             }
         }
 
+        private RelayCommand<Annotation> addAnnotationCommand;
+        public RelayCommand<Annotation> AddAnnotationCommand
+        {
+            get
+            {
+                return addAnnotationCommand ?? (addAnnotationCommand = new RelayCommand<Annotation>(async (Annotation annotation) =>
+                {
+                    await AddCommentAsync(annotation.Text, annotation.GoldCount);
+                }));
+            }
+        }
+
         public PhotoDetailsViewModel(INavigationService navigationService, IDialogService dialogService, IConnectivityService connectivityService, IPhotoService photoService)
         {
             this.navigationService = navigationService;
@@ -142,6 +154,41 @@ namespace PhotoSharingApp.Frontend.Portable
             catch (Exception ex)
             {
                 await dialogService.DisplayDialogAsync("Failed to delete", "Could not delete photo", "Ok");
+            }
+        }
+
+        private async Task AddCommentAsync(string text, int gold)
+        {
+            // Check connectivity
+            if (!connectivityService.IsConnected())
+            {
+                await ShowNoConnectionDialog(dialogService);
+                return;
+            }
+
+            try
+            {
+                IsRefreshing = true;
+
+                // Check if user is logged in
+                await photoService.GetCurrentUser();
+
+                var annotation = await photoService.PostAnnotation(Photo, text, gold);
+                Photo.Annotations.Add(annotation);
+
+                IsRefreshing = false;
+            }
+            catch (UnauthorizedException)
+            {
+                await dialogService.DisplayDialogAsync("Not logged in!", "You need to be logged in to upload a photo. Please log in first.", "Ok");
+            }
+            catch (InsufficientBalanceException)
+            {
+                await dialogService.DisplayDialogAsync("Balance too low!", "You don't have enough gold.", "Ok");
+            }
+            finally
+            {
+                IsRefreshing = false;
             }
         }
     }

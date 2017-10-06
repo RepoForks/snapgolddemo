@@ -22,6 +22,7 @@ using System.Net.Http;
 using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 using Lottie.Forms.Droid;
 using CarouselView.FormsPlugin.Android;
+using Acr.UserDialogs;
 
 namespace PhotoSharingApp.Forms.Droid
 {
@@ -48,6 +49,7 @@ namespace PhotoSharingApp.Forms.Droid
             CachedImageRenderer.Init();
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();
+            UserDialogs.Init(() => (Activity)global::Xamarin.Forms.Forms.Context);
 
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();

@@ -48,6 +48,7 @@ namespace PhotoSharingApp.Forms.iOS
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();
 
+
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();
 
