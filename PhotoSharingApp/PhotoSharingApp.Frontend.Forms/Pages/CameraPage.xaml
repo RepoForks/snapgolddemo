@@ -71,11 +71,12 @@
                 Padding="20">
 
                 <Label Text="Caption" Style="{StaticResource ControlHeaderStyle}" />
-                <Entry Text="{Binding Caption}" Margin="0,0,0,15"  />
+                <Entry Text="{Binding Caption}" Margin="0,0,0,15" HeightRequest="40"  />
 
                 <Label Text="Category" Style="{StaticResource ControlHeaderStyle}" />
                 <Picker
                     x:Name="CategoryPicker"
+                    HeightRequest="40"
                     Margin="0,0,0,15"
                     ItemsSource="{Binding CategoryOptions}"
                     SelectedItem="{Binding SelectedCategory}"

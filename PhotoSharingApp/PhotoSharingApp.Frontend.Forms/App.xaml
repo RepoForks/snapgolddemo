@@ -23,6 +23,10 @@
             <!-- Font Sizes -->
             <x:Double x:Key="FontSizeSmall">10</x:Double>
             <x:Double x:Key="FontSizeMedium">12</x:Double>
+            <OnPlatform x:Key="FontSizeLarge" x:TypeArguments="x:Double">
+                <On Platform="Android" Value="18" />
+                <On Platform="iOS,WinPhone" Value="20" />
+            </OnPlatform>
 
             <!-- Styles -->
             <Style x:Key="ControlHeaderStyle" TargetType="Label">

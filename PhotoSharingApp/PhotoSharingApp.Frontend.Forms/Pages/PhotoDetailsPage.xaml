@@ -70,6 +70,7 @@
                             BorderThickness="5" />
 
                         <Frame
+                            x:Name="GoldIndicator"
                             Grid.Column="1"
                             HorizontalOptions="End"
                             Margin="0,0,0,0"
@@ -79,6 +80,11 @@
                             WidthRequest="20"
                             HeightRequest="20"
                             HasShadow="false">
+
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GiveGold_Clicked"/>
+                            </Image.GestureRecognizers>
+                            
                             <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
                         </Frame>
                     </Grid>
@@ -95,7 +101,7 @@
 
                 <Button
                     HorizontalOptions="Start"
-                    Clicked="Handle_Clicked"
+                    Clicked="GiveGold_Clicked"
                     BackgroundColor="#DDD"
                     TextColor="Black">
                     <Button.Text>

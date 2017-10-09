@@ -89,6 +89,8 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
             heroImages = new ObservableRangeCollection<Photo>();
             topCategories = new ObservableRangeCollection<GroupedCategoryPreview>();
+
+
         }
 
         public async Task RefreshAsync(bool force = false)
@@ -126,7 +128,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             HeroImages.ReplaceRange(heroes);
 
             // Load categories
-            var topCat = await photoService.GetTopCategories(5);
+            var topCat = await photoService.GetTopCategories(6);
             var grouped =
                 from category in topCat
                 group category by category.Name into categoryGroup

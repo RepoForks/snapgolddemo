@@ -8,20 +8,20 @@
     <ScrollView>
         <StackLayout Padding="20" Spacing="10">
             <Label Text="Version" Style="{StaticResource ControlHeaderStyle}" />
-            <Label x:Name="VersionText" Text="1.0"  />
+            <Label x:Name="VersionText" Text="1.0" TextColor="{StaticResource DarkSubtleFontColor}" />
 
             <!--<Label Text="License" Style="{StaticResource ControlHeaderStyle}" Margin="0,20,0,0" />
             <Label Text="Microsoft © 2017 (Preview Software)"  />-->
 
             <Label Text="3rd Party Libraries" Style="{StaticResource ControlHeaderStyle}" Margin="0,20,0,0" />
-            <Label Text="MVVM Light by Laurent Bugnion"  />
-            <Label Text="Version Tracking Plugin by Colby L Williams"  />
-            <Label Text="MVVM Helpers by James Montemagno"  />
-            <Label Text="Media Plugin by James Montemagno"  />
-            <Label Text="Image Circle by James Montemagno"  />
-            <Label Text="CarouselView by Alex Rainman"  />
-            <Label Text="FFImageLoading by Daniel Luberda"  />
-            <Label Text="Lottie by AirBnB" />
+            <Label Text="MVVM Light by Laurent Bugnion" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="Version Tracking Plugin by Colby L Williams" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="MVVM Helpers by James Montemagno" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="Media Plugin by James Montemagno" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="Image Circle by James Montemagno" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="CarouselView by Alex Rainman" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="FFImageLoading by Daniel Luberda" TextColor="{StaticResource DarkSubtleFontColor}" />
+            <Label Text="Lottie by AirBnB" TextColor="{StaticResource DarkSubtleFontColor}" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

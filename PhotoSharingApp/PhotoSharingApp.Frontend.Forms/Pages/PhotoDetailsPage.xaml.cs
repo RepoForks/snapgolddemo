@@ -46,8 +46,11 @@ namespace PhotoSharingApp.Forms
             (sender as ListView).SelectedItem = null;
         }
 
-        async void Handle_Clicked(object sender, System.EventArgs e)
+        async void GiveGold_Clicked(object sender, System.EventArgs e)
         {
+            await GoldIndicator.ScaleTo(1.1, 100);
+            await GoldIndicator.ScaleTo(1.0, 100);
+
             var gold = await UserDialogs.Instance.PromptAsync("How much gold do you want to give?", "Gold", "Ok", "Cancel", "", InputType.Number);
             if (gold.Ok && !string.IsNullOrEmpty(gold.Value))
             {

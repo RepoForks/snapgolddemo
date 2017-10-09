@@ -24,7 +24,7 @@
 	<ContentPage.Content>
         <Grid>
         <flow:FlowListView
-            FlowColumnCount="5"
+            FlowColumnCount="3"
             SeparatorVisibility="None"
             HasUnevenRows="true"
             FlowUseAbsoluteLayoutInternally="false"
@@ -35,19 +35,19 @@
             IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
             RefreshCommand="{Binding RefreshCommand}"
             FlowGroupDisplayBinding="{Binding Name}"
-            FlowItemsSource="{Binding TopCategories}">
+            FlowItemsSource="{Binding TopCategories}"
+                >
 
             <!-- Item Template for Category Preview Image -->
             <flow:FlowListView.FlowColumnTemplate>
                 <DataTemplate>                   
-                    <ffimageloading:CachedImage                                
+                    <ffimageloading:CachedImage                          
                         Source="{Binding ImageUrl}"
-                        HeightRequest="70"
                         CacheType="Disk"
                         Aspect="AspectFill"
                         BackgroundColor="{StaticResource SubtleColor}">
                         <ffimageloading:CachedImage.HeightRequest>
-                            <OnIdiom x:TypeArguments="x:Double" Phone="74" Tablet="130" />                                
+                            <OnIdiom x:TypeArguments="x:Double" Phone="120" Tablet="130" />                                
                         </ffimageloading:CachedImage.HeightRequest>
                     </ffimageloading:CachedImage>
                 </DataTemplate>
@@ -137,10 +137,19 @@
                 </Grid>
             </flow:FlowListView.Header>
 
+            <flow:FlowListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell Height="60">
+                        <Grid BackgroundColor="White" Padding="20">
+                            <Label Text="{Binding Path=Key}" VerticalOptions="Center" FontAttributes="Bold" FontSize="{StaticResource FontSizeLarge}" TextColor="{StaticResource DarkSubtleFontColor}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </flow:FlowListView.GroupHeaderTemplate>
+
             <!-- ListView Footer -->
             <flow:FlowListView.Footer>
-                <Grid                    
-                    Padding="20">
+                <Grid Padding="0,10,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -160,7 +169,7 @@
                                 Grid.Row="0"
                                 Margin="0,0,0,5"
                                 Text="{Binding CurrentUser.GoldBalance, StringFormat='Gold balance: {0:G}'}"
-                                TextColor="{StaticResource SubtleFontColor}"/>
+                                TextColor="{StaticResource DarkSubtleFontColor}"/>
 
                             <StackLayout
                                 Grid.Row="1"
@@ -180,7 +189,7 @@
                         BackgroundColor="{StaticResource SubtleColor}"
                         HasShadow="false"
                         CornerRadius="0"
-                        Margin="0,20,0,0">
+                        Margin="0,5,0,0">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -191,7 +200,7 @@
                                 Grid.Row="0"
                                 Margin="0,0,0,5"
                                 Text="Upload a photo now to get some Gold"
-                                TextColor="{StaticResource SubtleFontColor}"/>
+                                TextColor="{StaticResource DarkSubtleFontColor}"/>
 
                             <StackLayout
                                 Grid.Row="1"

@@ -38,8 +38,6 @@ namespace PhotoSharingApp.Forms.iOS
                 //MobileServiceAuthenticationProvider.Twitter
             };
 
-
-
             UITabBar.Appearance.SelectedImageTintColor = UIColor.FromRGB(250, 168, 25);
 
             global::Xamarin.Forms.Forms.Init();
