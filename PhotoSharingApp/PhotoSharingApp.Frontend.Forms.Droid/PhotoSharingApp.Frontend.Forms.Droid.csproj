@@ -167,12 +167,6 @@
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\monoandroid\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
-    <Reference Include="ImageCircle.Forms.Plugin.Abstractions">
-      <HintPath>..\..\packages\Xam.Plugins.Forms.ImageCircle.1.8.1\lib\MonoAndroid10\ImageCircle.Forms.Plugin.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageCircle.Forms.Plugin.Android">
-      <HintPath>..\..\packages\Xam.Plugins.Forms.ImageCircle.1.8.1\lib\MonoAndroid10\ImageCircle.Forms.Plugin.Android.dll</HintPath>
-    </Reference>
     <Reference Include="Plugin.CurrentActivity">
       <HintPath>..\..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
     </Reference>

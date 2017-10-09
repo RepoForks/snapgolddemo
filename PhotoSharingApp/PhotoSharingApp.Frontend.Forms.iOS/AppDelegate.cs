@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FFImageLoading.Forms.Touch;
 using Foundation;
-using ImageCircle.Forms.Plugin.iOS;
 using Microsoft.WindowsAzure.MobileServices;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
 using PhotoSharingApp.Frontend.Portable.Models;
@@ -41,7 +40,6 @@ namespace PhotoSharingApp.Forms.iOS
             UITabBar.Appearance.SelectedImageTintColor = UIColor.FromRGB(250, 168, 25);
 
             global::Xamarin.Forms.Forms.Init();
-            ImageCircleRenderer.Init();
             CachedImageRenderer.Init();
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();

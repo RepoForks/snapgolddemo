@@ -60,15 +60,24 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- User Image -->
-                            <ic:CircleImage
+
+                            <ffimageloading:CachedImage
                                 WidthRequest="100"
                                 HeightRequest="100"
                                 VerticalOptions="Center"
                                 Aspect="AspectFill"
                                 Source="{Binding User.ProfilePictureUrl}"
-                                BorderColor="White"
-                                BorderThickness="5" />
+                                FadeAnimationEnabled="false"
+                                CacheType="Disk">          
+                                <ffimageloading:CachedImage.Transformations>
+                                    <fftransformations:CircleTransformation>
+                                        <x:Arguments>
+                                            <x:Double>50</x:Double>
+                                            <x:String>#FFFFFF</x:String>
+                                        </x:Arguments>
+                                    </fftransformations:CircleTransformation>
+                                </ffimageloading:CachedImage.Transformations>
+                            </ffimageloading:CachedImage>
 
                             <Frame
                                 Grid.Column="1"

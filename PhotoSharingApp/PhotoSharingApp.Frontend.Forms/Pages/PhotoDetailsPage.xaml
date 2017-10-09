@@ -48,7 +48,9 @@
                         Grid.Row="0"
                         Aspect="AspectFit"
                         CacheType="Disk"
-                        Source="{Binding Photo.StandardUrl}" />
+                        Source="{Binding Photo.StandardUrl}"
+                        LoadingPlaceholder="placehilder.jpg"
+                        MinimumHeightRequest="100"/>
 
                     <Grid
                         Margin="20,-50,20,0"
@@ -60,14 +62,22 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                     
-                        <ic:CircleImage
+                        <ffimageloading:CachedImage
                             WidthRequest="100"
                             HeightRequest="100"
                             VerticalOptions="Center"
                             Aspect="AspectFill"
-                            Source="{Binding Photo.User.ProfilePictureUrl}"
-                            BorderColor="White"
-                            BorderThickness="5" />
+                            CacheType="Disk"
+                            Source="{Binding Photo.User.ProfilePictureUrl}">
+                            <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation>
+                                    <x:Arguments>
+                                        <x:Double>50</x:Double>
+                                        <x:String>#FFFFFF</x:String>
+                                    </x:Arguments>
+                                </fftransformations:CircleTransformation>
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
 
                         <Frame
                             x:Name="GoldIndicator"
