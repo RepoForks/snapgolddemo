@@ -14,8 +14,8 @@ namespace PhotoSharingApp.Forms.iOS.CustomRenderers
         {
             base.OnElementChanged(e);
 
-            NavigationBar.PrefersLargeTitles |= UIDevice.CurrentDevice.CheckSystemVersion(11, 0);
-            UINavigationBar.Appearance.LargeTitleTextAttributes = new UIStringAttributes { ForegroundColor = UIColor.White }; ;
+            //NavigationBar.PrefersLargeTitles |= UIDevice.CurrentDevice.CheckSystemVersion(11, 0);
+            //UINavigationBar.Appearance.LargeTitleTextAttributes = new UIStringAttributes { ForegroundColor = UIColor.White }; ;
         }
     }
 }
