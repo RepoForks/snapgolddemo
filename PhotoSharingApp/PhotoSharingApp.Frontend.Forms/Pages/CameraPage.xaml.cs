@@ -62,7 +62,7 @@ namespace PhotoSharingApp.Forms
                 return;
 
             // Open camera capture overlay
-            file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { AllowCropping = false, SaveToAlbum = false });
+            file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { AllowCropping = false, SaveToAlbum = true });
             if (file == null)
                 return;
 
