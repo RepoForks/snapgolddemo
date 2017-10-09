@@ -75,7 +75,7 @@ namespace PhotoSharingApp.Forms.Droid
                 CrossSecureStorage.Current.SetValue("userId", user.UserId);
                 CrossSecureStorage.Current.SetValue("authToken", user.MobileServiceAuthenticationToken);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

@@ -12,7 +12,7 @@ namespace PhotoSharingApp.Forms
     public partial class StreamPage : ContentPage
     {
         private StreamPageViewModel viewModel;
-        private string photoId;
+        //private string photoId;
 
         public StreamPage(CategoryThumbnailBundle bundle)
         {

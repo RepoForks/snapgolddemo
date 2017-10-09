@@ -340,6 +340,7 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\signout.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\signout.png" />
     <AndroidResource Include="Resources\drawable\shadow.png" />
+    <AndroidResource Include="Resources\drawable\placeholder.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoSharingApp.Frontend.Forms\PhotoSharingApp.Frontend.Forms.csproj">
@@ -356,9 +357,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Resources\drawable\placeholder.jpg" />
-  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <AndroidAsset Include="Assets\upload-bubbles.json" />
