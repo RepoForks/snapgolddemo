@@ -18,7 +18,6 @@
             <Label Text="Version Tracking Plugin by Colby L Williams" TextColor="{StaticResource DarkSubtleFontColor}" />
             <Label Text="MVVM Helpers by James Montemagno" TextColor="{StaticResource DarkSubtleFontColor}" />
             <Label Text="Media Plugin by James Montemagno" TextColor="{StaticResource DarkSubtleFontColor}" />
-            <Label Text="Image Circle by James Montemagno" TextColor="{StaticResource DarkSubtleFontColor}" />
             <Label Text="CarouselView by Alex Rainman" TextColor="{StaticResource DarkSubtleFontColor}" />
             <Label Text="FFImageLoading by Daniel Luberda" TextColor="{StaticResource DarkSubtleFontColor}" />
             <Label Text="Lottie by AirBnB" TextColor="{StaticResource DarkSubtleFontColor}" />

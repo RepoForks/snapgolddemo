@@ -16,6 +16,8 @@ using Plugin.VersionTracking;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
@@ -53,9 +55,10 @@ namespace PhotoSharingApp.Forms
             SimpleIoc.Default.Register<ProfileViewModel>();
 
             // Setup App Container
-            var navigationPage = new NavigationPage();
+            var navigationPage = new Xamarin.Forms.NavigationPage();
             navigationPage.BarBackgroundColor = (Color)Resources["AccentColor"];
             navigationPage.BarTextColor = Color.White;
+            navigationPage.On<iOS>().EnableTranslucentNavigationBar();
 
             // Register Navigation Service
             var navigationService = new FormsNavigationService(navigationPage);
