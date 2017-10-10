@@ -10,9 +10,11 @@ namespace PhotoSharingApp.Forms.UITests
 {
 	public class HomePage : BasePage
 	{
+        readonly Query firstPhotoButton;
+
 		protected override PlatformQuery Trait => new PlatformQuery
 		{
-			Android = x => x.Marked("Home"),
+            Android = x => x.Class("AppCompatImageView"),
 			iOS = x => x.Marked("Home")
 		};
 
@@ -20,6 +22,7 @@ namespace PhotoSharingApp.Forms.UITests
 		{
 			if (OnAndroid)
 			{
+                firstPhotoButton = x => x.Class("CachedImageView").Index(2);
 			}
 
 			if (OniOS)
@@ -27,8 +30,23 @@ namespace PhotoSharingApp.Forms.UITests
 			}
 		}
 
-		public void DoSomething()
+        internal HomePage ScrollThroughPhotos()
+        {
+            app.ScrollDown();
+            app.ScrollDown();
+            return this;
+        }
+
+        public void DoSomething()
 		{
 		}
-	}
+
+        internal HomePage SelectPhoto()
+        {
+            app.Tap(firstPhotoButton);
+            //app.WaitForElement();
+            
+            return this;
+        }
+    }
 }
