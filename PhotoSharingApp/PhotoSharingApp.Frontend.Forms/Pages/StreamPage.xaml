@@ -11,6 +11,7 @@
 	<ContentPage.Content>
         <ListView
             x:Name="PhotoList"
+            AutomationId="PhotoList"
             ItemsSource="{Binding Photos}"
             HasUnevenRows="true"
             SeparatorVisibility="None"

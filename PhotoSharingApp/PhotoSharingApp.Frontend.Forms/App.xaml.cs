@@ -1,4 +1,5 @@
-﻿using DLToolkit.Forms.Controls;
+﻿using System.Collections.Generic;
+using DLToolkit.Forms.Controls;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Azure.Mobile;
@@ -85,6 +86,11 @@ namespace PhotoSharingApp.Forms
                 "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
                 typeof(Analytics),
                 typeof(Crashes));
+
+            Analytics.TrackEvent("App Started", new Dictionary<string, string> 
+            {
+                { "Day of week", System.DateTime.Now.ToString("dddd") }
+            });
         }
 
         protected override void OnSleep()

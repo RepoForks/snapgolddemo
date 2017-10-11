@@ -12,7 +12,7 @@ namespace PhotoSharingApp.Forms.UITests
 	{
 		protected override PlatformQuery Trait => new PlatformQuery
 		{
-			Android = x => x.Marked("Home"),
+            Android = x => x.Class("AppCompatImageView"),
 			iOS = x => x.Marked("Home")
 		};
 
@@ -25,10 +25,6 @@ namespace PhotoSharingApp.Forms.UITests
 			if (OniOS)
 			{
 			}
-		}
-
-		public void DoSomething()
-		{
 		}
 	}
 }

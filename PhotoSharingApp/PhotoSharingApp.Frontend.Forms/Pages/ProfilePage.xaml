@@ -28,6 +28,7 @@
         <ToolbarItem
             Name="Settings"
             Command="{Binding NavigateToSettingsCommand}"
+            AutomationId="SettingsButton"
             Icon="settings.png">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
@@ -39,6 +40,7 @@
         <ToolbarItem
             x:Name="SignOutButton"
             Name="Log out"
+            AutomationId="SignOutButton"
             Icon="signout.png"
             Command="{Binding LogoutCommand}">
             <ToolbarItem.Order>
@@ -92,6 +94,7 @@
             <ListView
                 Grid.Row="1"
                 ItemsSource="{Binding UserPhotos}"
+                AutomationId="UserPhotoList"
                 SeparatorVisibility="None"
                 ItemTapped="Handle_ItemTapped"
                 IsVisible="{Binding IsLoggedIn}"
@@ -109,24 +112,28 @@
                 
                 <Button
                     Text="Login with Facebook"
+                    AutomationId="FacebookButton"
                     Command="{Binding FacebookLoginCommand}"
                     BackgroundColor="{StaticResource FacebookBlue}"
                     TextColor="White"/>
                 
                 <Button
                     Text="Login with Google"
+                    AutomationId="GoogleButton"
                     Clicked="Handle_Clicked"
                     BackgroundColor="{StaticResource GoogleRed}"
                     TextColor="White"/>
 
                 <Button
                     Text="Login with Twitter"
+                    AutomationId="TwitterButton"
                     Clicked="Handle_Clicked"
                     BackgroundColor="{StaticResource TwitterBlue}"
                     TextColor="White"/>
 
                 <Button
                     Text="Login with a Microsoft Account"
+                    AutomationId="MSAButton"
                     Clicked="Handle_Clicked"
                     BackgroundColor="{StaticResource SubtleColor}"
                     TextColor="Black"/>

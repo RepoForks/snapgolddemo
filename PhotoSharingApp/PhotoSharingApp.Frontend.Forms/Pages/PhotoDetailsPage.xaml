@@ -25,6 +25,7 @@
         <ToolbarItem
             x:Name="DeleteToolbarItem"
             Name="Delete"
+            AutomationId="DeleteButton"
             Icon="delete.png"
             Command="{Binding DeletePhotoCommand}">
             <ToolbarItem.Order>
@@ -71,6 +72,7 @@
 
                         <Frame
                             x:Name="GoldIndicator"
+                            AutomationId="GiveGoldButton"
                             Grid.Column="1"
                             HorizontalOptions="End"
                             Margin="0,0,0,0"

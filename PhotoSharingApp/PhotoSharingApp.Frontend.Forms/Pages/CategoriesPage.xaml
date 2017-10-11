@@ -25,6 +25,7 @@
         <Grid>
         <flow:FlowListView
             FlowColumnCount="3"
+            AutomationId="FlowView"
             SeparatorVisibility="None"
             HasUnevenRows="true"
             FlowUseAbsoluteLayoutInternally="false"
@@ -69,6 +70,7 @@
 
                     <carousel:CarouselViewControl
                         Orientation="Horizontal"
+                        AutomationId="HeroCarousel"
                         ItemsSource="{Binding HeroImages}" 
                         VerticalOptions="FillAndExpand" 
                         HorizontalOptions="FillAndExpand"
@@ -96,6 +98,7 @@
                                     <!-- Hero Image -->
                                     <ffimageloading:CachedImage
                                         Grid.RowSpan="2"
+                                            AutomationId="HeroImage"
                                         Grid.ColumnSpan="2"                                       
                                         Aspect="AspectFill"
                                         FadeAnimationEnabled="false"
@@ -176,6 +179,7 @@
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
+                                    AutomationId="BuyGoldButton"
                                     Text="     Buy gold     "
                                     Clicked="Handle_Clicked"
                                     BackgroundColor="{StaticResource AccentColor}"
@@ -207,6 +211,7 @@
                                 Orientation="Horizontal">
                                 <Button
                                     HorizontalOptions="Start"
+                                    AutomationId="TakePhotoButton"
                                     Clicked="Handle_Clicked"
                                     BackgroundColor="#DDD"
                                     TextColor="Black">
@@ -221,6 +226,7 @@
 
                                 <Button
                                     HorizontalOptions="Start"
+                                    AutomationId="BrowseButton"
                                     Clicked="Handle_Clicked"
                                     BackgroundColor="#DDD"
                                     TextColor="Black">

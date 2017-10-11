@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using PhotoSharingApp.Frontend.Portable.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
 using PhotoSharingApp.Frontend.Portable.Models;
+using Microsoft.Azure.Mobile.Analytics;
 
 namespace PhotoSharingApp.Forms
 {
@@ -14,6 +15,7 @@ namespace PhotoSharingApp.Forms
 
         public ProfilePage()
         {
+            Analytics.TrackEvent("Navigate to My Profile");
             InitializeComponent();
             BindingContext = viewModel = SimpleIoc.Default.GetInstance<ProfileViewModel>();
 
@@ -39,6 +41,7 @@ namespace PhotoSharingApp.Forms
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
+            Analytics.TrackEvent("Attempt to Login non-Facebook");
             DisplayAlert("Not implemented yet", "Please use Facebook Login for now. Thanks.", "Ok");
         }
 

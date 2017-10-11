@@ -23,23 +23,21 @@ namespace PhotoSharingApp.Forms.UITests
 			if (OnAndroid)
 			{
                 firstPhotoButton = x => x.Class("CachedImageView").Index(2);
+              
 			}
 
 			if (OniOS)
 			{
+                firstPhotoButton = x => x.Class("UIImageView").Index(3);
 			}
 		}
 
         internal HomePage ScrollThroughPhotos()
         {
             app.ScrollDown();
-            app.ScrollDown();
             return this;
         }
 
-        public void DoSomething()
-		{
-		}
 
         internal HomePage SelectPhoto()
         {
@@ -47,6 +45,22 @@ namespace PhotoSharingApp.Forms.UITests
             //app.WaitForElement();
             
             return this;
+        }
+
+        internal void DeletePhoto()
+        {
+            //TODO This should be implemented on a new PhotoDetailsPage Class
+           
+        }
+
+        internal void GiveGold(int amount)
+        {
+            //TODO This should be implemented on a new PhotoDetailsPage Class
+        }
+
+        internal void BuyGold(int v)
+        {
+            
         }
     }
 }

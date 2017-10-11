@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <development version="7000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +22,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" image="icon.png"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.97254901960784312" green="0.72941176470588232" blue="0.15686274509803921" alpha="1"/>
+                        <color key="backgroundColor" red="0.97254901960784312" green="0.72941176470588232" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="385" secondAttribute="centerY" constant="12" id="792"/>
                             <constraint firstItem="385" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="793"/>
@@ -43,10 +42,10 @@
         <image name="user.png" width="25" height="25"/>
         <image name="settings.png" width="25" height="25"/>
         <image name="library.png" width="25" height="25"/>
-        <image name="Demo.jpg" width="1920" height="1080"/>
         <image name="delete.png" width="25" height="25"/>
         <image name="profilepicture.png" width="25" height="25"/>
-        <image name="placeholder.jpg" width="10" height="10"/>
+        <image name="signout.png" width="25" height="25"/>
+        <image name="shadow.png" width="10" height="100"/>
     </resources>
-    <color key="tintColor" red="0.95686274509803926" green="0.58823529411764708" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" red="0.95686274509803926" green="0.58823529411764708" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

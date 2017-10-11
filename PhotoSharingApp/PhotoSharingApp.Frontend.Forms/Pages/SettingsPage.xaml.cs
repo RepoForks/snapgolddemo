@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Azure.Mobile.Analytics;
 using Plugin.VersionTracking;
 using Xamarin.Forms;
 
@@ -9,6 +10,7 @@ namespace PhotoSharingApp.Forms.Pages
     {
         public SettingsPage()
         {
+            Analytics.TrackEvent("Navigate to Settings");
             InitializeComponent();
             NavigationPage.SetBackButtonTitle(this, "Back");
 
