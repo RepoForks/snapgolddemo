@@ -18,11 +18,12 @@ using Xamarin.Forms.Xaml;
 using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
 {
-    public partial class App : Application
+    public partial class App : Xamarin.Forms.Application
     {
         public static AppShell AppShell;
 
@@ -58,7 +59,6 @@ namespace PhotoSharingApp.Forms
             var navigationPage = new Xamarin.Forms.NavigationPage();
             navigationPage.BarBackgroundColor = (Color)Resources["AccentColor"];
             navigationPage.BarTextColor = Color.White;
-            navigationPage.On<iOS>().EnableTranslucentNavigationBar();
 
             // Register Navigation Service
             var navigationService = new FormsNavigationService(navigationPage);
@@ -70,9 +70,10 @@ namespace PhotoSharingApp.Forms
             // Setup App Shell
             AppShell = new AppShell();
             AppShell.Children.Add(new CategoriesPage());   // Home
-            AppShell.Children.Add(new CameraPage());       // Upload
+            AppShell.Children.Add(new FullCameraPage());       // Upload
             AppShell.Children.Add(new LeaderboardsPage()); // Leaderboards
             AppShell.Children.Add(new ProfilePage());      // My profile
+            AppShell.On<Android>().DisableSwipePaging();
 
             navigationPage.PushAsync(AppShell);
             MainPage = navigationPage;

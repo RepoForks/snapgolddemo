@@ -35,8 +35,8 @@
             IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
             RefreshCommand="{Binding RefreshCommand}"
             FlowGroupDisplayBinding="{Binding Name}"
-            FlowItemsSource="{Binding TopCategories}"
-                >
+            FlowItemsSource="{Binding TopCategories}">
+               
 
             <!-- Item Template for Category Preview Image -->
             <flow:FlowListView.FlowColumnTemplate>
@@ -127,7 +127,7 @@
                                     </ffimageloading:CachedImage>
                                     
                                     <StackLayout Grid.Row="1" Grid.Column="1" Padding="12" VerticalOptions="Center">
-                                        <Label TextColor="White" Text="{Binding CreatedAt}" FontSize="10" />
+                                        <Label TextColor="White" Text="{Binding CreatedAt, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="10" />
                                         <Label TextColor="White" Text="{Binding Caption}" FontSize="16" />
                                     </StackLayout>
                                 </Grid>

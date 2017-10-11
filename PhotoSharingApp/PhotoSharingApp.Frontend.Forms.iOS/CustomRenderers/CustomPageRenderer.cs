@@ -19,7 +19,7 @@ namespace PhotoSharingApp.Forms.iOS.CustomRenderers
             base.ViewDidLoad();
 
             // Repaint Refesh Control
-            UIRefreshControl.Appearance.TintColor = UIColor.FromRGB(250, 168, 25);
+            //UIRefreshControl.Appearance.TintColor = UIColor.FromRGB(250, 168, 25);
 
             // Fix Xamarin.Forms Keyboard issue
             var cp = Element as KeyboardResizingAwareContentPage;

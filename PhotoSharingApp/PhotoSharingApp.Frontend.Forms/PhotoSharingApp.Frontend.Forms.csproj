@@ -53,6 +53,12 @@
     <EmbeddedResource Include="Pages\SettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\FullCameraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\UploadPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -90,6 +96,13 @@
     <Compile Include="Controls\KeyboardResizingAwareContentPage.cs" />
     <Compile Include="Services\FormsConnectivityService.cs" />
     <Compile Include="Controls\FormsFloatingActionButton.cs" />
+    <Compile Include="Controls\CameraPage.cs" />
+    <Compile Include="Pages\FullCameraPage.xaml.cs">
+      <DependentUpon>FullCameraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UploadPage.xaml.cs">
+      <DependentUpon>UploadPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FFImageLoading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

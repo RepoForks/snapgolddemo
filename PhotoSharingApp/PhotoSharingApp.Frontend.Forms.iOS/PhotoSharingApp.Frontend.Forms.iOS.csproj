@@ -299,6 +299,7 @@
     <Compile Include="Services\PhotoCroppingServiceiOS.cs" />
     <Compile Include="CustomRenderers\CustomNavigationRenderer.cs" />
     <Compile Include="CustomRenderers\CustomPageRenderer.cs" />
+    <Compile Include="CustomRenderers\CameraPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoSharingApp.Frontend.Forms\PhotoSharingApp.Frontend.Forms.csproj">
