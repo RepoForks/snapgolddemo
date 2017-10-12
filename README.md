@@ -1,17 +1,15 @@
 <!---
 category: AudioVideoAndCamera ControlsLayoutAndText Data FilesFoldersAndLibraries IdentitySecurityAndEncryption Navigation NetworkingAndWebServices TrialsAdsAndInAppPurchases GlobalizationAndLocalization 
 -->
-# Appsample-Photosharing
+# SnapGold: An App Innovation Sample
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-**PhotoSharingApp** is a Universal Windows Platform (UWP) app sample that demonstrates real-world social media experiences around photo sharing.
-
-With this app, users can earn virtual gold by uploading and sharing photos with people from all around the world. They can upload photos of their cats, shoes, houses, or last vacations, and see how they compete against other users. Are their photos a great gold source? Are they among the most generous contributors? They can find out on the app's leaderboard.
-
-The goal of this app is to provide a complete, end-to-end example of a real-world app that uses a variety of UWP features, and exhibits design and development best practices. This makes it a great source of code you can copy into your own apps. It also provides an example of what a real-world app architecture might look like. The decoupled architecture makes it easy to reuse code or to make changes and build your own photo sharing app, which you can then publish in the [Windows Store](http://dev.windows.com).
-
+<!--
 ![Category overview screenshot](Images/Category-Overview-Desktop-Mobile.jpg "The photo sharing app")
 
 **See our post on the Windows Apps Team blog: <a href="https://blogs.windows.com/buildingapps/2016/03/17/uwp-azure-app-services-and-documentdb-soup-a-photo-sharing-app/">SnapGold</a>**
+
+-->
 
 Application Screenshots:
 
@@ -19,6 +17,10 @@ Application Screenshots:
 - Photo Stream [Desktop](Images/PhotoStream-Desktop.jpg) [Mobile](Images/PhotoStream-Mobile.jpg)
 - Photo Details Page [Desktop](Images/PhotoDetailsPage-Desktop.jpg) [Mobile](Images/PhotoDetailsPage-Mobile.jpg)
 - Profile Page [Desktop](Images/ProfilePage-Desktop.jpg) [Mobile](Images/ProfilePage-Mobile.jpg)
+
+## Architecture
+![](Images/architecture-diagram.png)
+
 
 ## App features
 
