@@ -177,12 +177,6 @@
     <Reference Include="Plugin.SecureStorage">
       <HintPath>..\..\packages\sameerIOTApps.Plugin.SecureStorage.1.2.2\lib\Xamarin.iOS10\Plugin.SecureStorage.dll</HintPath>
     </Reference>
-    <Reference Include="CarouselView.FormsPlugin.Abstractions">
-      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.3\lib\Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="CarouselView.FormsPlugin.iOS">
-      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.3\lib\Xamarin.iOS10\CarouselView.FormsPlugin.iOS.dll</HintPath>
-    </Reference>
     <Reference Include="Plugin.VersionTracking.Abstractions">
       <HintPath>..\..\packages\Xam.Plugin.VersionTracking.2.0.0\lib\Xamarin.iOS10\Plugin.VersionTracking.Abstractions.dll</HintPath>
     </Reference>
@@ -254,6 +248,12 @@
     </Reference>
     <Reference Include="Acr.UserDialogs.Interface">
       <HintPath>..\..\packages\Acr.UserDialogs.6.5.1\lib\Xamarin.iOS10\Acr.UserDialogs.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="CarouselView.FormsPlugin.Abstractions">
+      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.4\lib\Xamarin.iOS10\CarouselView.FormsPlugin.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="CarouselView.FormsPlugin.iOS">
+      <HintPath>..\..\packages\CarouselView.FormsPlugin.4.4.4\lib\Xamarin.iOS10\CarouselView.FormsPlugin.iOS.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +349,7 @@
     <BundleResource Include="Resources\signout%402x.png" />
     <BundleResource Include="Resources\signout%403x.png" />
     <BundleResource Include="Resources\shadow.png" />
+    <BundleResource Include="Resources\placeholder.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

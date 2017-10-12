@@ -47,7 +47,9 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             {
                 return refreshCommand ?? (refreshCommand = new RelayCommand(async () =>
                 {
+                    IsRefreshing = true;
                     await RefreshAsync(true);
+                    IsRefreshing = false;
                 }));
             }
         }
@@ -59,7 +61,8 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             {
                 return showPhotoDetailsCommand ?? (showPhotoDetailsCommand = new RelayCommand<Photo>((Photo photo) =>
                 {
-                    navigationService.NavigateTo(ViewNames.PhotoDetailsPage, photo);
+                    if (!photo.ImageUrl.Contains("placeholder"))
+                        navigationService.NavigateTo(ViewNames.PhotoDetailsPage, photo);
                 }));
             }
         }
@@ -87,10 +90,8 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             this.connectivityService = connectivityService;
             this.photoService = photoService;
 
-            heroImages = new ObservableRangeCollection<Photo>();
-            topCategories = new ObservableRangeCollection<GroupedCategoryPreview>();
-
-
+            heroImages = new ObservableRangeCollection<Photo>(MockData.GetHeroImages());
+            topCategories = new ObservableRangeCollection<GroupedCategoryPreview>(MockData.GetTopCategories());
         }
 
         public async Task RefreshAsync(bool force = false)
@@ -103,10 +104,19 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             }
 
             // Check if ViewModel is already loaded or refreshing
-            if (IsRefreshing || (IsLoaded && !force))
+            if (IsLoading || (IsLoaded && !force))
                 return;
 
-            IsRefreshing = true;
+            IsLoading = true;
+
+            // Don't use placeholders when PullToRefresh is used
+            //if (!force)
+            //{
+            //    // Get Mock Data to show placeholders
+            //    HeroImages.ReplaceRange(MockData.GetHeroImages());
+            //    //TopCategories.ReplaceRange(MockData.GetTopCategories());
+            //    TopCategories = new ObservableRangeCollection<GroupedCategoryPreview>(MockData.GetTopCategories());
+            //}
 
             // Get current user
             try
@@ -133,12 +143,15 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                 from category in topCat
                 group category by category.Name into categoryGroup
                 select new GroupedCategoryPreview(categoryGroup.First()?.PhotoThumbnails, categoryGroup.Key, categoryGroup.Key.Substring(0, 1), categoryGroup.FirstOrDefault());
-            TopCategories.ReplaceRange(grouped);
+
+            //HACK: Re-initializing because FlowListView crashes when Replacing lists at the moment.
+            TopCategories = new ObservableRangeCollection<GroupedCategoryPreview>(grouped);
+            //TopCategories.ReplaceRange(grouped);
 
             // Check if loading went right
             IsLoaded = HeroImages.Count > 0 || TopCategories.Count > 0;
 
-            IsRefreshing = false;
+            IsLoading = false;
         }
     }
 }

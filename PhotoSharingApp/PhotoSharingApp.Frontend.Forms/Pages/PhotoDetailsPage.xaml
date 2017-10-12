@@ -7,7 +7,7 @@
     xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
     x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
     Title="{Binding Photo.CategoryName}"
-    IsBusy="{Binding IsRefreshing}">
+    IsBusy="{Binding IsLoading}">
 
     <!-- Toolbar Items -->
     <TabbedPage.ToolbarItems>        
@@ -48,8 +48,9 @@
                         Grid.Row="0"
                         Aspect="AspectFit"
                         CacheType="Disk"
+                        FadeAnimationEnabled="false"
                         Source="{Binding Photo.StandardUrl}"
-                        LoadingPlaceholder="placehilder.jpg"
+                        ErrorPlaceholder="placeholder.jpg"
                         MinimumHeightRequest="100"/>
 
                     <Grid
@@ -68,7 +69,8 @@
                             VerticalOptions="Center"
                             Aspect="AspectFill"
                             CacheType="Disk"
-                            Source="{Binding Photo.User.ProfilePictureUrl}">
+                            Source="{Binding Photo.User.ProfilePictureUrl}"
+                            ErrorPlaceholder="placeholder.jpg">
                             <ffimageloading:CachedImage.Transformations>
                                 <fftransformations:CircleTransformation>
                                     <x:Arguments>
@@ -95,7 +97,7 @@
                                 <TapGestureRecognizer Tapped="GiveGold_Clicked"/>
                             </Image.GestureRecognizers>
                             
-                            <Label Text="10" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                            <Label Text="{Binding Photo.GoldCount}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
                         </Frame>
                     </Grid>
 

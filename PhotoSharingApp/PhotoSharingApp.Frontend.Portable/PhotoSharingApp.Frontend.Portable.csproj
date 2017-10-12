@@ -85,6 +85,7 @@
     <Compile Include="Helpers\CategoryThumbnailBundle.cs" />
     <Compile Include="Helpers\GroupedCategoryPreview.cs" />
     <Compile Include="Abstractions\IConnectivityService.cs" />
+    <Compile Include="Helpers\MockData.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

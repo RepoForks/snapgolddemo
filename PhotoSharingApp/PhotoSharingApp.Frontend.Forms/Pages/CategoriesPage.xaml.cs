@@ -28,7 +28,7 @@ namespace PhotoSharingApp.Forms
         void Handle_FlowItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             var selectedItem = e.Item as PhotoThumbnail;
-            if (selectedItem != null)
+            if (selectedItem != null && !selectedItem.ImageUrl.Contains("placeholder"))
                 viewModel.ShowCategoryStreamCommand.Execute(selectedItem);
         }
 

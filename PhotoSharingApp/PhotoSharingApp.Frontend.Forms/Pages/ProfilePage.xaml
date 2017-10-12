@@ -77,6 +77,8 @@
                     CacheType="Disk"
                     Aspect="AspectFill"
                     Source="{Binding ProfilePictureUrl}"
+                    ErrorPlaceholder="placeholder.jpg"
+                    LoadingPlaceholder="placeholder.jpg"
                     WidthRequest="50"
                     HeightRequest="50">
                     <ffimageloading:CachedImage.Transformations>

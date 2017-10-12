@@ -6,6 +6,7 @@ using MvvmHelpers;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
+using PhotoSharingApp.Frontend.Portable.Helpers;
 
 namespace PhotoSharingApp.Frontend.Portable
 {
@@ -56,23 +57,39 @@ namespace PhotoSharingApp.Frontend.Portable
         {
             categoryId = categoryPreview.Id;
             Title = categoryPreview.Name;
+
+
+            IsLoaded = false;
+
+            // Mock data
+            Photos.ReplaceRange(MockData.GetHeroImages());
         }
 
-        public async Task RefreshAsync()
+        public async Task RefreshAsync(bool force = false)
         {
+
+            if ((IsLoaded || IsLoading) && !force)
+                return;
+
+            IsLoading = true;
+
             // Check connectivity
             if (!connectivityService.IsConnected())
             {
+                IsLoading = false;
                 return;
             }
 
             if (categoryId != null)
             {
-                var photos = await photoService.GetPhotosForCategoryId(categoryId);
+                var photosForCategory = await photoService.GetPhotosForCategoryId(categoryId);
 
-                Photos.ReplaceRange(photos.Items);
+                Photos.ReplaceRange(photosForCategory.Items);
                 // TODO: Implement pagination, as this only loads photos for the fist page.
             }
+
+            IsLoaded = true;
+            IsLoading = false;
         }
     }
 }

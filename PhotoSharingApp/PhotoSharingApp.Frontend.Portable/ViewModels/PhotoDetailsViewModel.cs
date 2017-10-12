@@ -84,7 +84,7 @@ namespace PhotoSharingApp.Frontend.Portable
                 return;
             }
 
-            IsRefreshing = true;
+            IsLoading = true;
 
             // Update photo with detailed information
             Photo = await photoService.GetPhotoDetails(Photo.Id);
@@ -103,7 +103,7 @@ namespace PhotoSharingApp.Frontend.Portable
                 IsCurrentUsersPhoto = false;
             }
 
-            IsRefreshing = false;
+            IsLoading = false;
         }
 
         public async Task DeletePhotoAsync()
@@ -168,15 +168,16 @@ namespace PhotoSharingApp.Frontend.Portable
 
             try
             {
-                IsRefreshing = true;
+                IsLoading = true;
 
                 // Check if user is logged in
                 await photoService.GetCurrentUser();
 
                 var annotation = await photoService.PostAnnotation(Photo, text, gold);
                 Photo.Annotations.Add(annotation);
+                Photo.GoldCount += gold;
 
-                IsRefreshing = false;
+                IsLoading = false;
             }
             catch (UnauthorizedException)
             {
@@ -188,7 +189,7 @@ namespace PhotoSharingApp.Frontend.Portable
             }
             finally
             {
-                IsRefreshing = false;
+                IsLoading = false;
             }
         }
     }

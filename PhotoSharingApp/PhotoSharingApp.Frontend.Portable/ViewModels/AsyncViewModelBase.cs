@@ -14,6 +14,13 @@ namespace PhotoSharingApp.Frontend.Portable
             set { isRefreshing = value; RaisePropertyChanged(); }
         }
 
+        private bool isLoading;
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set { isLoading = value; RaisePropertyChanged(); }
+        }
+
         private bool isLoaded;
         public bool IsLoaded
         {

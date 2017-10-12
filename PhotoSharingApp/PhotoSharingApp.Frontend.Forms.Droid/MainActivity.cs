@@ -22,10 +22,12 @@ using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 using Lottie.Forms.Droid;
 using CarouselView.FormsPlugin.Android;
 using Acr.UserDialogs;
+using Android.Content.Res;
+using Android.Media;
 
 namespace PhotoSharingApp.Forms.Droid
 {
-    [Activity(Label = "SnapGold", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "SnapGold", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IAuthenticationHandler
     {
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
