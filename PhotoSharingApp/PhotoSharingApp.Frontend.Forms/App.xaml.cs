@@ -73,7 +73,7 @@ namespace PhotoSharingApp.Forms
             // Setup App Shell
             AppShell = new AppShell();
             AppShell.Children.Add(new CategoriesPage());   // Home
-            AppShell.Children.Add(new FullCameraPage());       // Upload
+            AppShell.Children.Add(new FullCameraPage());   // Upload
             AppShell.Children.Add(new LeaderboardsPage()); // Leaderboards
             AppShell.Children.Add(new ProfilePage());      // My profile
             AppShell.On<Android>().DisableSwipePaging();
