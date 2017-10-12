@@ -32,6 +32,7 @@
 	<ContentPage.Content>
         <Grid>
             <flow:FlowListView
+                AutomationId="FlowView"
                 FlowColumnCount="3"
                 SeparatorVisibility="None"
                 HasUnevenRows="true"
@@ -81,6 +82,7 @@
                         </Grid.HeightRequest>
 
                         <carousel:CarouselViewControl
+                            AutomationId="HeroCarousel"
                             Orientation="Horizontal"
                             ItemsSource="{Binding HeroImages}" 
                             VerticalOptions="FillAndExpand" 
@@ -189,7 +191,8 @@
 
                                 <StackLayout
                                     Grid.Row="1"
-                                    Orientation="Horizontal">
+                                    Orientation="Horizontal"
+                                    AutomationId="BuyGoldButton">
                                     <Button
                                         HorizontalOptions="Start"
                                         Text="     Buy gold     "
@@ -223,6 +226,7 @@
                                     Orientation="Horizontal">
                                     <Button
                                         HorizontalOptions="Start"
+                                        AutomationId="TakePhotoButton"
                                         Clicked="Handle_Clicked"
                                         BackgroundColor="#DDD"
                                         TextColor="Black">
@@ -237,6 +241,7 @@
 
                                     <Button
                                         HorizontalOptions="Start"
+                                        AutomationId="BrowseButton"
                                         Clicked="Handle_Clicked"
                                         BackgroundColor="#DDD"
                                         TextColor="Black">

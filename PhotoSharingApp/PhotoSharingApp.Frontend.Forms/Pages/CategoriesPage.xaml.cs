@@ -5,6 +5,7 @@ using PhotoSharingApp.Frontend.Portable.ViewModels;
 using Xamarin.Forms;
 using PhotoSharingApp.Frontend.Portable.Models;
 using System.Linq;
+using Microsoft.Azure.Mobile.Analytics;
 
 namespace PhotoSharingApp.Forms
 {
@@ -14,6 +15,7 @@ namespace PhotoSharingApp.Forms
 
         public CategoriesPage()
         {
+            Analytics.TrackEvent("Navigate to Categories");
             InitializeComponent();
             BindingContext = viewModel = SimpleIoc.Default.GetInstance<CategoriesViewModel>();
             AddPhotoButton.Clicked += AddPhotoButton_Clicked;
@@ -39,6 +41,7 @@ namespace PhotoSharingApp.Forms
 
         void AddPhotoButton_Clicked(object sender, System.EventArgs e)
         {
+            Analytics.TrackEvent("Add Photo Button Clicked");
             // Navigate to camera page
             App.AppShell.SelectedItem = null; // Hack: Xamarin.Forms Bug does not allow the same navigation twice otherwise
             App.AppShell.SelectedItem = App.AppShell.Children.ElementAt(1);

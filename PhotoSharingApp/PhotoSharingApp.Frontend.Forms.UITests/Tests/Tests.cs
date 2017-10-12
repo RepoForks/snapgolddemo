@@ -21,19 +21,96 @@ namespace PhotoSharingApp.Forms.UITests
 
 			app.Repl();
 		}
-		
+
         [Test]
-		public void TestSomething()
-		{
-			
-			new HomePage()
-				.DoSomething();
+        public void LoginAndUploadPhoto()
+        {
+            new HomePage()
+                .NavigateToMyProfile();
 
             new MyProfilePage()
-                .DoSomething();
+                .FacebookLogin()
+                .NavigateToUpload();
 
-            new LeaderboardsPage()
-                .DoSomething();
-		}
+            new UploadPage()
+                .UploadPicture();
+            
+        }
+
+        [Test]
+        public void LoginAndDeletePhoto()
+        {
+            new HomePage()
+                .NavigateToMyProfile();
+
+            new MyProfilePage()
+                .FacebookLogin()
+                .NavigateToHome();
+
+            new HomePage()
+                .SelectPhoto()
+                .DeletePhoto();
+            
+        }
+
+        [Test]
+        public void LoginAndGiveGold()
+        {
+            new HomePage()
+                .NavigateToMyProfile();
+
+            new MyProfilePage()
+                .FacebookLogin()
+                .NavigateToHome();
+
+            new HomePage()
+                .SelectPhoto()
+                .GiveGold(10);
+        }
+
+        [Test]
+        public void LoginAndTakePhoto()
+        {
+            new HomePage()
+                .NavigateToMyProfile();
+
+            new MyProfilePage()
+                .FacebookLogin()
+                .NavigateToUpload();
+
+            new UploadPage()
+                .TakePicture();
+            
+        }
+
+        [Test]
+        public void LoginAndBuyGold()
+        {
+            new HomePage()
+          .NavigateToMyProfile();
+
+            new MyProfilePage()
+                .FacebookLogin()
+                .NavigateToHome();
+            new HomePage()
+              .BuyGold(10);
+        }
+
+      
+
+        [Test]
+		public void BrowsePhotos()
+		{
+            new HomePage()
+                .SelectPhoto()
+                .ScrollThroughPhotos();
+        }
+
+        [Test]
+        public void BrowseLeaderboard()
+        {
+            new HomePage()
+                .NavigateToLeaderboard();
+        }
     }
 }

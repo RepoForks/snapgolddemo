@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight.Ioc;
 using System.Globalization;
 using PhotoSharingApp.Forms.Controls;
 using System.Linq;
+using Microsoft.Azure.Mobile.Analytics;
 
 namespace PhotoSharingApp.Forms
 {
@@ -58,6 +59,7 @@ namespace PhotoSharingApp.Forms
 
         async void TakeButton_Clicked(object sender, System.EventArgs e)
         {
+            Analytics.TrackEvent("Take Photo Button Clicked");
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 return;
 
@@ -76,6 +78,8 @@ namespace PhotoSharingApp.Forms
 
         async void UploadButton_Clicked(object sender, System.EventArgs e)
         {
+            Analytics.TrackEvent("Upload Button Clicked");
+
             LoadingOverlay.IsVisible = true;
             LoadingAnimation.Play();
 
@@ -100,6 +104,7 @@ namespace PhotoSharingApp.Forms
 
         private void CancelButton_Clicked(object sender, System.EventArgs e)
         {
+            Analytics.TrackEvent("Cancel Button Clicked");
             CameraControls.IsVisible = true;
             UploadControls.IsVisible = false;
             PhotoPreview.Source = null;

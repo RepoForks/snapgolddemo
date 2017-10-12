@@ -58,7 +58,7 @@
                 Padding="20">
                 
                 <!--<Button Text="Init" Clicked="Handle_Clicked" TextColor="Black" BackgroundColor="{StaticResource SubtleColor}" WidthRequest="80" />-->
-                <Button Text="Take a picture" Clicked="TakeButton_Clicked"  BackgroundColor="{StaticResource AccentColor}" WidthRequest="120" TextColor="White" />
+                <Button Text="Take a picture" Clicked="TakeButton_Clicked" AutomationId="TakePhotoButton" BackgroundColor="{StaticResource AccentColor}" WidthRequest="120" TextColor="White" />
                 <!--<Button Text="Turn" TextColor="Black" BackgroundColor="{StaticResource SubtleColor}" WidthRequest="80" />-->
             </StackLayout>
 
@@ -89,6 +89,7 @@
                     <Button
                         Text="Upload"
                         Clicked="UploadButton_Clicked"
+                        AutomationId="UploadPhotoButton"
                         HorizontalOptions="FillAndExpand"
                         Command="{Binding SaveCommand}"
                         BackgroundColor="{StaticResource AccentColor}"
@@ -97,6 +98,7 @@
                     <Button
                         Text="Cancel"
                         Clicked="CancelButton_Clicked"
+                        AutomationId="CancelButton"
                         HorizontalOptions="FillAndExpand"
                         Command="{Binding DeleteCommand}"
                         BackgroundColor="{StaticResource SubtleColor}"

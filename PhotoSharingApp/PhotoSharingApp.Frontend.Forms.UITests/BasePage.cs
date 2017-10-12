@@ -2,6 +2,8 @@ using System;
 using NUnit.Framework;
 using Xamarin.UITest;
 
+using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
+
 namespace PhotoSharingApp.Forms.UITests
 {
     public abstract class BasePage
@@ -12,11 +14,41 @@ namespace PhotoSharingApp.Forms.UITests
 
         protected abstract PlatformQuery Trait { get; }
 
+        readonly Query homeButton;
+        readonly Query uploadButton;
+        readonly Query leaderboardsButton;
+        readonly Query myProfileButton;
+
         protected BasePage()
         {
             AssertOnPage(TimeSpan.FromSeconds(30));
             app.Screenshot("On " + this.GetType().Name);
+
+            if (OnAndroid)
+            {
+                homeButton = x => x.Class("AppCompatImageView");
+                uploadButton = x => x.Class("AppCompatImageView").Index(1);
+                leaderboardsButton = x => x.Class("AppCompatImageView").Index(2);
+                myProfileButton = x => x.Class("AppCompatImageView").Index(3);
+               
+            }
+
+            if (OniOS)
+            {
+                homeButton = x => x.Marked("Home");
+                uploadButton = x => x.Marked("Upload");
+                leaderboardsButton = x => x.Marked("Leaderboards");
+                myProfileButton = x => x.Marked("My Profile");
+            }
         }
+
+        internal void NavigateToHome() => app.Tap(homeButton);
+
+        internal void NavigateToUpload() => app.Tap(uploadButton);
+
+        internal void NavigateToLeaderboard() => app.Tap(leaderboardsButton);
+
+        internal void NavigateToMyProfile() => app.Tap(myProfileButton);
 
         /// <summary>
         /// Verifies that the trait is still present. Defaults to no wait.

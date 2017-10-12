@@ -6,6 +6,7 @@ using PhotoSharingApp.Frontend.Portable;
 using GalaSoft.MvvmLight.Ioc;
 using PhotoSharingApp.Frontend.Portable.Models;
 using Acr.UserDialogs;
+using Microsoft.Azure.Mobile.Analytics;
 
 namespace PhotoSharingApp.Forms
 {
@@ -16,6 +17,7 @@ namespace PhotoSharingApp.Forms
         public PhotoDetailsPage()
         {
             InitializeComponent();
+            Analytics.TrackEvent("Navigate to Photo Details");
         }
 
         public PhotoDetailsPage(Photo photo)
@@ -48,6 +50,7 @@ namespace PhotoSharingApp.Forms
 
         async void GiveGold_Clicked(object sender, System.EventArgs e)
         {
+            Analytics.TrackEvent("Give Gold Button Clicked");
             await GoldIndicator.ScaleTo(1.1, 100);
             await GoldIndicator.ScaleTo(1.0, 100);
 
