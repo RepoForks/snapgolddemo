@@ -20,6 +20,8 @@ using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogSer
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Microsoft.Azure.Mobile.Distribute;
+using PhotoSharingApp.Forms.Abstractions;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
@@ -84,17 +86,22 @@ namespace PhotoSharingApp.Forms
         {
             CrossVersionTracking.Current.Track();
 
-            // Visual Studio Mobile Center
-            MobileCenter.Start(
-                "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
-                "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
-                typeof(Analytics),
-                typeof(Crashes));
-
-            Analytics.TrackEvent("App Started", new Dictionary<string, string> 
+            var environment = DependencyService.Get<IEnvironmentService>();
+            if (environment?.IsRunningInRealWorld() == true)
             {
-                { "Day of week", System.DateTime.Now.ToString("dddd") }
-            });
+                // Visual Studio Mobile Center
+                MobileCenter.Start(
+                    "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
+                    "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
+                    typeof(Analytics),
+                    typeof(Crashes),
+                    typeof(Distribute));
+
+                Analytics.TrackEvent("App Started", new Dictionary<string, string>
+                {
+                    { "Day of week", System.DateTime.Now.ToString("dddd") }
+                });
+            }
         }
 
         protected override void OnSleep()

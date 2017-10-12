@@ -276,6 +276,7 @@
     <Compile Include="Services\PhotoCroppingServiceDroid.cs" />
     <Compile Include="CustomRenderers\FloatingActionButtonRenderer.cs" />
     <Compile Include="CustomRenderers\CameraPageRenderer.cs" />
+    <Compile Include="Services\EnvironmentService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

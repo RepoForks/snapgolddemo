@@ -48,5 +48,14 @@
 	<string>This app needs access to photos.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs access to microphone.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mobilecenter-7e7901fb-6317-46d8-8a33-7cb200424c11</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

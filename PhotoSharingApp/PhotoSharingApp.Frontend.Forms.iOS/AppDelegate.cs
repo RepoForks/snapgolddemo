@@ -17,6 +17,7 @@ using PhotoSharingApp.Portable.DataContracts;
 using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 using Lottie.Forms.iOS.Renderers;
 using CarouselView.FormsPlugin.iOS;
+using Microsoft.Azure.Mobile.Distribute;
 
 namespace PhotoSharingApp.Forms.iOS
 {
@@ -50,6 +51,9 @@ namespace PhotoSharingApp.Forms.iOS
 
             // Code for starting up the Xamarin Test Cloud Agent
             Xamarin.Calabash.Start();
+
+            // Disable Mobile Center updates when in Debug Mode
+            Distribute.DontCheckForUpdatesInDebug();
 
             LoadApplication(new App(this));
 

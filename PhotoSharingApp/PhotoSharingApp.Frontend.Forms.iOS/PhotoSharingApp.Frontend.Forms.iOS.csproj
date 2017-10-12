@@ -300,6 +300,7 @@
     <Compile Include="CustomRenderers\CustomNavigationRenderer.cs" />
     <Compile Include="CustomRenderers\CustomPageRenderer.cs" />
     <Compile Include="CustomRenderers\CameraPageRenderer.cs" />
+    <Compile Include="Services\EnvironmentService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoSharingApp.Frontend.Forms\PhotoSharingApp.Frontend.Forms.csproj">
