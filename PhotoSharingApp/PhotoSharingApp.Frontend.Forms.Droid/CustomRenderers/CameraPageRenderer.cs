@@ -23,33 +23,39 @@ using Java.Nio;
 
 // Copied mostly from: https://github.com/flusharcade/chapter8-camera/blob/master/Droid/Renderers/CameraView/CameraDroid.cs
 using System.Runtime.Remoting.Messaging;
+using Android;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace PhotoSharingApp.Forms.Droid.CustomRenderers
 {
-    public class CameraPageRenderer : PageRenderer, TextureView.ISurfaceTextureListener
+    public class CameraPageRenderer : PageRenderer, TextureView.ISurfaceTextureListener, ISensorEventListener
     {
+        // Camera
         public CameraDevice CameraDevice;
         CameraManager cameraManager;
         CameraCaptureSession previewSession;
         CaptureRequest.Builder previewBuilder;
         string cameraId;
-        SparseIntArray orientations;
+        int orientation = 90;
 
+        // Orientation
+        SensorManager sensorManager;
+        Sensor orientationSensor;
+
+        // Layout
         RelativeLayout mainLayout;
         TextureView liveTextureView;
         PaintCodeButton capturePhotoButton;
         Size previewSize;
 
-        Activity Activity => this.Context as Activity;
+        //Activity Activity => this.Context as FormsAppCompatActivity;
 
         public CameraPageRenderer()
         {
-            orientations = new SparseIntArray();
-            orientations.Append((int)SurfaceOrientation.Rotation0, 90);
-            orientations.Append((int)SurfaceOrientation.Rotation90, 0);
-            orientations.Append((int)SurfaceOrientation.Rotation180, 270);
-            orientations.Append((int)SurfaceOrientation.Rotation270, 180);
+            // Instanciate SensorManager
+            // But do not listen yet (Listening starts later, when controls get initilialized)
+            sensorManager = (SensorManager)Application.Context.GetSystemService(Context.SensorService);
+            orientationSensor = sensorManager.GetDefaultSensor(SensorType.Orientation);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Page> e)
@@ -62,23 +68,16 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
             liveTextureView.SurfaceTextureListener = this;
             liveTextureView.LayoutParameters = new RelativeLayout.LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent); ;
             mainLayout.AddView(liveTextureView);
-
             capturePhotoButton = new PaintCodeButton(Context);
             RelativeLayout.LayoutParams captureButtonParams = new RelativeLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent);
             captureButtonParams.Height = 120;
             captureButtonParams.Width = 120;
             capturePhotoButton.LayoutParameters = captureButtonParams;
-            capturePhotoButton.Click += (sender, f) =>
-            {
-                TakePhoto();
-            };
+            capturePhotoButton.Click += (sender, f) => { TakePhoto(); };
             mainLayout.AddView(capturePhotoButton);
-
             AddView(mainLayout);
 
-            //SetupUserInterface();
-            //SetupEventHandlers();
-
+            // Initialize CameraManager
             cameraManager = (CameraManager)Context.GetSystemService(Context.CameraService);
             cameraId = cameraManager.GetCameraIdList().FirstOrDefault();
             if (cameraId != null)
@@ -88,17 +87,41 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
                 previewSize = map.GetOutputSizes(Java.Lang.Class.FromType(typeof(SurfaceTexture)))[0];
             }
 
+            // Subscribe to Init and Dispose Events
+            // These events get raised by the page when it is ready to display the stream or when
+            // the stream should stop (for example when navigated away)
             (Element as Controls.CameraPage).OnInitialize += Handle_OnInitialize;
             (Element as Controls.CameraPage).OnDispose += Handle_OnDispose;
         }
 
         void Handle_OnInitialize(EventArgs args)
         {
+            // Start listening for orientation changes
+            sensorManager.RegisterListener(this, orientationSensor, SensorDelay.Normal);
+
+            // Start camera stream
             if (cameraId != null)
             {
                 var cameraStateListener = new CameraStateListener(this);
                 cameraManager.OpenCamera(cameraId, cameraStateListener, null);
             }
+        }
+
+        void Handle_OnDispose(EventArgs args)
+        {
+            // Stop listening for orientation changes
+            sensorManager.UnregisterListener(this);
+
+            // Stop camera stram
+            StopCamera();
+        }
+
+        private void StopCamera()
+        {
+            if (previewSession != null && previewSession.IsReprocessable)
+                previewSession?.StopRepeating();
+
+            CameraDevice.Close();
         }
 
         public void StartPreview()
@@ -129,11 +152,6 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
                     previewSession.SetRepeatingRequest(previewBuilder.Build(), null, backgroundHandler);
                 }
             }, null);
-        }
-
-        void Handle_OnDispose(EventArgs args)
-        {
-            StopCamera();
         }
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
@@ -177,7 +195,7 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
             // Orientation
             var windowManager = Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
             SurfaceOrientation rotation = windowManager.DefaultDisplay.Rotation;
-            captureBuilder.Set(CaptureRequest.JpegOrientation, orientations.Get((int)rotation));
+            captureBuilder.Set(CaptureRequest.JpegOrientation, orientation);
 
             var readerListener = new ImageAvailableListener();
             readerListener.Photo += (sender, e) =>
@@ -194,7 +212,6 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
 
             captureListener.PhotoComplete += (sender, e) =>
             {
-
                 StartPreview();
             };
 
@@ -214,22 +231,6 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
                 }
             }, backgroundHandler);
         }
-
-        private void StopCamera()
-        {
-            if (previewSession != null && previewSession.IsReprocessable)
-                previewSession?.StopRepeating();
-
-            //camera.StopPreview();
-            //camera.Release();
-        }
-
-        private void StartCamera()
-        {
-            //camera.SetDisplayOrientation(90);
-            //camera.StartPreview();
-        }
-
 
         #region TextureView.ISurfaceTextureListener implementations
 
@@ -287,6 +288,42 @@ namespace PhotoSharingApp.Forms.Droid.CustomRenderers
 
         public void OnSurfaceTextureUpdated(Android.Graphics.SurfaceTexture surface)
         {
+        }
+
+        public void OnAccuracyChanged(Sensor sensor, [GeneratedEnum] SensorStatus accuracy)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnSensorChanged(SensorEvent e)
+        {
+            if (e.Sensor.Type == SensorType.Orientation)
+            {
+                float xAxis = e.Values[1];
+                float yAxis = e.Values[2];
+
+                if ((yAxis <= 25) && (yAxis >= -25) && (xAxis >= -160))
+                {
+                    // CHANGED TO PORTRAIT
+                    if (orientation != 90)
+                        orientation = 90;
+
+                }
+                else if ((yAxis < -25) && (xAxis >= -20))
+                {
+                    // CHANGED TO LANDSCAPE RIGHT
+                    if (orientation != 180)
+                        orientation = 180;
+
+                }
+                else if ((yAxis > 25) && (xAxis >= -20))
+                {
+                    // CHANGED TO LANDSCAPE LEFT
+                    if (orientation != 0)
+                        orientation = 0;
+
+                }
+            }
         }
         #endregion
     }

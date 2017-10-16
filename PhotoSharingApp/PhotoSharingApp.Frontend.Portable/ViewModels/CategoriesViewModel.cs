@@ -9,6 +9,7 @@ using PhotoSharingApp.Frontend.Portable.Exceptions;
 using PhotoSharingApp.Frontend.Portable.Helpers;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
 using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogService;
+using System;
 
 namespace PhotoSharingApp.Frontend.Portable.ViewModels
 {
@@ -127,10 +128,17 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
 
                 CurrentUser = await photoService.GetCurrentUser();
             }
-            catch (UnauthorizedException)
+            catch (Exception ex)
             {
-                // User not logged in yet
-                CurrentUser = null;
+                if (ex is UnauthorizedException || ex is ServiceException)
+                {
+                    // User not logged in yet
+                    CurrentUser = null;
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             // Load hero images

@@ -55,6 +55,7 @@ namespace PhotoSharingApp.Forms.Droid
             CurrentPlatform.Init();
 
             LoadApplication(new App(this));
+
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
