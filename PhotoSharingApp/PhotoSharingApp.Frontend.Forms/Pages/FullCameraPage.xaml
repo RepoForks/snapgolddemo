@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controls:CameraPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:controls="clr-namespace:PhotoSharingApp.Forms.Controls;assembly=PhotoSharingApp.Forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="PhotoSharingApp.Forms.Pages.FullCameraPage"
+    Icon="camera.png">
+
+    <!-- Remove title on Android -->
+    <controls:CameraPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Upload"/>
+            <On Platform="Android" Value=""/>
+        </OnPlatform>
+    </controls:CameraPage.Title>
+
+    <!-- Toolbar Items -->
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem
+            Name="Library"
+            Icon="library.png"
+            Clicked="LibraryButton_Clicked"/>
+    </TabbedPage.ToolbarItems>
+</controls:CameraPage>

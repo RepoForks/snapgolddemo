@@ -34,6 +34,7 @@ using Microsoft.Azure.Documents.Linq;
 using PhotoSharingApp.AppService.Shared.Context;
 using PhotoSharingApp.AppService.Shared.Models.DocumentDB;
 using PhotoSharingApp.Portable.DataContracts;
+using PhotoSharingApp.AppService.Shared.Models;
 
 namespace PhotoSharingApp.AppService.Shared.Repositories
 {
@@ -209,6 +210,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 await GetAllUserDocumentsFromIdList(photoDocuments.Select(p => p.UserId)
                     .Concat(photoDocuments.SelectMany(p => p.Annotations).Select(a => a.From)).ToList());
 
+            ConvertImageUrlsToFullyQualified(userDocumentsForPhotosAndAnnotations);
+
             // Pass in the collection of users so ToContract can set the proper user objects for PhotoContract and the AnnotationContracts.
             return
                 photoDocuments.Select(photoDocument => photoDocument.ToContract(userDocumentsForPhotosAndAnnotations))
@@ -382,7 +385,11 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
 
             var documentResponse = await query.ExecuteNextAsync<UserDocument>();
 
-            return documentResponse.ToList();
+            var userList = documentResponse.ToList();
+
+            ConvertImageUrlsToFullyQualified(userList);
+
+            return userList;
         }
 
         private AnnotationDocument GetAnnotationDocument(string annotationId)
@@ -423,11 +430,13 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                     numberOfThumbnails,
                     _currentDocumentVersion);
 
-            
+
             var mostRecentCategoryPhotos = photosQuery.Response;
 
             if (mostRecentCategoryPhotos != null && mostRecentCategoryPhotos.Any())
             {
+                ConvertImageUrlsToFullyQualified(mostRecentCategoryPhotos);
+
                 // Create a collection of all categories represented in the list of photos we received
                 var allCategories =
                     mostRecentCategoryPhotos.GroupBy(p => p.CategoryId)
@@ -502,6 +511,9 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
 
             var photoContracts = await CreatePhotoContractsAndLoadUserData(documentResponse.ToList());
 
+            ConvertImageUrlsToPathOnly(photoContracts);
+            ConvertImageUrlsToFullyQualified(photoContracts);
+
             var result = new PagedResponse<PhotoContract>
             {
                 Items = photoContracts,
@@ -540,7 +552,11 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
 
             var documentResponse = await query.ExecuteNextAsync<PhotoDocument>();
 
-            return await CreatePhotoContractsAndLoadUserData(documentResponse.ToList());
+            var photos = await CreatePhotoContractsAndLoadUserData(documentResponse.ToList());
+
+            ConvertImageUrlsToFullyQualified(photos);
+
+            return photos;
         }
 
         private async Task<IList<LeaderboardEntryContract<UserContract>>> GetHighestGivingUsers(int count)
@@ -567,6 +583,11 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 Value = u.GoldGiven,
                 Rank = rank++
             }).ToList();
+
+            foreach (var item in mostGivingUsers)
+            {
+                ConvertImageUrlsToFullyQualified(item.Model);
+            }
 
             return mostGivingUsers;
         }
@@ -627,6 +648,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             var photoDocumentResponse = await photoQuery.ExecuteNextAsync<PhotoDocument>();
             var photoContracts = await CreatePhotoContractsAndLoadUserData(photoDocumentResponse.ToList());
 
+            ConvertImageUrlsToFullyQualified(photoContracts);
+
             var rank = 1;
             var mostGoldPhotos = photoContracts.Select(p => new LeaderboardEntryContract<PhotoContract>
             {
@@ -662,6 +685,11 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 Value = u.GoldBalance,
                 Rank = rank++
             }).ToList();
+
+            foreach (var item in mostGoldUsers)
+            {
+                ConvertImageUrlsToFullyQualified(item.Model);
+            }
 
             return mostGoldUsers;
         }
@@ -704,6 +732,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 throw new DataLayerException(DataLayerError.NotFound, $"No annotation with id {annotationId} found");
             }
 
+            ConvertImageUrlsToFullyQualified(photoDocument);
+
             return photoDocument;
         }
 
@@ -732,6 +762,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 throw new DataLayerException(DataLayerError.NotFound, $"No photo with id {id} found");
             }
 
+            ConvertImageUrlsToFullyQualified(document);
+
             return document;
         }
 
@@ -754,6 +786,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             var documentResponse = await documentQuery.ExecuteNextAsync<PhotoDocument>();
 
             var photoContracts = await CreatePhotoContractsAndLoadUserData(documentResponse.ToList());
+
+            ConvertImageUrlsToFullyQualified(photoContracts);
 
             var result = new PagedResponse<PhotoContract>
             {
@@ -813,6 +847,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                 throw new DataLayerException(DataLayerError.NotFound, $"No user with registrationReference {registrationReference} found");
             }
 
+            ConvertImageUrlsToFullyQualified(user);
+
             return user;
         }
 
@@ -828,6 +864,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             {
                 throw new DataLayerException(DataLayerError.NotFound, $"No user with id {userId} found");
             }
+
+            ConvertImageUrlsToFullyQualified(user);
 
             return user;
         }
@@ -866,6 +904,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             var documentResponse = await documentQuery.ExecuteNextAsync<PhotoDocument>();
 
             var photoContracts = await CreatePhotoContractsAndLoadUserData(documentResponse.ToList());
+
+            ConvertImageUrlsToFullyQualified(photoContracts);
 
             var result = new PagedResponse<PhotoContract>
             {
@@ -1010,6 +1050,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         /// <returns>New PhotoContract with updated user balance.</returns>
         public async Task<PhotoContract> InsertPhoto(PhotoContract photo, int goldIncrement)
         {
+            ConvertImageUrlsToPathOnly(photo);
+
             var document = _documentClient.CreateDocumentQuery<PhotoDocument>(DocumentCollectionUri)
                 .Where(d => d.DocumentType == PhotoDocument.DocumentTypeIdentifier)
                 .Where(d => d.DocumentVersion == _currentDocumentVersion)
@@ -1020,6 +1062,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             {
                 throw new DataLayerException(DataLayerError.DuplicateKeyInsert, $"Photo with Id={photo.Id} already exists");
             }
+
+            ConvertImageUrlsToPathOnly(document);
 
             var photoDocument = PhotoDocument.CreateFromContract(photo);
             photoDocument.Status = PhotoStatus.Active;
@@ -1059,7 +1103,7 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
                     photoDocument.Reports.Add(reportDocument);
 
                     if (photoDocument.Reports.Count >= _maxReportsPermitted)
-                    { 
+                    {
                         photoDocument.Status = PhotoStatus.UnderReview;
 
                         var user = GetUserDocumentByUserId(photoDocument.UserId);
@@ -1112,6 +1156,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         {
             try
             {
+                ConvertImageUrlsToPathOnly(photoDocument);
+
                 // Set the category name
                 photoDocument.CategoryName = GetCategoryDocument(photoDocument.CategoryId).Name;
                 photoDocument.ModifiedAt = new DateDocument
@@ -1141,6 +1187,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
 
         private async Task<UserDocument> ReplaceUserDocument(UserDocument userDocument)
         {
+            ConvertImageUrlsToPathOnly(userDocument);
+
             var existingUser = GetUserDocumentByRegistrationReference(userDocument.RegistrationReference);
 
             // First time profile pic update awards user some gold (value found in environment definitions)
@@ -1222,6 +1270,8 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
         {
             var photoDocument = GetPhotoDocument(photoContract.Id);
 
+            ConvertImageUrlsToPathOnly(photoDocument);
+
             photoDocument.CategoryId = photoContract.CategoryId;
             photoDocument.Description = photoContract.Description;
 
@@ -1260,6 +1310,310 @@ namespace PhotoSharingApp.AppService.Shared.Repositories
             await ReplaceUserDocument(UserDocument.CreateFromContract(userContract));
 
             return userContract;
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photo">A PhotoDocument object.</param>
+        private void ConvertImageUrlsToPathOnly(PhotoDocument photo)
+        {
+            if (photo == null)
+                return;
+
+            if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.CroppedUrl = new Uri(photo.CroppedUrl).PathAndQuery;
+
+            if (!photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.HighResolutionUrl = new Uri(photo.HighResolutionUrl).PathAndQuery;
+
+            if (!photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.StandardUrl = new Uri(photo.StandardUrl).PathAndQuery;
+
+            if (!photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.ThumbnailUrl = new Uri(photo.ThumbnailUrl).PathAndQuery;
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photo">A PhotoContract object.</param>
+        private void ConvertImageUrlsToPathOnly(PhotoContract photo)
+        {
+            if (photo == null)
+                return;
+
+            if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.CroppedUrl = new Uri(photo.CroppedUrl).PathAndQuery;
+
+            if (!photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.HighResolutionUrl = new Uri(photo.HighResolutionUrl).PathAndQuery;
+
+            if (!photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.StandardUrl = new Uri(photo.StandardUrl).PathAndQuery;
+
+            if (!photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.ThumbnailUrl = new Uri(photo.ThumbnailUrl).PathAndQuery;
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photos">A List of PhotoContract objects.</param>
+        private void ConvertImageUrlsToPathOnly(IList<PhotoContract> photos)
+        {
+            if (photos == null)
+                return;
+
+            foreach (var photo in photos)
+            {
+                if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.CroppedUrl = new Uri(photo.CroppedUrl).PathAndQuery;
+
+                if (!photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.HighResolutionUrl = new Uri(photo.HighResolutionUrl).PathAndQuery;
+
+                if (!photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.StandardUrl = new Uri(photo.StandardUrl).PathAndQuery;
+
+                if (!photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.ThumbnailUrl = new Uri(photo.ThumbnailUrl).PathAndQuery;
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photos">A List of PhotoContract objects.</param>
+        private void ConvertImageUrlsToPathOnly(IList<PhotoDocument> photos)
+        {
+            if (photos == null)
+                return;
+
+            foreach (var photo in photos)
+            {
+                if (!photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.CroppedUrl = new Uri(photo.CroppedUrl).PathAndQuery;
+
+                if (!photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.HighResolutionUrl = new Uri(photo.HighResolutionUrl).PathAndQuery;
+
+                if (!photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.StandardUrl = new Uri(photo.StandardUrl).PathAndQuery;
+
+                if (!photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.ThumbnailUrl = new Uri(photo.ThumbnailUrl).PathAndQuery;
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="user">A UserDocument object.</param>
+        private void ConvertImageUrlsToPathOnly(UserDocument user)
+        {
+            if (user == null)
+                return;
+
+            if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                user.ProfilePhotoUrl = new Uri(user.ProfilePhotoUrl).PathAndQuery;
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="user">A UserContract object.</param>
+        private void ConvertImageUrlsToPathOnly(UserContract user)
+        {
+            if (user == null)
+                return;
+
+            if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                user.ProfilePhotoUrl = new Uri(user.ProfilePhotoUrl).PathAndQuery;
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="users">A List of UserContract objects.</param>
+        private void ConvertImageUrlsToPathOnly(IList<UserContract> users)
+        {
+            if (users == null)
+                return;
+
+            foreach (var user in users)
+            {
+                if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    user.ProfilePhotoUrl = new Uri(user.ProfilePhotoUrl).PathAndQuery;
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="users">A List of UserContract objects.</param>
+        private void ConvertImageUrlsToPathOnly(IList<UserDocument> users)
+        {
+            if (users == null)
+                return;
+
+            foreach (var user in users)
+            {
+                if (!user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    user.ProfilePhotoUrl = new Uri(user.ProfilePhotoUrl).PathAndQuery;
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photo">A PhotoDocument object.</param>
+        private void ConvertImageUrlsToFullyQualified(PhotoDocument photo)
+        {
+            if (photo == null)
+                return;
+
+            if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.CroppedUrl = $"{Settings.ImageBaseUrl}{photo.CroppedUrl}";
+
+            if (photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.HighResolutionUrl = $"{Settings.ImageBaseUrl}{photo.HighResolutionUrl}";
+
+            if (photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.StandardUrl = $"{Settings.ImageBaseUrl}{photo.StandardUrl}";
+
+            if (photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.ThumbnailUrl = $"{Settings.ImageBaseUrl}{photo.ThumbnailUrl}";
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photo">A PhotoContract object</param>
+        private void ConvertImageUrlsToFullyQualified(PhotoContract photo)
+        {
+            if (photo == null)
+                return;
+
+            if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.CroppedUrl = $"{Settings.ImageBaseUrl}{photo.CroppedUrl}";
+
+            if (photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.HighResolutionUrl = $"{Settings.ImageBaseUrl}{photo.HighResolutionUrl}";
+
+            if (photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.StandardUrl = $"{Settings.ImageBaseUrl}{photo.StandardUrl}";
+
+            if (photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                photo.ThumbnailUrl = $"{Settings.ImageBaseUrl}{photo.ThumbnailUrl}";
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photos">A List of PhotoContract objects</param>
+        private void ConvertImageUrlsToFullyQualified(IList<PhotoContract> photos)
+        {
+            if (photos == null)
+                return;
+
+            foreach (var photo in photos)
+            {
+                if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.CroppedUrl = $"{Settings.ImageBaseUrl}{photo.CroppedUrl}";
+
+                if (photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.HighResolutionUrl = $"{Settings.ImageBaseUrl}{photo.HighResolutionUrl}";
+
+                if (photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.StandardUrl = $"{Settings.ImageBaseUrl}{photo.StandardUrl}";
+
+                if (photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.ThumbnailUrl = $"{Settings.ImageBaseUrl}{photo.ThumbnailUrl}";
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="photos">A List of PhotoDocument objects</param>
+        private void ConvertImageUrlsToFullyQualified(IList<PhotoDocument> photos)
+        {
+            if (photos == null)
+                return;
+
+            foreach (var photo in photos)
+            {
+                if (photo.CroppedUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.CroppedUrl = $"{Settings.ImageBaseUrl}{photo.CroppedUrl}";
+
+                if (photo.HighResolutionUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.HighResolutionUrl = $"{Settings.ImageBaseUrl}{photo.HighResolutionUrl}";
+
+                if (photo.StandardUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.StandardUrl = $"{Settings.ImageBaseUrl}{photo.StandardUrl}";
+
+                if (photo.ThumbnailUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    photo.ThumbnailUrl = $"{Settings.ImageBaseUrl}{photo.ThumbnailUrl}";
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="user">A UserDocument object.</param>
+        private void ConvertImageUrlsToFullyQualified(UserContract user)
+        {
+            if (user == null)
+                return;
+
+            if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                user.ProfilePhotoUrl = $"{Settings.ImageBaseUrl}{user.ProfilePhotoUrl}";
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="user">A UserDocument object.</param>
+        private void ConvertImageUrlsToFullyQualified(UserDocument user)
+        {
+            if (user == null)
+                return;
+
+            if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                user.ProfilePhotoUrl = $"{Settings.ImageBaseUrl}{user.ProfilePhotoUrl}";
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="users">A List of UserContract objects</param>
+        private void ConvertImageUrlsToFullyQualified(IList<UserContract> users)
+        {
+            if (users == null)
+                return;
+
+            foreach (var user in users)
+            {
+                if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    user.ProfilePhotoUrl = $"{Settings.ImageBaseUrl}{user.ProfilePhotoUrl}";
+            }
+        }
+
+        /// <summary>
+        /// Method to effectively add  strip the domain portion of the image urls so they are paths only.
+        /// </summary>
+        /// <param name="users">A List of UserDocument objects</param>
+        private void ConvertImageUrlsToFullyQualified(IList<UserDocument> users)
+        {
+            if (users == null)
+                return;
+
+            foreach (var user in users)
+            {
+                if (user.ProfilePhotoUrl?.StartsWith("/", StringComparison.OrdinalIgnoreCase) ?? false)
+                    user.ProfilePhotoUrl = $"{Settings.ImageBaseUrl}{user.ProfilePhotoUrl}";
+            }
         }
     }
 }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+    xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+    x:Class="PhotoSharingApp.Forms.PhotoDetailsPage"
+    Title="{Binding Photo.CategoryName}"
+    IsBusy="{Binding IsLoading}">
+
+    <!-- Toolbar Items -->
+    <TabbedPage.ToolbarItems>        
+        <ToolbarItem
+            x:Name="SetAsProfilePictureToolbarItem"
+            Name="Set as Profile Picture"
+            Icon="profilepicture.png"
+            Command="{Binding SetAsProfilePictureCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+        <ToolbarItem
+            x:Name="DeleteToolbarItem"
+            Name="Delete"
+            AutomationId="DeleteButton"
+            Icon="delete.png"
+            Command="{Binding DeletePhotoCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <ListView
+            ItemsSource="{Binding Photo.Annotations}"
+            ItemSelected="ListView_ItemSelected"
+            SeparatorVisibility="None">
+
+            <ListView.Header>
+                <StackLayout Spacing="0">
+
+                    <ffimageloading:CachedImage
+                        Grid.Row="0"
+                        Aspect="AspectFit"
+                        CacheType="Disk"
+                        FadeAnimationEnabled="false"
+                        Source="{Binding Photo.StandardUrl}"
+                        ErrorPlaceholder="placeholder.jpg"
+                        MinimumHeightRequest="100"/>
+
+                    <Grid
+                        Margin="20,-50,20,0"
+                        WidthRequest="100"
+                        HeightRequest="100">
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    
+                        <ffimageloading:CachedImage
+                            WidthRequest="100"
+                            HeightRequest="100"
+                            VerticalOptions="Center"
+                            Aspect="AspectFill"
+                            CacheType="Disk"
+                            Source="{Binding Photo.User.ProfilePictureUrl}"
+                            ErrorPlaceholder="placeholder.jpg">
+                            <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation>
+                                    <x:Arguments>
+                                        <x:Double>50</x:Double>
+                                        <x:String>#FFFFFF</x:String>
+                                    </x:Arguments>
+                                </fftransformations:CircleTransformation>
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
+
+                        <Frame
+                            x:Name="GoldIndicator"
+                            AutomationId="GiveGoldButton"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            Margin="0,0,0,0"
+                            VerticalOptions="Center"
+                            BackgroundColor="{StaticResource AccentColor}"
+                            CornerRadius="30"
+                            WidthRequest="20"
+                            HeightRequest="20"
+                            HasShadow="false">
+
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GiveGold_Clicked"/>
+                            </Image.GestureRecognizers>
+                            
+                            <Label Text="{Binding Photo.GoldCount}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" />
+                        </Frame>
+                    </Grid>
+
+                    <StackLayout Padding="20">
+                        <Label Text="{Binding Photo.Caption}" FontAttributes="Bold" />
+                        <Label Text="{Binding Photo.CreatedAt, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="{StaticResource FontSizeMedium}" TextColor="{StaticResource SubtleFontColor}" />
+                    </StackLayout>
+                </StackLayout>
+            </ListView.Header>
+
+            <ListView.Footer>
+                <Grid Padding="20">
+
+                <Button
+                    HorizontalOptions="Start"
+                    Clicked="GiveGold_Clicked"
+                    BackgroundColor="#DDD"
+                    TextColor="Black">
+                    <Button.Text>
+                        <OnPlatform x:TypeArguments="x:String">   
+                            <!-- Ugly HACK: Simulate Padding on iOS -->
+                            <On Platform="iOS" Value="    Add Annotation    "/>
+                            <On Platform="Android,WinPhone" Value="Add Annotation"/>
+                        </OnPlatform>
+                    </Button.Text>
+                </Button>
+                    </Grid>
+            </ListView.Footer>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="20,0" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ffimageloading:CachedImage
+                                Grid.Column="0"
+                                WidthRequest="30"
+                                HeightRequest="30"
+                                VerticalOptions="Center"
+                                Source="{Binding From.ProfilePictureUrl}" >
+                                <ffimageloading:CachedImage.Transformations>
+                                    <fftransformations:CircleTransformation/>
+                                </ffimageloading:CachedImage.Transformations>
+                            </ffimageloading:CachedImage>
+
+                            <StackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Grid.Column="1"  Text="{Binding GoldCount, StringFormat='Gave {0:G} piece of Gold.'}" FontSize="{StaticResource FontSizeSmall}" FontAttributes="Bold" />
+                                <Label Text="{Binding Text}" FontSize="{StaticResource FontSizeMedium}" TextColor="{StaticResource DarkSubtleFontColor}"  />
+                            </StackLayout>
+
+                            <Label
+                                Grid.Column="2"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                FontSize="{StaticResource FontSizeSmall}" 
+                                TextColor="{StaticResource SubtleFontColor}"
+                                Text="{Binding CreatedTime, StringFormat='{0:MMM dd, yyyy hh:mm tt}'}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>                    
+            </ListView.ItemTemplate>
+        </ListView>
+	</ContentPage.Content>
+</ContentPage>

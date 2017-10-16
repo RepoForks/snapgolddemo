@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="PhotoSharingApp.Forms.LeaderboardsPage"
+    Icon="flag.png">
+
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="iOS" Value="Leaderboards"/>
+            <On Platform="Android" Value=""/>
+        </OnPlatform>
+    </ContentPage.Title>
+    
+	<ContentPage.Content>
+        <Label Text="Not implemented yet" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource SubtleFontColor}" />
+	</ContentPage.Content>
+</ContentPage>

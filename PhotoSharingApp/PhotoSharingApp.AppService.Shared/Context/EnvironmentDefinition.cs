@@ -49,8 +49,8 @@ namespace PhotoSharingApp.AppService.Shared.Context
                         // if none exist with these names.
                         DataBaseId = "photosharing-database",
                         CollectionId = "photosharing-document-data",
-                        EndpointUrl = "[Your Azure DocumentDB Endpoint URL]",
-                        AuthorizationKey = "[Your Azure DocumentDB Authorization Id]"
+                        EndpointUrl = "https://snapgolddemodb.documents.azure.com:443/",
+                        AuthorizationKey = "0e5TPr752unFx3Xk58ZC0AeHunPB9LKpugdUjTm0OCM1PFx9eASetyPDMbtnE03P0wh4rt4Fptbt5IKY3YW1Yw=="
                     };
                 }
 
@@ -91,7 +91,7 @@ namespace PhotoSharingApp.AppService.Shared.Context
         /// </summary>
         public override string StorageAccessKey
         {
-            get { return "[Your Azure Storage access key]"; }
+            get { return "UXWKEc4JJD/nFtoJ+31nLuMABErqdwbeTChkOijEOXdH4rm42vPicsf0wwLNXVLvqmrnDtzKB5nX+VMSU7/j/Q=="; }
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace PhotoSharingApp.AppService.Shared.Context
         /// </summary>
         public override string StorageAccountName
         {
-            get { return "[Your Azure Storage account name]"; }
+            get { return "snapgolddemostorage"; }
         }
     }
 }

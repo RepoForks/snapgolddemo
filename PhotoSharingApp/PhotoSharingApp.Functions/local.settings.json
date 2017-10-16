@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=snapgolddemostorage;AccountKey=UXWKEc4JJD/nFtoJ+31nLuMABErqdwbeTChkOijEOXdH4rm42vPicsf0wwLNXVLvqmrnDtzKB5nX+VMSU7/j/Q==",
+    "AzureWebJobsDashboard": "DefaultEndpointsProtocol=https;AccountName=snapgolddemostorage;AccountKey=UXWKEc4JJD/nFtoJ+31nLuMABErqdwbeTChkOijEOXdH4rm42vPicsf0wwLNXVLvqmrnDtzKB5nX+VMSU7/j/Q==",
+    "DocumentDatabaseId": "photosharing-database",
+    "DocumentCollectionId": "photosharing-document-data",
+    "DocumentEndpointUrl": "https://snapgolddemodb.documents.azure.com:443/",
+    "DocumentAuthorizationKey": "0e5TPr752unFx3Xk58ZC0AeHunPB9LKpugdUjTm0OCM1PFx9eASetyPDMbtnE03P0wh4rt4Fptbt5IKY3YW1Yw==",
+    "VisionApiSubscriptionKey": "13b4c92af6bc4e80a3337499f47de2fa",
+    "EmotionApiSubscriptionKey": "55fe1bd0eb2549039dd9301911b50d32",
+    "VisionApiRequestUrlAnalyze": "https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description&language=en",
+    "EmotionApiRequestUrlRecognize": "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize",
+    "ImageUrlBase": "https://snapgolddemostorage.blob.core.windows.net"
+  }
+}

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+    xmlns:converters="clr-namespace:PhotoSharingApp.Forms.Converters;assembly=PhotoSharingApp.Forms"    
+    x:Class="PhotoSharingApp.Forms.ProfilePage"
+    Icon="user.png">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToNegatedBoolConverter x:Key="BoolToNegatedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="iOS" Value="My Profile"/>
+            <On Platform="Android" Value=""/>
+        </OnPlatform>
+    </ContentPage.Title>
+
+    <!-- Toolbar Items -->
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem
+            Name="Settings"
+            Command="{Binding NavigateToSettingsCommand}"
+            AutomationId="SettingsButton"
+            Icon="settings.png">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary"/>
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+        
+        <ToolbarItem
+            x:Name="SignOutButton"
+            Name="Log out"
+            AutomationId="SignOutButton"
+            Icon="signout.png"
+            Command="{Binding LogoutCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary"/>
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+    </TabbedPage.ToolbarItems>
+    
+	<ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>                
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0" RowSpacing="0" Padding="20" BackgroundColor="{StaticResource SubtleColor}" IsVisible="{Binding IsLoggedIn}">
+                <Grid.RowDefinitions>                
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Text="{Binding NumberOfPhotos}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="End" />
+                <Label Grid.Row="1" Grid.Column="0" Text="Photos" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+
+                <ffimageloading:CachedImage
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    CacheType="Disk"
+                    Aspect="AspectFill"
+                    Source="{Binding ProfilePictureUrl}"
+                    ErrorPlaceholder="placeholder.jpg"
+                    LoadingPlaceholder="placeholder.jpg"
+                    WidthRequest="50"
+                    HeightRequest="50">
+                    <ffimageloading:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffimageloading:CachedImage.Transformations>
+                </ffimageloading:CachedImage>
+
+                <Label Grid.Row="0" Grid.Column="2" Text="{Binding UserGold}" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="End" />
+                <Label Grid.Row="1" Grid.Column="2" Text="Gold"  HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            </Grid>
+
+            <!-- List of user's photos -->
+            <ListView
+                Grid.Row="1"
+                ItemsSource="{Binding UserPhotos}"
+                AutomationId="UserPhotoList"
+                SeparatorVisibility="None"
+                ItemTapped="Handle_ItemTapped"
+                IsVisible="{Binding IsLoggedIn}"
+                HasUnevenRows="true"
+                ItemTemplate="{StaticResource FullPhotoItemTemplate}">
+            </ListView>
+            
+            <!-- Social Login buttons -->
+            <StackLayout
+                Grid.Row="1"
+                Padding="20"
+                IsVisible="{Binding IsLoggedIn, Converter={StaticResource BoolToNegatedBoolConverter}}"
+                VerticalOptions="Center"
+                Spacing="10">
+                
+                <Button
+                    Text="Login with Facebook"
+                    AutomationId="FacebookButton"
+                    Command="{Binding FacebookLoginCommand}"
+                    BackgroundColor="{StaticResource FacebookBlue}"
+                    TextColor="White"/>
+                
+                <Button
+                    Text="Login with Google"
+                    AutomationId="GoogleButton"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="{StaticResource GoogleRed}"
+                    TextColor="White"/>
+
+                <Button
+                    Text="Login with Twitter"
+                    AutomationId="TwitterButton"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="{StaticResource TwitterBlue}"
+                    TextColor="White"/>
+
+                <Button
+                    Text="Login with a Microsoft Account"
+                    AutomationId="MSAButton"
+                    Clicked="Handle_Clicked"
+                    BackgroundColor="{StaticResource SubtleColor}"
+                    TextColor="Black"/>
+            </StackLayout>
+        </Grid>
+	</ContentPage.Content>
+</ContentPage>

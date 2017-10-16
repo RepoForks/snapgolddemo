@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3D557C9-A8B0-40E6-B430-1989D0631CD1}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UseMSBuildEngine>true</UseMSBuildEngine>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PhotoSharingApp.Frontend</RootNamespace>
+    <AssemblyName>PhotoSharingApp.Frontend</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Commands\BaseCommand.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Commands\RelayCommand.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ComponentModel\IncrementalLoadingCollection.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ComponentModel\ObservableObjectBase.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\Annotation.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\AppEnvironment.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\CategoryMatchedException.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\CategoryMatchFinder.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\CategoryPreview.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\CategoryRequiredException.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\Config.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\DefaultConfig.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\DeviceFamily.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\EditingMode.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\IAppEnvironment.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\InstructionItem.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\Leaderboard.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\LeaderboardEntry.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\PhotoStream.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\PhotoStreamLayoutType.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\PhotoThumbnail.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Models\User.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Services\IAuthEnforcementHandler.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Services\IAuthenticationHandler.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="Services\IPhotoService.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\AboutViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\AppShellViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\CameraViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\CameraViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\CategoriesChooserViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\CategoriesViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\CropViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\CropViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\DebugViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\DefaultUploadFinishedHandler.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\GiveGoldViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\GoldPurchasePromptViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\IUploadFinishedHandler.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\LeaderboardViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\PageHeaderViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\PhotoDetailsViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\PhotoDetailsViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\PhotoDetailsViewModelPhotoIdArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\ProfileViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\ProfileViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\SettingsViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\ShareTargetUploadFinishedHandler.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\SignInPromptViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\SignInViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\StreamViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\StreamViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\StreamViewModelThumbnailArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\UploadPhotoControlViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\UploadViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\UploadViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\UploadViewModelEditPhotoArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\ViewModelArgs.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\ViewModelBase.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="ViewModels\WelcomeViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="ComponentModel\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+</Project>

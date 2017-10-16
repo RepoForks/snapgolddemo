@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="PhotoSharingApp.Forms.CategoriesPage"
+    xmlns:controls="clr-namespace:PhotoSharingApp.Forms.Controls;assembly=PhotoSharingApp.Forms"    
+    xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+    xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+    xmlns:flow="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations" 
+    xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+    xmlns:converters="clr-namespace:PhotoSharingApp.Forms.Converters;assembly=PhotoSharingApp.Forms"    
+    x:Name="CategoriesPage"
+    Icon="home.png"
+    IsBusy="{Binding IsLoading}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateToVisibilityConverter x:Key="DateToVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Remove title on Android -->
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">            
+            <On Platform="iOS" Value="Home"/>
+            <On Platform="Android" Value=""/>
+        </OnPlatform>
+    </ContentPage.Title>
+
+	<ContentPage.Content>
+        <Grid>
+            <flow:FlowListView
+                AutomationId="FlowView"
+                FlowColumnCount="3"
+                SeparatorVisibility="None"
+                HasUnevenRows="true"
+                FlowUseAbsoluteLayoutInternally="false"
+                FlowColumnExpand="None"
+                IsGroupingEnabled="true"
+                IsPullToRefreshEnabled="true"
+                FlowItemTapped="Handle_FlowItemTapped"
+                IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+                RefreshCommand="{Binding RefreshCommand}"
+                FlowGroupDisplayBinding="{Binding Name}"
+                FlowItemsSource="{Binding TopCategories}">               
+
+                <!-- Item Template for Category Preview Image -->
+                <flow:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>         
+                        <ffimageloading:CachedImage                          
+                            Source="{Binding ImageUrl}"
+                            ErrorPlaceholder="placeholder.jpg"
+                            LoadingPlaceholder="placeholder.jpg"
+                            CacheType="Disk"
+                            Aspect="AspectFill"
+                            FadeAnimationEnabled="true"
+                            BackgroundColor="{StaticResource SubtleColor}">
+                            <ffimageloading:CachedImage.HeightRequest>
+                                <OnIdiom x:TypeArguments="x:Double" Phone="120" Tablet="130" />                                
+                            </ffimageloading:CachedImage.HeightRequest>
+                            <ffimageloading:CachedImage.DownsampleHeight>
+                                <OnIdiom x:TypeArguments="x:Double" Phone="120" Tablet="130" /> 
+                            </ffimageloading:CachedImage.DownsampleHeight>
+                        </ffimageloading:CachedImage>
+                    </DataTemplate>
+                </flow:FlowListView.FlowColumnTemplate>
+
+                <!-- List View Header -->
+                <flow:FlowListView.Header>
+                    <Grid>
+                        <Grid.HeightRequest>
+                            <OnIdiom x:TypeArguments="x:Double" Tablet="400">
+                                <OnIdiom.Phone>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="iOS" Value="300" />
+                                        <On Platform="Android,WinPhone" Value="300" />
+                                    </OnPlatform>
+                                </OnIdiom.Phone>
+                            </OnIdiom>
+                        </Grid.HeightRequest>
+
+                        <carousel:CarouselViewControl
+                            AutomationId="HeroCarousel"
+                            Orientation="Horizontal"
+                            ItemsSource="{Binding HeroImages}" 
+                            VerticalOptions="FillAndExpand" 
+                            HorizontalOptions="FillAndExpand"
+                            CurrentPageIndicatorTintColor="{StaticResource AccentColor}"
+                            ShowIndicators="true">
+                            <carousel:CarouselViewControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Path=BindingContext.ShowPhotoDetailsCommand, Source={x:Reference Name=CategoriesPage}}"
+                                                CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+                                        
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                                                                                                          
+                                        <!-- Hero Image -->
+                                        <ffimageloading:CachedImage
+                                            Grid.RowSpan="2"
+                                            Grid.ColumnSpan="2"                                       
+                                            Aspect="AspectFill"
+                                            FadeAnimationEnabled="true"
+                                            CacheType="Disk"
+                                            Source="{Binding StandardUrl}"
+                                            ErrorPlaceholder="placeholder.jpg"
+                                            LoadingPlaceholder="placeholder.jpg"
+                                            BackgroundColor="{StaticResource SubtleColor}"/>
+
+                                        <!-- Shadow -->
+                                        <ffimageloading:CachedImage
+                                            Grid.RowSpan="2"
+                                            Grid.ColumnSpan="2"
+                                            Source="shadow.png"
+                                            HeightRequest="100"
+                                            CacheType="Memory"
+                                            Aspect="Fill"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="End" />
+                                            
+                                        <!-- Details -->
+                                        <ffimageloading:CachedImage
+                                            Margin="20,0,0,30"
+                                            Grid.Row="1"
+                                            Aspect="AspectFill"
+                                            Source="{Binding User.ProfilePictureUrl}"
+                                            DownsampleToViewSize="true"
+                                            WidthRequest="80"
+                                            HeightRequest="80">
+                                            <ffimageloading:CachedImage.Transformations>
+                                                <fftransformations:CircleTransformation />
+                                            </ffimageloading:CachedImage.Transformations>
+                                        </ffimageloading:CachedImage>
+                                        
+                                        <StackLayout Grid.Row="1" Grid.Column="1" Padding="12" VerticalOptions="Center">
+                                            <Label TextColor="White" Text="{Binding CreatedAt, StringFormat='{0:MMMM dd, yyyy}'}" IsVisible="{Binding CreatedAt, Converter={StaticResource DateToVisibilityConverter}}" FontSize="10" />
+                                            <Label TextColor="White" Text="{Binding Caption}" FontSize="16" />
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </carousel:CarouselViewControl.ItemTemplate>
+                        </carousel:CarouselViewControl>
+                    </Grid>
+                </flow:FlowListView.Header>
+
+                <flow:FlowListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="60">
+                            <Grid BackgroundColor="White" Padding="20">
+                                <Label Text="{Binding Path=Key}" VerticalOptions="Center" FontAttributes="Bold" FontSize="{StaticResource FontSizeLarge}" TextColor="{StaticResource DarkSubtleFontColor}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </flow:FlowListView.GroupHeaderTemplate>
+
+                <!-- ListView Footer -->
+                <flow:FlowListView.Footer>
+                    <Grid Padding="0,10,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <Frame          
+                            BackgroundColor="{StaticResource SubtleColor}"
+                            HasShadow="false"
+                            CornerRadius="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    Text="{Binding CurrentUser.GoldBalance, StringFormat='Gold balance: {0:G}'}"
+                                    TextColor="{StaticResource DarkSubtleFontColor}"/>
+
+                                <StackLayout
+                                    Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    AutomationId="BuyGoldButton">
+                                    <Button
+                                        HorizontalOptions="Start"
+                                        Text="     Buy gold     "
+                                        Clicked="Handle_Clicked"
+                                        BackgroundColor="{StaticResource AccentColor}"
+                                        TextColor="White"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+
+                        <Frame  
+                            Grid.Row="1"
+                            BackgroundColor="{StaticResource SubtleColor}"
+                            HasShadow="false"
+                            CornerRadius="0"
+                            Margin="0,5,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Margin="0,0,0,5"
+                                    Text="Upload a photo now to get some Gold"
+                                    TextColor="{StaticResource DarkSubtleFontColor}"/>
+
+                                <StackLayout
+                                    Grid.Row="1"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        HorizontalOptions="Start"
+                                        AutomationId="TakePhotoButton"
+                                        Clicked="Handle_Clicked"
+                                        BackgroundColor="#DDD"
+                                        TextColor="Black">
+                                        <Button.Text>
+                                            <OnPlatform x:TypeArguments="x:String">   
+                                                <!-- Ugly HACK: Simulate Padding on iOS -->
+                                                <On Platform="iOS" Value="    Take photo    "/>
+                                                <On Platform="Android,WinPhone" Value="Take photo"/>
+                                            </OnPlatform>
+                                        </Button.Text>
+                                    </Button>
+
+                                    <Button
+                                        HorizontalOptions="Start"
+                                        AutomationId="BrowseButton"
+                                        Clicked="Handle_Clicked"
+                                        BackgroundColor="#DDD"
+                                        TextColor="Black">
+                                        <Button.Text>
+                                            <OnPlatform x:TypeArguments="x:String">   
+                                                <!-- Ugly HACK: Simulate Padding on iOS -->
+                                                <On Platform="iOS" Value="    Browse pictures    "/>
+                                                <On Platform="Android,WinPhone" Value="Browse pictures"/>
+                                            </OnPlatform>
+                                        </Button.Text>
+                                    </Button>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </flow:FlowListView.Footer>
+            </flow:FlowListView>
+
+            <!-- Android only Floating Action Button -->
+            <controls:FormsFloatingActionButton
+                x:Name="AddPhotoButton"
+                Margin="0"
+                HorizontalOptions="End"
+                AutomationId="AddPhotoButton"
+                Icon="camera.png"
+                VerticalOptions="End">
+                <controls:FormsFloatingActionButton.IsVisible>
+                    <OnPlatform
+                        x:TypeArguments="x:Boolean"
+                        Android="True"
+                        WinPhone="False"
+                        iOS="False" />
+                </controls:FormsFloatingActionButton.IsVisible>
+            </controls:FormsFloatingActionButton>
+        </Grid>
+	</ContentPage.Content>
+</ContentPage>

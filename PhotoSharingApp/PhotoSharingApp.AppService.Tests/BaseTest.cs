@@ -66,6 +66,7 @@ namespace PhotoSharingApp.AppService.Tests
                 HighResolutionUrl = "http://bing.com",
                 StandardUrl = "http://bing.com",
                 ThumbnailUrl = "http://bing.com",
+                CroppedUrl = "http://bing.com",
                 NumberOfGoldVotes = goldCount
             };
         }
