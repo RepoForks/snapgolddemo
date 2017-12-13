@@ -5,7 +5,7 @@ using PhotoSharingApp.Frontend.Portable.ViewModels;
 using Xamarin.Forms;
 using PhotoSharingApp.Frontend.Portable.Models;
 using System.Linq;
-using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.AppCenter.Analytics;
 
 namespace PhotoSharingApp.Forms
 {

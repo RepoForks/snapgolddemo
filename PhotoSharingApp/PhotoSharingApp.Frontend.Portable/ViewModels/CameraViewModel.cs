@@ -95,13 +95,16 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
                 // Refresh CategoryViewModel
                 await categoriesViewModel.RefreshAsync(true);
 
-                // Notify user
-                await dialogService.DisplayDialogAsync("Upload successful", "", "Ok");
                 return true;
             }
             catch (UnauthorizedException)
             {
                 await dialogService.DisplayDialogAsync("Not logged in!", "You need to be logged in to upload a photo. Please log in first.", "Ok");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                await dialogService.DisplayDialogAsync("Upload failed", $"Error: {ex.Message}", "Ok");
                 return false;
             }
         }

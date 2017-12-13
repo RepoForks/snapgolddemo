@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.IO;
 using CoreGraphics;
+using FFImageLoading.Forms.Touch;
+using Foundation;
 using PhotoSharingApp.Forms.iOS.Services;
 using PhotoSharingApp.Frontend.Portable.Abstractions;
 using UIKit;
@@ -13,7 +15,13 @@ namespace PhotoSharingApp.Forms.iOS.Services
     {
         public byte[] ResizeImage(byte[] source, int width, int height)
         {
-            using (var originalImage = new UIImage(Foundation.NSData.FromArray(source)))
+
+            var d1 = NSData.FromArray(source);
+            var d2 = UIImage.LoadFromData(d1);
+            var d3 = new UIImage(d1);
+
+
+            using (var originalImage = UIImage.LoadFromData(Foundation.NSData.FromArray(source)))
             {
                 // Determine the ratio
                 var ratioX = (double)width / originalImage.Size.Width;

@@ -2,9 +2,6 @@
 using DLToolkit.Forms.Controls;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
-using Microsoft.Azure.Mobile;
-using Microsoft.Azure.Mobile.Analytics;
-using Microsoft.Azure.Mobile.Crashes;
 using Microsoft.Practices.ServiceLocation;
 using PhotoSharingApp.Forms.Pages;
 using PhotoSharingApp.Forms.Services;
@@ -20,8 +17,12 @@ using IDialogService = PhotoSharingApp.Frontend.Portable.Abstractions.IDialogSer
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
-using Microsoft.Azure.Mobile.Distribute;
 using PhotoSharingApp.Forms.Abstractions;
+
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Distribute;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
@@ -57,6 +58,7 @@ namespace PhotoSharingApp.Forms
             SimpleIoc.Default.Register<StreamPageViewModel>();
             SimpleIoc.Default.Register<CameraViewModel>();
             SimpleIoc.Default.Register<ProfileViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
 
             // Setup App Container
             var navigationPage = new Xamarin.Forms.NavigationPage();
@@ -73,7 +75,7 @@ namespace PhotoSharingApp.Forms
             // Setup App Shell
             AppShell = new AppShell();
             AppShell.Children.Add(new CategoriesPage());   // Home
-            AppShell.Children.Add(new FullCameraPage());   // Upload
+            AppShell.Children.Add(new CameraPage());   // Upload
             AppShell.Children.Add(new LeaderboardsPage()); // Leaderboards
             AppShell.Children.Add(new ProfilePage());      // My profile
             AppShell.On<Android>().DisableSwipePaging();
@@ -90,7 +92,7 @@ namespace PhotoSharingApp.Forms
             if (environment?.IsRunningInRealWorld() == true)
             {
                 // Visual Studio Mobile Center
-                MobileCenter.Start(
+                AppCenter.Start(
                     "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
                     "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
                     typeof(Analytics),

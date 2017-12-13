@@ -72,7 +72,7 @@ namespace PhotoSharingApp.Forms.Pages
 
             // Upload photo
             var stream = pickedPhoto != null ? pickedPhoto.GetStream() : new MemoryStream(photoResult.Image);
-            var success = await viewModel.UploadPhoto(stream, "");
+            var success = false; //await viewModel.UploadPhoto(stream, "");
             if (success)
             {
                 PhotoPreview.Source = null;
