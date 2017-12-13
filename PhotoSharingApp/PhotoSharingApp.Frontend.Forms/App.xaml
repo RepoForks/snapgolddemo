@@ -10,6 +10,43 @@
 	<Application.Resources>
 		<ResourceDictionary>
             <converters:DateToVisibilityConverter x:Key="DateToVisibilityConverter" />
+
+            <!-- Margin -->
+            <OnPlatform
+                x:Key="DefaultMargin"
+                x:TypeArguments="x:Double"
+                Android="14"
+                WinPhone="20"
+                iOS="10" />
+
+            <OnPlatform
+                x:Key="DefaultItemMargin"
+                x:TypeArguments="x:Double"
+                Android="{StaticResource DefaultMargin}"
+                WinPhone="{StaticResource DefaultMargin}"
+                iOS="15" />
+
+            <OnPlatform
+                x:Key="DefaultItemMarginRight"
+                x:TypeArguments="x:Double"
+                Android="{StaticResource DefaultMargin}"
+                WinPhone="{StaticResource DefaultMargin}"
+                iOS="8" />
+
+            <!-- Thickness -->
+            <Thickness
+                x:Key="DefaultThickness"
+                Bottom="{StaticResource DefaultMargin}"
+                Left="{StaticResource DefaultMargin}"
+                Right="{StaticResource DefaultMargin}"
+                Top="{StaticResource DefaultMargin}" />
+
+            <Thickness
+                x:Key="DefaultItemThickness"
+                Bottom="{StaticResource DefaultItemMargin}"
+                Left="{StaticResource DefaultItemMargin}"
+                Right="{StaticResource DefaultItemMarginRight}"
+                Top="{StaticResource DefaultItemMargin}" />
             
             <!-- Colors -->
             <Color x:Key="AccentColor">#FAA819</Color>
@@ -71,6 +108,7 @@
                                 Source="{Binding User.ProfilePictureUrl}"
                                 ErrorPlaceholder="placeholder.jpg"
                                 LoadingPlaceholder="placeholder.jpg"
+                                TransformPlaceholders="true"
                                 FadeAnimationEnabled="false"
                                 CacheType="Disk">          
                                 <ffimageloading:CachedImage.Transformations>

@@ -17,7 +17,8 @@ using PhotoSharingApp.Portable.DataContracts;
 using PhotoSharingApp.Frontend.Portable.ContractModelConverterExtensions;
 using Lottie.Forms.iOS.Renderers;
 using CarouselView.FormsPlugin.iOS;
-using Microsoft.Azure.Mobile.Distribute;
+using Microsoft.AppCenter.Distribute;
+using Microsoft.AppCenter.Analytics;
 
 namespace PhotoSharingApp.Forms.iOS
 {
@@ -26,7 +27,6 @@ namespace PhotoSharingApp.Forms.iOS
     {
         private SecureStorageImplementation secureStorage = new SecureStorageImplementation() { };
         public List<MobileServiceAuthenticationProvider> AuthenticationProviders { get; set; }
-
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
@@ -40,11 +40,11 @@ namespace PhotoSharingApp.Forms.iOS
 
             UITabBar.Appearance.SelectedImageTintColor = UIColor.FromRGB(250, 168, 25);
 
+            // Initialize Xamarin.Forms and its Plugins
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();
-
 
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();
@@ -52,13 +52,12 @@ namespace PhotoSharingApp.Forms.iOS
             // Code for starting up the Xamarin Test Cloud Agent
             Xamarin.Calabash.Start();
 
-            // Disable Mobile Center updates when in Debug Mode
+            // Disable Visual Studio App Center updates when in Debug Mode
             Distribute.DontCheckForUpdatesInDebug();
 
             LoadApplication(new App(this));
 
-            var result = base.FinishedLaunching(app, options);
-            return result;
+            return base.FinishedLaunching(app, options);
         }
 
         #region IAuthenticationHandler implementation
@@ -76,7 +75,7 @@ namespace PhotoSharingApp.Forms.iOS
             }
             catch (Exception ex)
             {
-
+                Analytics.TrackEvent("Login issue", new Dictionary<string, string> { { "Issue", "Login failed" } });
             }
         }
 
@@ -116,6 +115,8 @@ namespace PhotoSharingApp.Forms.iOS
                     // Remove the credentials.
                     ResetPasswordVault();
                     AzureAppService.Current.CurrentUser = null;
+
+                    Analytics.TrackEvent("Login issue", new Dictionary<string, string> { { "Issue", "Restore account status failed" } });
                 }
             }
 

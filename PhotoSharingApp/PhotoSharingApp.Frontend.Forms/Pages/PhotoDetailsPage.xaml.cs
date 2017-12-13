@@ -6,7 +6,7 @@ using PhotoSharingApp.Frontend.Portable;
 using GalaSoft.MvvmLight.Ioc;
 using PhotoSharingApp.Frontend.Portable.Models;
 using Acr.UserDialogs;
-using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.AppCenter.Analytics;
 
 namespace PhotoSharingApp.Forms
 {

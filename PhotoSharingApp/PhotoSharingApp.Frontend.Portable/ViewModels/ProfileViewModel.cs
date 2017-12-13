@@ -99,7 +99,7 @@ namespace PhotoSharingApp.Frontend.Portable.ViewModels
             {
                 return navigateToSettingsCommand ?? (navigateToSettingsCommand = new RelayCommand(() =>
                 {
-                    navigationService.NavigateTo(ViewNames.SettingsPage);
+                    navigationService.NavigateTo(ViewNames.SettingsPage, null);
                 }));
             }
         }
