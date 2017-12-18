@@ -19,6 +19,7 @@ using Lottie.Forms.iOS.Renderers;
 using CarouselView.FormsPlugin.iOS;
 using Microsoft.AppCenter.Distribute;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Push;
 
 namespace PhotoSharingApp.Forms.iOS
 {
@@ -52,6 +53,7 @@ namespace PhotoSharingApp.Forms.iOS
             // Code for starting up the Xamarin Test Cloud Agent
             Xamarin.Calabash.Start();
 
+
             // Disable Visual Studio App Center updates when in Debug Mode
             Distribute.DontCheckForUpdatesInDebug();
 
@@ -59,6 +61,7 @@ namespace PhotoSharingApp.Forms.iOS
 
             return base.FinishedLaunching(app, options);
         }
+
 
         #region IAuthenticationHandler implementation
 

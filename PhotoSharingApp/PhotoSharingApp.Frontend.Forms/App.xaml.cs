@@ -23,20 +23,17 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
+using Microsoft.AppCenter.Push;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace PhotoSharingApp.Forms
 {
     public partial class App : Xamarin.Forms.Application
     {
+
         public static AppShell AppShell;
 
-        public App()
-        {
-            InitializeComponent();
-        }
-
-        public App(IAuthenticationHandler authenticationHandler)
+        public App(IAuthenticationHandler authenticationHandler = null)
         {
             InitializeComponent();
             FlowListView.Init();
@@ -46,8 +43,9 @@ namespace PhotoSharingApp.Forms
             SimpleIoc.Default.Reset();
 
             // Register Dependencies
+            if (authenticationHandler != null)
+                SimpleIoc.Default.Register<IAuthenticationHandler>(() => authenticationHandler);
             SimpleIoc.Default.Register<IAppEnvironment, AppEnvironment>();
-            SimpleIoc.Default.Register<IAuthenticationHandler>(() => authenticationHandler);
             SimpleIoc.Default.Register<IPhotoCroppingService>(() => DependencyService.Get<IPhotoCroppingService>());
             SimpleIoc.Default.Register<IPhotoService, ServiceClient>();
             SimpleIoc.Default.Register<IDialogService, FormsDialogService>();
@@ -89,26 +87,42 @@ namespace PhotoSharingApp.Forms
             CrossVersionTracking.Current.Track();
 
             var environment = DependencyService.Get<IEnvironmentService>();
-            if (environment?.IsRunningInRealWorld() == true)
+            if (environment?.IsRunningInRealWorld() == false)
             {
-                // Visual Studio Mobile Center
-                AppCenter.Start(
-                    "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
-                    "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
-                    typeof(Analytics),
-                    typeof(Crashes),
-                    typeof(Distribute));
+                Analytics.SetEnabledAsync(false);
+                Crashes.SetEnabledAsync(false);
+                Distribute.SetEnabledAsync(false);
+            }
 
-                Analytics.TrackEvent("App Started", new Dictionary<string, string>
-                {
-                    { "Day of week", System.DateTime.Now.ToString("dddd") }
-                });
+            // Visual Studio Mobile Center
+            AppCenter.Start(
+                "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
+                "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
+                typeof(Analytics),
+                typeof(Crashes),
+                typeof(Distribute),
+                typeof(Push));
+
+            Push.PushNotificationReceived += Push_PushNotificationReceived;
+            Analytics.TrackEvent("App Started", new Dictionary<string, string>
+            {
+                { "Day of week", System.DateTime.Now.ToString("dddd") }
+            });
+        }
+
+        async void Push_PushNotificationReceived(object sender, PushNotificationReceivedEventArgs e)
+        {
+            if (e.Title != null || e.Message != null)
+            {
+                var dialogService = SimpleIoc.Default.GetInstance<IDialogService>();
+                await dialogService?.DisplayDialogAsync(e.Title, e.Message, "Ok");
             }
         }
 
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+
         }
 
         protected override void OnResume()
