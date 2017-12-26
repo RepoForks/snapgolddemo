@@ -50,6 +50,7 @@ namespace PhotoSharingApp.Forms
             SimpleIoc.Default.Register<IPhotoService, ServiceClient>();
             SimpleIoc.Default.Register<IDialogService, FormsDialogService>();
             SimpleIoc.Default.Register<IConnectivityService, FormsConnectivityService>();
+            SimpleIoc.Default.Register<ISettingsService, FormsSettingsService>();
 
             SimpleIoc.Default.Register<CategoriesViewModel>();
             SimpleIoc.Default.Register<PhotoDetailsViewModel>();
@@ -73,7 +74,7 @@ namespace PhotoSharingApp.Forms
             // Setup App Shell
             AppShell = new AppShell();
             AppShell.Children.Add(new CategoriesPage());   // Home
-            AppShell.Children.Add(new CameraPage());   // Upload
+            AppShell.Children.Add(new CameraPage());       // Upload
             AppShell.Children.Add(new LeaderboardsPage()); // Leaderboards
             AppShell.Children.Add(new ProfilePage());      // My profile
             AppShell.On<Android>().DisableSwipePaging();
@@ -86,22 +87,29 @@ namespace PhotoSharingApp.Forms
         {
             CrossVersionTracking.Current.Track();
 
+            var appCenterKey =
+                "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
+                "android=60d30fa4-683b-4d74-aff1-434e694999e2;";
+
             var environment = DependencyService.Get<IEnvironmentService>();
-            if (environment?.IsRunningInRealWorld() == false)
+            if (environment?.IsRunningInRealWorld() == true)
+            {
+                AppCenter.Start(appCenterKey, typeof(Analytics), typeof(Crashes), typeof(Distribute), typeof(Push));
+            }
+            else
+            {
+                // When running in Test Cloud, Debug Mode or on an Emulator / Simulator, do not kick off
+                // Analytics, Crash Reports and Distribution
+                AppCenter.Start(appCenterKey, typeof(Push));
+            }
+
+            // Stop collecting Analytics, when opted-out by the user
+            var settings = SimpleIoc.Default.GetInstance<ISettingsService>();
+            if (settings?.IsAnalyticsAllowed == false)
             {
                 Analytics.SetEnabledAsync(false);
                 Crashes.SetEnabledAsync(false);
-                Distribute.SetEnabledAsync(false);
             }
-
-            // Visual Studio Mobile Center
-            AppCenter.Start(
-                "ios=7e7901fb-6317-46d8-8a33-7cb200424c11;" +
-                "android=60d30fa4-683b-4d74-aff1-434e694999e2;",
-                typeof(Analytics),
-                typeof(Crashes),
-                typeof(Distribute),
-                typeof(Push));
 
             Push.PushNotificationReceived += Push_PushNotificationReceived;
             Analytics.TrackEvent("App Started", new Dictionary<string, string>
@@ -122,7 +130,6 @@ namespace PhotoSharingApp.Forms
         protected override void OnSleep()
         {
             // Handle when your app sleeps
-
         }
 
         protected override void OnResume()

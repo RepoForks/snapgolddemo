@@ -20,6 +20,7 @@ using CarouselView.FormsPlugin.iOS;
 using Microsoft.AppCenter.Distribute;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Push;
+using FFImageLoading.Transformations;
 
 namespace PhotoSharingApp.Forms.iOS
 {
@@ -44,6 +45,7 @@ namespace PhotoSharingApp.Forms.iOS
             // Initialize Xamarin.Forms and its Plugins
             global::Xamarin.Forms.Forms.Init();
             CachedImageRenderer.Init();
+            var ignore = typeof(CropTransformation);
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();
 

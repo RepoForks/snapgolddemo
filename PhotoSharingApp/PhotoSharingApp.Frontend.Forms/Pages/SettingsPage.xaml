@@ -34,6 +34,28 @@
 
                 <BoxView HeightRequest="1" Color="{StaticResource SubtleFontColor}" />
 
+                <!-- Analytics -->
+                <StackLayout Padding="{StaticResource DefaultItemThickness}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+                            <Label Style="{StaticResource HeadlineStyle}" Text="Analytics" />
+                            <Label Style="{StaticResource ExplainationTextStyle}" Text="Send annoymous analytics to help us improving the app"/>
+                        </StackLayout>
+                        
+                        <Switch
+                            Grid.Column="1"
+                            IsToggled="{Binding IsAnalyticsAllowed, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </StackLayout> 
+
+                <BoxView HeightRequest="1" Color="{StaticResource SubtleFontColor}" />
+                
+                <!-- 3rd Party -->
                 <StackLayout Padding="{StaticResource DefaultItemThickness}">
                     <Label Style="{StaticResource HeadlineStyle}" Text="3rd Party Libraries" />  
                     <Label Style="{StaticResource ExplainationTextStyle}" Text="Credits to these incredible community projects that made my life easier!"/>

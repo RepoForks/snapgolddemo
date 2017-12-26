@@ -47,7 +47,7 @@ namespace PhotoSharingApp.Forms.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            CachedImageRenderer.Init();
+            CachedImageRenderer.Init(false);
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();
             UserDialogs.Init(() => (Activity)global::Xamarin.Forms.Forms.Context);

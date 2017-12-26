@@ -11,6 +11,8 @@ namespace PhotoSharingApp.Forms.Pages
 {
     public partial class SettingsPage : ContentPage
     {
+        private SettingsViewModel viewModel;
+
         public SettingsPage()
         {
             Analytics.TrackEvent("Navigate to Settings");
@@ -20,7 +22,22 @@ namespace PhotoSharingApp.Forms.Pages
             // Set Version and Build
             VersionLabel.Text = $"{CrossVersionTracking.Current.CurrentVersion} (Build {CrossVersionTracking.Current.CurrentBuild})";
 
-            BindingContext = SimpleIoc.Default.GetInstance<SettingsViewModel>();
+            BindingContext = viewModel = SimpleIoc.Default.GetInstance<SettingsViewModel>();
+            viewModel.Refresh();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            viewModel.Refresh();
+        }
+
+        protected override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+            viewModel.SaveSettings();
+            await Analytics.SetEnabledAsync(viewModel.IsAnalyticsAllowed);
+            bool isEnabled = await Analytics.IsEnabledAsync();
         }
 
         void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -34,9 +51,6 @@ namespace PhotoSharingApp.Forms.Pages
         void Handle_Clicked(object sender, System.EventArgs e)
         {
             Device.OpenUri(new Uri("https://github.com/robinmanuelthiel/Pollenalarm"));
-
-
-
         }
     }
 }
