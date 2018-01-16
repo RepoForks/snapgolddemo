@@ -30,7 +30,6 @@
         <MtouchArch>x86_64</MtouchArch>
         <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
         <DeviceSpecificBuild>false</DeviceSpecificBuild>
-        <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
         <DebugType>pdbonly</DebugType>
