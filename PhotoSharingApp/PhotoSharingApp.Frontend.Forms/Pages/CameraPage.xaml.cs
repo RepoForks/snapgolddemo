@@ -98,7 +98,6 @@ namespace PhotoSharingApp.Forms
             }
 
             LoadingOverlay.IsVisible = false;
-            LoadingAnimation.IsPlaying = false;
             LoadingAnimation.Pause();
         }
 

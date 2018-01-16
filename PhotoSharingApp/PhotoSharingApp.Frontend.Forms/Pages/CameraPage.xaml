@@ -92,9 +92,9 @@
 
             <StackLayout VerticalOptions="Center">
                 <lottie:AnimationView
+                    x:Name="LoadingAnimation"
                     HeightRequest="200"
                     WidthRequest="200"
-                    x:Name="LoadingAnimation"
                     Animation="upload-bubbles.json"
                     Loop="True" />
                 
