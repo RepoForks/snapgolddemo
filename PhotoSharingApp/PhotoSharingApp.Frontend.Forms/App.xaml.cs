@@ -38,6 +38,8 @@ namespace PhotoSharingApp.Forms
             InitializeComponent();
             FlowListView.Init();
 
+            // OOP Demo Comment
+
             // Setup IoC Container for Dependeny Injection
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Reset();
