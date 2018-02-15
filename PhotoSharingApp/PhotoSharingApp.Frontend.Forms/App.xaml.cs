@@ -33,6 +33,11 @@ namespace PhotoSharingApp.Forms
 
         public static AppShell AppShell;
 
+        public App()
+        {
+            InitializeComponent();
+        }
+
         public App(IAuthenticationHandler authenticationHandler = null)
         {
             InitializeComponent();

@@ -35,14 +35,12 @@
 
                     <cropview:ImageCropView
                         x:Name="PhotoPreview"
-                        Delay="50"
-                        PanSpeed="5"
                         BindingContext="{x:Reference Name=PhotoPreviewContainer}"
                         WidthRequest="{Binding Width}"
                         HeightRequest="{Binding Width}">
-                    <cropview:ImageCropView.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TakePhoto" />
-                    </cropview:ImageCropView.GestureRecognizers>
+                        <cropview:ImageCropView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TakePhoto" />
+                        </cropview:ImageCropView.GestureRecognizers>
                     </cropview:ImageCropView>
                 </Grid>
 
