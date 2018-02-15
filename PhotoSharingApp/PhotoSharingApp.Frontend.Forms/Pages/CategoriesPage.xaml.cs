@@ -25,6 +25,8 @@ namespace PhotoSharingApp.Forms
         {
             base.OnAppearing();
             await viewModel.RefreshAsync();
+
+            var check = await Analytics.IsEnabledAsync();
         }
 
         void Handle_FlowItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)

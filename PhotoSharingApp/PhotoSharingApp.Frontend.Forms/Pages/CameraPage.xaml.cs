@@ -53,7 +53,7 @@ namespace PhotoSharingApp.Forms
                 var result = await UserDialogs.Instance.ActionSheetAsync("Select picture to upload", "Cancel", null, null, options.ToArray());
                 if (result.Equals(takePhoto))
                 {
-                    file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions { SaveToAlbum = true });
+                    file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()); // TODO: Re-add Saving to local library. Fails at the current MediaPluginVersion
                 }
                 else if (result.Equals(pickPhoto))
                 {
@@ -92,11 +92,12 @@ namespace PhotoSharingApp.Forms
                     // Navigate back to categories page
                     App.AppShell.SelectedItem = null; // Hack: Xamarin.Forms Bug does not allow the same navigation twice otherwise
                     App.AppShell.SelectedItem = App.AppShell.Children.First();
+
+                    Analytics.TrackEvent("Photo uploaded");
                 }
             }
 
             LoadingOverlay.IsVisible = false;
-            LoadingAnimation.IsPlaying = false;
             LoadingAnimation.Pause();
         }
 

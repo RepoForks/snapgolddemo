@@ -24,6 +24,7 @@ using CarouselView.FormsPlugin.Android;
 using Acr.UserDialogs;
 using Android.Content.Res;
 using Android.Media;
+using Microsoft.AppCenter;
 
 namespace PhotoSharingApp.Forms.Droid
 {
@@ -46,10 +47,11 @@ namespace PhotoSharingApp.Forms.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            CachedImageRenderer.Init();
+            CachedImageRenderer.Init(false);
             AnimationViewRenderer.Init();
             CarouselViewRenderer.Init();
             UserDialogs.Init(() => (Activity)global::Xamarin.Forms.Forms.Context);
+            Microsoft.AppCenter.Push.Push.SetSenderId("714883573816");
 
             // Initialize Azure Mobile App Client for the current platform
             CurrentPlatform.Init();

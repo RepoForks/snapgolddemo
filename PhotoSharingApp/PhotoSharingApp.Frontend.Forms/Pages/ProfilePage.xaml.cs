@@ -41,7 +41,7 @@ namespace PhotoSharingApp.Forms
 
         void Handle_Clicked(object sender, System.EventArgs e)
         {
-            Analytics.TrackEvent("Attempt to Login non-Facebook", new Dictionary<string, string> { { "Provicer", (sender as Button).Text } });
+            Analytics.TrackEvent("Attempt to Login non-Facebook", new Dictionary<string, string> { { "Provider", (sender as Button).Text } });
             DisplayAlert("Not implemented yet", "Please use Facebook Login for now. Thanks.", "Ok");
         }
 

@@ -88,6 +88,7 @@
     <Compile Include="Helpers\MockData.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Models\ThirdPartyLibrary.cs" />
+    <Compile Include="Abstractions\ISettingsService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

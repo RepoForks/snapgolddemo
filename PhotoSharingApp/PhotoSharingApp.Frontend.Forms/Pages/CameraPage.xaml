@@ -35,14 +35,12 @@
 
                     <cropview:ImageCropView
                         x:Name="PhotoPreview"
-                        Delay="50"
-                        PanSpeed="5"
                         BindingContext="{x:Reference Name=PhotoPreviewContainer}"
                         WidthRequest="{Binding Width}"
                         HeightRequest="{Binding Width}">
-                    <cropview:ImageCropView.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TakePhoto" />
-                    </cropview:ImageCropView.GestureRecognizers>
+                        <cropview:ImageCropView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TakePhoto" />
+                        </cropview:ImageCropView.GestureRecognizers>
                     </cropview:ImageCropView>
                 </Grid>
 
@@ -92,9 +90,9 @@
 
             <StackLayout VerticalOptions="Center">
                 <lottie:AnimationView
+                    x:Name="LoadingAnimation"
                     HeightRequest="200"
                     WidthRequest="200"
-                    x:Name="LoadingAnimation"
                     Animation="upload-bubbles.json"
                     Loop="True" />
                 

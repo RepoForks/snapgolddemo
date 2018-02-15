@@ -47,7 +47,7 @@
 
                     <ffimageloading:CachedImage
                         Grid.Row="0"
-                        Aspect="AspectFit"
+                        Aspect="AspectFill"
                         CacheType="Disk"
                         FadeAnimationEnabled="false"
                         Source="{Binding Photo.StandardUrl}"
