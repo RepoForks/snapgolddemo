@@ -5,7 +5,7 @@ using PhotoSharingApp.Frontend.Portable.ViewModels;
 using Xamarin.Forms;
 using PhotoSharingApp.Frontend.Portable.Models;
 using System.Linq;
-using Microsoft.Azure.Mobile.Analytics;
+using Microsoft.AppCenter.Analytics;
 
 namespace PhotoSharingApp.Forms
 {
@@ -25,6 +25,8 @@ namespace PhotoSharingApp.Forms
         {
             base.OnAppearing();
             await viewModel.RefreshAsync();
+
+            var check = await Analytics.IsEnabledAsync();
         }
 
         void Handle_FlowItemTapped(object sender, Xamarin.Forms.ItemTappedEventArgs e)
